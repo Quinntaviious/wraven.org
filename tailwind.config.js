@@ -1,7 +1,7 @@
 module.exports = {
   content: ['./your-files/**/*.{html,js}'],
 
-  plugins: [require('daisyui@4')],
+  plugins: [require('daisyui')],
 
   // config docs: https://daisyui.com/docs/config/
   daisyui: {
