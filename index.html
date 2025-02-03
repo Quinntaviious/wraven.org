@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    child-src my.spline.design;
+    img-src 'self' https://wraven.org https://wraven.org/imgs/;
+    style-src 'self' 'nonce-<random-nonce>';
+    script-src 'self';
+    object-src 'none';
+    base-uri 'none';
+    form-action 'self';
+    upgrade-insecure-requests;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="author" content="WRAVEN">
     <title>WRAVEN | Cybersecurity</title>
     <meta name="description" content="A student-run cybersecurity organization based at WMU. We participate in Research, CTF Competitions, Community Outreach & more. Learn more...">
     <meta name="keywords" content="cybersecurity, WMU, WRAVEN, hacking, CTF, research">
