@@ -25,13 +25,13 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             border: 0;
+            box-sizing: border-box;
         }
         html, body {
             width: 100%;
@@ -43,9 +43,42 @@
             height: 100vh;
             display: block;
         }
+        /* Button Container */
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        /* Buttons */
+        .button-container a {
+            text-decoration: none;
+            padding: 12px 20px;
+            background: white;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            transition: 0.3s ease;
+            border: 2px solid black;
+        }
+        .button-container a:hover {
+            background: black;
+            color: white;
+        }
     </style>
 </head>
 <body>
+
     <iframe src="https://my.spline.design/mouseinteractiveheropage-fcd205b7da29bc2a3242831226d1ef62/" frameborder="0"></iframe>
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <a href="https://github.com/WRAVENproject" target="_blank">GitHub</a>
+        <a href="https://wraven.org/blog" target="_blank">Blog</a>
+    </div>
+
 </body>
 </html>
