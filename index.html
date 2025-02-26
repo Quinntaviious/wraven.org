@@ -26,12 +26,16 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
 
+    <!-- Custom Font (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             border: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
         html, body {
             width: 100%;
@@ -46,21 +50,21 @@
         /* Button Container */
         .button-container {
             position: fixed;
-            bottom: 20px;
+            bottom: 50px; /* Moved up slightly */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
         /* Buttons */
         .button-container a {
             text-decoration: none;
-            padding: 12px 20px;
+            padding: 14px 24px; /* Slightly bigger */
             background: white;
             color: black;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 25px;
+            font-size: 18px; /* Slightly bigger */
+            font-weight: 600; /* Slightly bolder */
+            border-radius: 30px;
             transition: 0.3s ease;
             border: 2px solid black;
         }
