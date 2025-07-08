@@ -324,16 +324,24 @@ async function checkDashboardStatus() {
     const feedStatus = document.querySelector('.feed-status');
     
     try {
-        // Try to fetch from dashboard.wraven.org with no-cors to avoid CORS issues
+        // Try to fetch from dashboard.wraven.org and check the actual response
         const response = await fetch('https://dashboard.wraven.org', { 
-            mode: 'no-cors',
-            method: 'HEAD'
+            method: 'HEAD',
+            signal: AbortSignal.timeout(10000) // 10 second timeout
         });
         
-        // If we get here without error, the site is reachable
-        updateDashboardStatus(true);
+        // Check if the response is successful (status 200-299)
+        // This will catch Cloudflare 502 errors and other server errors
+        if (response.ok) {
+            updateDashboardStatus(true);
+        } else {
+            // If we get a non-2xx status (like 502 from Cloudflare), treat as offline
+            console.log(`Dashboard returned status ${response.status}`);
+            updateDashboardStatus(false);
+        }
     } catch (error) {
-        // If there's an error, the site is likely down
+        // If there's a network error, timeout, or CORS issue, the site is down
+        console.log('Dashboard check failed:', error.message);
         updateDashboardStatus(false);
     }
 }
