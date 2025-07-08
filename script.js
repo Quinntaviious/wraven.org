@@ -323,27 +323,71 @@ const getIPDuringLoading = async () => {
 async function checkDashboardStatus() {
     const feedStatus = document.querySelector('.feed-status');
     
-    try {
-        // Try to fetch from dashboard.wraven.org and check the actual response
-        const response = await fetch('https://dashboard.wraven.org', { 
-            method: 'HEAD',
-            signal: AbortSignal.timeout(10000) // 10 second timeout
-        });
+    // Try multiple approaches to determine dashboard status
+    const checkMethods = [
+        // Method 1: Try GET request with CORS mode first
+        async () => {
+            const response = await fetch('https://dashboard.wraven.org', { 
+                method: 'GET',
+                signal: AbortSignal.timeout(8000), // 8 second timeout
+                redirect: 'follow' // Allow redirects
+            });
+            
+            // Check if response is successful and not a Cloudflare error page
+            if (response.ok) {
+                // For GET requests, we can check the content to detect Cloudflare error pages
+                const contentType = response.headers.get('content-type') || '';
+                
+                // If it's HTML, check if it's a Cloudflare error page
+                if (contentType.includes('text/html')) {
+                    const text = await response.text();
+                    // Check for common Cloudflare error indicators
+                    if (text.includes('502 Bad gateway') || 
+                        text.includes('503 Service Temporarily Unavailable') ||
+                        text.includes('504 Gateway timeout') ||
+                        text.includes('cloudflare') && text.includes('error')) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        },
         
-        // Check if the response is successful (status 200-299)
-        // This will catch Cloudflare 502 errors and other server errors
-        if (response.ok) {
-            updateDashboardStatus(true);
-        } else {
-            // If we get a non-2xx status (like 502 from Cloudflare), treat as offline
-            console.log(`Dashboard returned status ${response.status}`);
-            updateDashboardStatus(false);
+        // Method 2: Fallback to HEAD request with no-cors
+        async () => {
+            const response = await fetch('https://dashboard.wraven.org', { 
+                method: 'HEAD',
+                mode: 'no-cors',
+                signal: AbortSignal.timeout(5000) // 5 second timeout
+            });
+            // If no-cors succeeds without throwing, assume it's reachable
+            return true;
         }
-    } catch (error) {
-        // If there's a network error, timeout, or CORS issue, the site is down
-        console.log('Dashboard check failed:', error.message);
-        updateDashboardStatus(false);
+    ];
+    
+    // Try each method in order
+    for (let i = 0; i < checkMethods.length; i++) {
+        try {
+            const result = await checkMethods[i]();
+            if (result === true) {
+                console.log(`Dashboard check method ${i + 1} succeeded`);
+                updateDashboardStatus(true);
+                return;
+            } else if (result === false) {
+                console.log(`Dashboard check method ${i + 1} detected error page`);
+                updateDashboardStatus(false);
+                return;
+            }
+        } catch (error) {
+            console.log(`Dashboard check method ${i + 1} failed:`, error.message);
+            // Continue to next method
+        }
     }
+    
+    // If all methods fail, dashboard is offline
+    console.log('All dashboard check methods failed');
+    updateDashboardStatus(false);
 }
 
 function updateDashboardStatus(isOnline) {
