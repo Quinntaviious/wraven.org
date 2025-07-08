@@ -352,10 +352,15 @@ body {
     background: var(--bg-tertiary);
     border-radius: 6px;
     border-left: 3px solid transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .threat-item:hover {
+    border-color: var(--accent-blue);
     background: rgba(30, 144, 255, 0.05);
+    transform: translateY(-1px);
 }
 
 .threat-indicator {
