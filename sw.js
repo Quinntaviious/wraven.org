@@ -2,6 +2,9 @@ const CACHE_NAME = 'wraven-v1.0.0';
 const STATIC_CACHE_NAME = 'wraven-static-v1.0.0';
 const DYNAMIC_CACHE_NAME = 'wraven-dynamic-v1.0.0';
 
+// Onion address for Tor support
+const ONION_ADDRESS = 'http://fxyk2rjld5uqnkpqazbgt6w6yvq27vejjrg3brgtcdl3dm2bmq5c4nyd.onion';
+
 // Files to cache immediately (static assets)
 const STATIC_ASSETS = [
   '/',
@@ -96,26 +99,50 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
+// Add Onion-Location header to responses
+function addOnionLocationHeader(response, url) {
+  // Only add to HTML responses from our domain
+  if (url.hostname === 'wraven.org' || url.hostname === 'www.wraven.org') {
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('text/html')) {
+      // Clone the response and add the header
+      const newHeaders = new Headers(response.headers);
+      newHeaders.set('Onion-Location', ONION_ADDRESS + url.pathname + url.search);
+      
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders
+      });
+    }
+  }
+  return response;
+}
+
 async function handleRequest(request, url) {
   try {
+    let response;
+    
     // Strategy 1: NEVER cache main content files (always fresh)
     if (NEVER_CACHE.some(pattern => url.pathname.includes(pattern))) {
       console.log('Fetching fresh (never cache):', url.pathname);
-      return await fetchWithFallback(request);
+      response = await fetchWithFallback(request);
     }
-    
     // Strategy 2: Cache external resources with network-first for freshness
-    if (EXTERNAL_CACHE_PATTERNS.some(pattern => pattern.test(url.hostname))) {
-      return await networkFirstStrategy(request, DYNAMIC_CACHE_NAME);
+    else if (EXTERNAL_CACHE_PATTERNS.some(pattern => pattern.test(url.hostname))) {
+      response = await networkFirstStrategy(request, DYNAMIC_CACHE_NAME);
     }
-    
     // Strategy 3: Cache static assets with cache-first
-    if (STATIC_ASSETS.includes(url.pathname) && !NEVER_CACHE.includes(url.pathname)) {
-      return await cacheFirstStrategy(request, STATIC_CACHE_NAME);
+    else if (STATIC_ASSETS.includes(url.pathname) && !NEVER_CACHE.includes(url.pathname)) {
+      response = await cacheFirstStrategy(request, STATIC_CACHE_NAME);
+    }
+    // Strategy 4: Everything else - network first with short cache
+    else {
+      response = await networkFirstStrategy(request, DYNAMIC_CACHE_NAME);
     }
     
-    // Strategy 4: Everything else - network first with short cache
-    return await networkFirstStrategy(request, DYNAMIC_CACHE_NAME);
+    // Add Onion-Location header if appropriate
+    return addOnionLocationHeader(response, url);
     
   } catch (error) {
     console.error('Service Worker fetch error:', error);

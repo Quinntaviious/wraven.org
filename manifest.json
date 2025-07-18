@@ -52,24 +52,10 @@
   ],
   "shortcuts": [
     {
-      "name": "WATCHTOWER Dashboard",
-      "short_name": "Dashboard",
-      "description": "Access the WATCHTOWER threat monitoring dashboard",
-      "url": "https://public.wraven.org",
-      "icons": [{ "src": "/imgs/icon-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Research Blog",
-      "short_name": "Blog",
-      "description": "Read our latest cybersecurity research",
-      "url": "https://blog.wraven.org",
-      "icons": [{ "src": "/imgs/icon-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Discord Server",
-      "short_name": "Discord",
-      "description": "Join the WRAVEN Discord community",
-      "url": "https://discord.gg/uYkvSU8DHy",
+      "name": "What is WRAVEN?",
+      "short_name": "About",
+      "description": "Learn more about WRAVEN and our mission",
+      "url": "/?modal=about",
       "icons": [{ "src": "/imgs/icon-192x192.png", "sizes": "192x192" }]
     }
   ]

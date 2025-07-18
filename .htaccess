@@ -1,5 +1,10 @@
 # Performance and Security Optimizations for WRAVEN
 
+# Tor Support - Add Onion-Location header
+<FilesMatch "\.(html|php)$">
+    Header always set Onion-Location "http://fxyk2rjld5uqnkpqazbgt6w6yvq27vejjrg3brgtcdl3dm2bmq5c4nyd.onion"
+</FilesMatch>
+
 # Enable compression
 <IfModule mod_deflate.c>
     # Compress HTML, CSS, JavaScript, Text, XML and fonts

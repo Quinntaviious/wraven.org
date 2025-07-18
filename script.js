@@ -265,6 +265,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const btn = document.getElementById('what-is-wraven-btn');
         const closeBtn = document.querySelector('.modal-close');
         
+        // Check if modal should be opened via URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('modal') === 'about') {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            // Clear the URL parameter
+            history.replaceState({}, document.title, window.location.pathname);
+        }
+        
         // Open modal
         if (btn) {
             btn.addEventListener('click', () => {
@@ -329,6 +338,177 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(updateLoadingMessage, 1000);
     */
     
+    // PWA Installation Handler
+    class PWAInstaller {
+        constructor() {
+            this.deferredPrompt = null;
+            this.isInstalled = false;
+            this.init();
+        }
+        
+        init() {
+            // Check if PWA is supported
+            if (!('serviceWorker' in navigator)) {
+                console.log('PWA not supported - Service Worker unavailable');
+                return;
+            }
+            
+            // Listen for the beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                console.log('PWA install prompt available');
+                e.preventDefault();
+                this.deferredPrompt = e;
+                this.showInstallButton();
+            });
+            
+            // Listen for successful app installation
+            window.addEventListener('appinstalled', (e) => {
+                console.log('PWA was installed successfully');
+                this.isInstalled = true;
+                this.hideInstallButton();
+                this.showInstalledNotification();
+            });
+            
+            // Check if app is already installed
+            this.checkIfInstalled();
+        }
+        
+        showInstallButton() {
+            // Add install button to header
+            const headerRight = document.querySelector('.header-right');
+            if (headerRight && !document.getElementById('pwa-install-btn')) {
+                const installBtn = document.createElement('button');
+                installBtn.id = 'pwa-install-btn';
+                installBtn.className = 'access-btn pwa-install-btn';
+                installBtn.innerHTML = '📱 Install App';
+                installBtn.title = 'Install WRAVEN as a desktop/mobile app';
+                
+                installBtn.addEventListener('click', () => {
+                    this.installPWA();
+                });
+                
+                headerRight.appendChild(installBtn);
+            }
+        }
+        
+        hideInstallButton() {
+            const installBtn = document.getElementById('pwa-install-btn');
+            if (installBtn) {
+                installBtn.remove();
+            }
+        }
+        
+        async installPWA() {
+            if (!this.deferredPrompt) {
+                console.log('No install prompt available');
+                return;
+            }
+            
+            // Show the install prompt
+            this.deferredPrompt.prompt();
+            
+            // Wait for the user to respond
+            const { outcome } = await this.deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+            
+            // Clear the deferredPrompt
+            this.deferredPrompt = null;
+            this.hideInstallButton();
+        }
+        
+        checkIfInstalled() {
+            // Check if running in standalone mode (installed)
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                this.isInstalled = true;
+                console.log('App is running in standalone mode');
+            }
+            
+            // Check if running in PWA mode on iOS
+            if (window.navigator.standalone === true) {
+                this.isInstalled = true;
+                console.log('App is running in iOS standalone mode');
+            }
+        }
+        
+        showInstalledNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'pwa-notification';
+            notification.innerHTML = `
+                <div class="pwa-icon">🎉</div>
+                <div class="pwa-message">
+                    <strong>WRAVEN Installed!</strong><br>
+                    You can now access WRAVEN from your desktop or home screen.
+                </div>
+                <button class="pwa-dismiss">×</button>
+            `;
+            
+            notification.querySelector('.pwa-dismiss').addEventListener('click', () => {
+                notification.remove();
+            });
+            
+            document.body.appendChild(notification);
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+    }
+
+    // Initialize PWA
+    function initializePWA() {
+        const pwaInstaller = new PWAInstaller();
+        
+        // Add PWA-specific features
+        addPWAFeatures();
+    }
+
+    // Add PWA-specific features
+    function addPWAFeatures() {
+        // Add app shortcuts handling
+        if ('navigator' in window && 'shortcuts' in navigator) {
+            // Handle keyboard shortcuts for PWA
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'd':
+                            e.preventDefault();
+                            window.open('https://public.wraven.org', '_blank');
+                            break;
+                        case 'b':
+                            e.preventDefault();
+                            window.open('https://blog.wraven.org', '_blank');
+                            break;
+                    }
+                }
+            });
+        }
+        
+        // Add app badge support (if available)
+        if ('setAppBadge' in navigator) {
+            // Could be used to show threat count
+            navigator.setAppBadge(0);
+        }
+        
+        // Handle app visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                console.log('App is hidden');
+            } else {
+                console.log('App is visible');
+                // Refresh threat data when app becomes visible
+                checkDashboardStatus();
+            }
+        });
+    }
+
     // Initialize immediately without loading screen
     initializeInterface();
     
@@ -337,176 +517,61 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize PWA functionality
     initializePWA();
+    
+    // Add Onion-Location header support
+    addOnionLocationSupport();
 
-// PWA Installation Handler
-class PWAInstaller {
-    constructor() {
-        this.deferredPrompt = null;
-        this.isInstalled = false;
-        this.init();
-    }
+// Add Onion-Location header support
+function addOnionLocationSupport() {
+    const onionAddress = 'http://fxyk2rjld5uqnkpqazbgt6w6yvq27vejjrg3brgtcdl3dm2bmq5c4nyd.onion';
     
-    init() {
-        // Check if PWA is supported
-        if (!('serviceWorker' in navigator)) {
-            console.log('PWA not supported - Service Worker unavailable');
-            return;
+    // Add onion address to page for Tor Browser detection
+    if (window.location.hostname === 'wraven.org' || window.location.hostname === 'www.wraven.org') {
+        // Create a hidden element with the onion address for Tor Browser
+        const onionMeta = document.createElement('meta');
+        onionMeta.setAttribute('http-equiv', 'onion-location');
+        onionMeta.setAttribute('content', onionAddress + window.location.pathname + window.location.search);
+        
+        // Check if meta tag doesn't already exist
+        if (!document.querySelector('meta[name="onion-location"]')) {
+            document.head.appendChild(onionMeta);
         }
         
-        // Listen for the beforeinstallprompt event
-        window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('PWA install prompt available');
-            e.preventDefault();
-            this.deferredPrompt = e;
-            this.showInstallButton();
-        });
-        
-        // Listen for successful app installation
-        window.addEventListener('appinstalled', (e) => {
-            console.log('PWA was installed successfully');
-            this.isInstalled = true;
-            this.hideInstallButton();
-            this.showInstalledNotification();
-        });
-        
-        // Check if app is already installed
-        this.checkIfInstalled();
-    }
-    
-    showInstallButton() {
-        // Add install button to header
-        const headerRight = document.querySelector('.header-right');
-        if (headerRight && !document.getElementById('pwa-install-btn')) {
-            const installBtn = document.createElement('button');
-            installBtn.id = 'pwa-install-btn';
-            installBtn.className = 'access-btn pwa-install-btn';
-            installBtn.innerHTML = '📱 Install App';
-            installBtn.title = 'Install WRAVEN as a desktop/mobile app';
-            
-            installBtn.addEventListener('click', () => {
-                this.installPWA();
-            });
-            
-            headerRight.appendChild(installBtn);
+        // Add notification for Tor users
+        if (navigator.userAgent.includes('Tor')) {
+            setTimeout(() => {
+                showTorNotification(onionAddress);
+            }, 2000);
         }
-    }
-    
-    hideInstallButton() {
-        const installBtn = document.getElementById('pwa-install-btn');
-        if (installBtn) {
-            installBtn.remove();
-        }
-    }
-    
-    async installPWA() {
-        if (!this.deferredPrompt) {
-            console.log('No install prompt available');
-            return;
-        }
-        
-        // Show the install prompt
-        this.deferredPrompt.prompt();
-        
-        // Wait for the user to respond
-        const { outcome } = await this.deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-        } else {
-            console.log('User dismissed the install prompt');
-        }
-        
-        // Clear the deferredPrompt
-        this.deferredPrompt = null;
-        this.hideInstallButton();
-    }
-    
-    checkIfInstalled() {
-        // Check if running in standalone mode (installed)
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            this.isInstalled = true;
-            console.log('App is running in standalone mode');
-        }
-        
-        // Check if running in PWA mode on iOS
-        if (window.navigator.standalone === true) {
-            this.isInstalled = true;
-            console.log('App is running in iOS standalone mode');
-        }
-    }
-    
-    showInstalledNotification() {
-        const notification = document.createElement('div');
-        notification.className = 'pwa-notification';
-        notification.innerHTML = `
-            <div class="pwa-icon">🎉</div>
-            <div class="pwa-message">
-                <strong>WRAVEN Installed!</strong><br>
-                You can now access WRAVEN from your desktop or home screen.
-            </div>
-            <button class="pwa-dismiss">×</button>
-        `;
-        
-        notification.querySelector('.pwa-dismiss').addEventListener('click', () => {
-            notification.remove();
-        });
-        
-        document.body.appendChild(notification);
-        
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 5000);
     }
 }
 
-// Initialize PWA
-function initializePWA() {
-    const pwaInstaller = new PWAInstaller();
+// Show Tor notification
+function showTorNotification(onionAddress) {
+    const notification = document.createElement('div');
+    notification.className = 'tor-notification';
+    notification.innerHTML = `
+        <div class="tor-icon">🧅</div>
+        <div class="tor-message">
+            <strong>Tor Browser Detected</strong><br>
+            <span>You can access this site via Tor at:</span><br>
+            <code>${onionAddress}</code>
+        </div>
+        <button class="tor-dismiss">×</button>
+    `;
     
-    // Add PWA-specific features
-    addPWAFeatures();
-}
-
-// Add PWA-specific features
-function addPWAFeatures() {
-    // Add app shortcuts handling
-    if ('navigator' in window && 'shortcuts' in navigator) {
-        // Handle keyboard shortcuts for PWA
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
-                    case 'd':
-                        e.preventDefault();
-                        window.open('https://public.wraven.org', '_blank');
-                        break;
-                    case 'b':
-                        e.preventDefault();
-                        window.open('https://blog.wraven.org', '_blank');
-                        break;
-                }
-            }
-        });
-    }
-    
-    // Add app badge support (if available)
-    if ('setAppBadge' in navigator) {
-        // Could be used to show threat count
-        navigator.setAppBadge(0);
-    }
-    
-    // Handle app visibility changes
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            console.log('App is hidden');
-        } else {
-            console.log('App is visible');
-            // Refresh threat data when app becomes visible
-            checkDashboardStatus();
-        }
+    notification.querySelector('.tor-dismiss').addEventListener('click', () => {
+        notification.remove();
     });
+    
+    document.body.appendChild(notification);
+    
+    // Auto-hide after 10 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 10000);
 }
 
 // Register service worker
@@ -792,6 +857,147 @@ style.textContent = `
     .access-btn:disabled {
         opacity: 0.7;
         cursor: not-allowed;
+    }
+    
+    .pwa-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        padding: 16px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--accent-blue);
+        font-size: 14px;
+        z-index: 10000;
+        max-width: 300px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.3s ease-out;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    .pwa-notification .pwa-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    
+    .pwa-notification .pwa-message {
+        flex: 1;
+        line-height: 1.4;
+    }
+    
+    .pwa-notification .pwa-dismiss {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 8px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+    
+    .pwa-notification .pwa-dismiss:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+    }
+    
+    .pwa-install-btn {
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        margin-left: 12px;
+    }
+    
+    .pwa-install-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+    }
+    
+    .tor-notification {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        padding: 16px 20px;
+        border-radius: 8px;
+        border: 1px solid #ff6b35;
+        font-size: 14px;
+        z-index: 10000;
+        max-width: 400px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.3s ease-out;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .tor-notification .tor-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    
+    .tor-notification .tor-message {
+        flex: 1;
+        line-height: 1.4;
+    }
+    
+    .tor-notification .tor-message code {
+        background: rgba(255, 107, 53, 0.1);
+        color: #ff6b35;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        word-break: break-all;
+    }
+    
+    .tor-notification .tor-dismiss {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 8px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+    
+    .tor-notification .tor-dismiss:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
     }
 `;
 document.head.appendChild(style);
