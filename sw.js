@@ -10,6 +10,8 @@ const STATIC_ASSETS = [
   '/script.js',
   '/manifest.json',
   '/imgs/littlelogo.png',
+  '/imgs/icon-192x192.png',
+  '/imgs/icon-512x512.png',
   '/imgs/widelogo.png',
   '/imgs/og-image.png'
 ];

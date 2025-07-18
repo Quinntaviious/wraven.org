@@ -90,6 +90,48 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     */
     
+    // Simulate data updates
+    const simulateDataUpdates = () => {
+        // CTF stats are now static team information, no random updates needed
+        // Research project progress bars remain static - they represent actual project status
+        // Only update them manually when projects actually progress
+    };
+    
+    // Update system uptime
+    const updateSystemUptime = () => {
+        const uptimeElement = document.querySelector('.uptime');
+        const lastUpdateElement = document.querySelector('.last-update');
+        
+        if (uptimeElement) {
+            // Calculate uptime from November 30th, 2024 at 3pm
+            const startTime = new Date('2024-11-30T15:00:00');
+            const now = new Date();
+            const uptimeMs = now.getTime() - startTime.getTime();
+            
+            const days = Math.floor(uptimeMs / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((uptimeMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((uptimeMs % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((uptimeMs % (1000 * 60)) / 1000);
+            
+            uptimeElement.innerHTML = `Uptime: <code class="uptime-code">${days}d ${hours}h ${minutes}m ${seconds}s</code>`;
+        }
+        
+        if (lastUpdateElement) {
+            const now = new Date();
+            const timestamp = now.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            }) + ' ' + now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            }) + ' EST';
+            
+            lastUpdateElement.textContent = `Last updated: ${timestamp}`;
+        }
+    };
+    
     // Real-time updates simulation
     const startRealTimeUpdates = () => {
         // Threat timestamps are now static dates - no need to update
@@ -305,6 +347,12 @@ class PWAInstaller {
     }
     
     init() {
+        // Check if PWA is supported
+        if (!('serviceWorker' in navigator)) {
+            console.log('PWA not supported - Service Worker unavailable');
+            return;
+        }
+        
         // Listen for the beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', (e) => {
             console.log('PWA install prompt available');
@@ -465,19 +513,26 @@ function addPWAFeatures() {
 async function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         try {
-            const registration = await navigator.serviceWorker.register('/sw.js');
+            const registration = await navigator.serviceWorker.register('/sw.js', {
+                scope: '/' // Explicitly set scope
+            });
             console.log('Service Worker registered successfully:', registration);
+            
+            // Check if there's a waiting service worker
+            if (registration.waiting) {
+                console.log('Service Worker is waiting to activate');
+                showUpdateNotification();
+            }
             
             // Listen for updates
             registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing;
                 if (newWorker) {
+                    console.log('New service worker installing...');
                     newWorker.addEventListener('statechange', () => {
                         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                             // New version available
                             console.log('New version available! Refresh to update.');
-                            
-                            // Optionally show a notification to the user
                             showUpdateNotification();
                         }
                     });
@@ -487,6 +542,8 @@ async function registerServiceWorker() {
         } catch (error) {
             console.log('Service Worker registration failed:', error);
         }
+    } else {
+        console.log('Service Worker not supported');
     }
 }
 
@@ -540,48 +597,6 @@ function showUpdateNotification() {
             hour: '2-digit', 
             minute: '2-digit' 
         });
-    };
-    
-    // Simulate data updates
-    const simulateDataUpdates = () => {
-        // CTF stats are now static team information, no random updates needed
-        // Research project progress bars remain static - they represent actual project status
-        // Only update them manually when projects actually progress
-    };
-    
-    // Update system uptime
-    const updateSystemUptime = () => {
-        const uptimeElement = document.querySelector('.uptime');
-        const lastUpdateElement = document.querySelector('.last-update');
-        
-        if (uptimeElement) {
-            // Calculate uptime from November 30th, 2024 at 3pm
-            const startTime = new Date('2024-11-30T15:00:00');
-            const now = new Date();
-            const uptimeMs = now.getTime() - startTime.getTime();
-            
-            const days = Math.floor(uptimeMs / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((uptimeMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((uptimeMs % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((uptimeMs % (1000 * 60)) / 1000);
-            
-            uptimeElement.innerHTML = `Uptime: <code class="uptime-code">${days}d ${hours}h ${minutes}m ${seconds}s</code>`;
-        }
-        
-        if (lastUpdateElement) {
-            const now = new Date();
-            const timestamp = now.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
-            }) + ' ' + now.toLocaleTimeString('en-US', { 
-                hour12: false, 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            }) + ' EST';
-            
-            lastUpdateElement.textContent = `Last updated: ${timestamp}`;
-        }
     };
     
     // Add hover effects and interactions
