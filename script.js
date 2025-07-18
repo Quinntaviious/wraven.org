@@ -90,6 +90,21 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     */
     
+    // Real-time updates simulation
+    const startRealTimeUpdates = () => {
+        // Threat timestamps are now static dates - no need to update
+        
+        // Check dashboard status periodically
+        setInterval(checkDashboardStatus, 5 * 60 * 1000); // Check every 5 minutes
+        
+        // Simulate live data updates (static now)
+        setInterval(simulateDataUpdates, 30000); // Update every 30 seconds
+        
+        // Update system uptime (now with seconds)
+        updateSystemUptime();
+        setInterval(updateSystemUptime, 1000); // Update every second for seconds display
+    };
+    
     // Initialize the main interface immediately
     const initializeInterface = () => {
         isLoading = false; // Update loading state
@@ -512,25 +527,10 @@ function showUpdateNotification() {
     }, 10000);
 }
 
-// Real-time updates simulation
-const startRealTimeUpdates = () => {
-        // Threat timestamps are now static dates - no need to update
-        
-        // Check dashboard status periodically
-        setInterval(checkDashboardStatus, 5 * 60 * 1000); // Check every 5 minutes
-        
-        // Simulate live data updates (static now)
-        setInterval(simulateDataUpdates, 30000); // Update every 30 seconds
-        
-        // Update system uptime (now with seconds)
-        updateSystemUptime();
-        setInterval(updateSystemUptime, 1000); // Update every second for seconds display
-    };
-    
-    // Update threat feed timestamps
-    // Threat timestamps are now static dates in HTML - no need for dynamic updates
-    // const updateThreatTimestamps = () => {
-    //     // Timestamps are now static dates showing threat discovery dates
+// Update threat feed timestamps
+// Threat timestamps are now static dates in HTML - no need for dynamic updates
+// const updateThreatTimestamps = () => {
+//     // Timestamps are now static dates showing threat discovery dates
     // };
     
     // Format time to HH:MM (kept for other potential uses)
