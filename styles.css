@@ -31,7 +31,8 @@ body {
     overflow-x: hidden;
 }
 
-/* Loading Screen */
+/* Loading Screen - COMMENTED OUT */
+/*
 .loading-screen {
     position: fixed;
     top: 0;
@@ -111,11 +112,15 @@ body {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
+*/
 
+/* Hidden class - COMMENTED OUT since no loading screen */
+/*
 .hidden {
     opacity: 0;
     visibility: hidden;
 }
+*/
 
 /* Background Grid */
 .background-grid {
@@ -453,6 +458,12 @@ body {
 .project-card:hover {
     border-color: var(--accent-blue);
     background: rgba(30, 144, 255, 0.03);
+}
+
+.project-card.clickable:hover {
+    border-color: var(--accent-blue);
+    background: rgba(30, 144, 255, 0.08);
+    transform: translateY(-1px);
 }
 
 .project-header {

@@ -1,5 +1,7 @@
-// Loading screen and initialization
+// Optimized initialization - Loading screen functionality commented out
 document.addEventListener('DOMContentLoaded', function() {
+    // LOADING SCREEN FUNCTIONALITY COMMENTED OUT
+    /*
     const loadingScreen = document.getElementById('loading-screen');
     const mainInterface = document.getElementById('main-interface');
     const loadingStatus = document.querySelector('.loading-status');
@@ -18,7 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let messageIndex = 0;
     let detectedIP = 'Unknown';
     let isLoading = true; // Track loading state for keyboard shortcuts
+    */
     
+    // Immediate initialization without loading screen
+    let detectedIP = 'Unknown';
+    let isLoading = false; // No loading state needed
+    
+    // LOADING SCREEN FUNCTIONALITY COMMENTED OUT
+    /*
     // Update loading status messages
     const updateLoadingMessage = () => {
         if (messageIndex < loadingMessages.length - 1) {
@@ -79,10 +88,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 600);
         }
     };
+    */
     
-    // Initialize the main interface
+    // Initialize the main interface immediately
     const initializeInterface = () => {
         isLoading = false; // Update loading state
+        
+        // LOADING SCREEN MANIPULATION COMMENTED OUT
+        /*
         // Remove the loading skip listener since we're no longer loading
         document.removeEventListener('keydown', handleLoadingSkip);
         
@@ -91,32 +104,34 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingScreen.style.display = 'none';
             mainInterface.classList.remove('hidden');
             mainInterface.style.opacity = '1';
-            
-            // Handle logo image fallback
-            setupLogoFallback();
-            
-            // Set IP if already detected during loading
-            if (detectedIP && detectedIP !== 'Unknown' && detectedIP !== 'Unavailable') {
-                const ipElement = document.getElementById('user-ip');
-                if (ipElement) {
-                    ipElement.textContent = detectedIP;
-                }
-            } else {
-                // Get user's IP address if not detected during loading
-                getUserIP();
-            }
-            
-            // Setup modal functionality
-            setupWRAVENModal();
-            
-            // Check WRAVEN dashboard status
-            checkDashboardStatus();
-            
-            // Start real-time updates
-            startRealTimeUpdates();
+        */
+        
+        // Handle logo image fallback
+        setupLogoFallback();
+        
+        // Get user's IP address
+        getUserIP();
+        
+        // Setup modal functionality
+        setupWRAVENModal();
+        
+        // Setup click handlers for threat items and completed projects
+        setupClickHandlers();
+        
+        // Check WRAVEN dashboard status
+        checkDashboardStatus();
+        
+        // Start real-time updates
+        startRealTimeUpdates();
+        
+        // LOADING SCREEN MANIPULATION COMMENTED OUT
+        /*
         }, 500);
+        */
     };
 
+    // LOADING SCREEN KEYBOARD SHORTCUT COMMENTED OUT
+    /*
     // Keyboard shortcut to skip loading screen
     const handleLoadingSkip = (e) => {
         if (e.key === 'ArrowRight' && isLoading) {
@@ -134,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add the loading skip listener
     document.addEventListener('keydown', handleLoadingSkip);
+    */
 
     // Setup logo image fallback
     const setupLogoFallback = () => {
@@ -225,8 +241,108 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
+    // Setup click handlers for interactive elements
+    const setupClickHandlers = () => {
+        // Add click handlers for threat items
+        const threatItems = document.querySelectorAll('.threat-item');
+        threatItems.forEach(item => {
+            item.addEventListener('click', () => {
+                window.open('https://public.wraven.org', '_blank');
+            });
+        });
+
+        // Add click handlers for completed projects
+        const completedProjects = document.querySelectorAll('.project-card');
+        completedProjects.forEach(project => {
+            const statusElement = project.querySelector('.project-status');
+            if (statusElement && statusElement.textContent.trim() === 'COMPLETED') {
+                project.addEventListener('click', () => {
+                    window.open('https://blog.wraven.org', '_blank');
+                });
+                // Add cursor pointer and clickable class to indicate clickability
+                project.style.cursor = 'pointer';
+                project.classList.add('clickable');
+            }
+        });
+    };
+
+    // LOADING SCREEN START COMMENTED OUT
+    /*
     // Start the loading sequence
     setTimeout(updateLoadingMessage, 1000);
+    */
+    
+    // Initialize immediately without loading screen
+    initializeInterface();
+    
+    // Register service worker for performance and offline support
+    registerServiceWorker();
+
+// Register service worker
+async function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        try {
+            const registration = await navigator.serviceWorker.register('/sw.js');
+            console.log('Service Worker registered successfully:', registration);
+            
+            // Listen for updates
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New version available
+                            console.log('New version available! Refresh to update.');
+                            
+                            // Optionally show a notification to the user
+                            showUpdateNotification();
+                        }
+                    });
+                }
+            });
+            
+        } catch (error) {
+            console.log('Service Worker registration failed:', error);
+        }
+    }
+}
+
+// Show update notification
+function showUpdateNotification() {
+    // Create a subtle notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        padding: 12px 16px;
+        border-radius: 6px;
+        border: 1px solid var(--accent-blue);
+        font-size: 14px;
+        z-index: 10000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    `;
+    notification.innerHTML = `
+        <div style="margin-bottom: 8px;">🔄 New version available!</div>
+        <div style="font-size: 12px; color: var(--text-secondary);">Click to refresh</div>
+    `;
+    
+    notification.addEventListener('click', () => {
+        window.location.reload();
+    });
+    
+    document.body.appendChild(notification);
+    
+    // Auto-hide after 10 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 10000);
+}
 
 // Real-time updates simulation
 const startRealTimeUpdates = () => {

@@ -1,0 +1,51 @@
+{
+  "name": "WRAVEN - Western Research Advisory for Vulnerabilities, Exploits, & Networks",
+  "short_name": "WRAVEN",
+  "description": "A student-run cybersecurity organization based at WMU. Research, CTF Competitions, Community Outreach & more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0d",
+  "theme_color": "#0b0b0d",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/imgs/littlelogo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/imgs/littlelogo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["education", "security", "research"],
+  "screenshots": [
+    {
+      "src": "/imgs/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "WATCHTOWER Dashboard",
+      "short_name": "Dashboard",
+      "description": "Access the WATCHTOWER threat monitoring dashboard",
+      "url": "https://public.wraven.org",
+      "icons": [{ "src": "/imgs/littlelogo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Research Blog",
+      "short_name": "Blog",
+      "description": "Read our latest cybersecurity research",
+      "url": "https://blog.wraven.org",
+      "icons": [{ "src": "/imgs/littlelogo.png", "sizes": "192x192" }]
+    }
+  ]
+}

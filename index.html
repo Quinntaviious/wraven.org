@@ -31,16 +31,33 @@
     <meta name="theme-color" content="#000000">
     <link rel="canonical" href="https://wraven.org/">
     
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Performance Optimizations -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Icons -->
     <link rel="icon" type="image/png" href="/imgs/littlelogo.png">
     <link rel="apple-touch-icon" href="/imgs/littlelogo.png">
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/styles.css"></noscript>
+    <link rel="preload" href="/script.js" as="script">
+    
+    <!-- Fonts with display=swap for faster rendering -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Loading Screen -->
+    <!-- Loading Screen - COMMENTED OUT FOR NOW -->
+    <!--
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
             <div class="loading-logo">WRAVEN</div>
@@ -51,9 +68,10 @@
             <div class="loading-status">Connecting to threat intel feeds</div>
         </div>
     </div>
+    -->
 
     <!-- Main Interface -->
-    <div id="main-interface" class="main-interface hidden">
+    <div id="main-interface" class="main-interface">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
@@ -377,6 +395,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Load JavaScript at the end for better performance -->
+    <script src="script.js" defer></script>
 </body>
 </html>
