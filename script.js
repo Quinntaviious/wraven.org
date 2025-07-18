@@ -277,6 +277,174 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Register service worker for performance and offline support
     registerServiceWorker();
+    
+    // Initialize PWA functionality
+    initializePWA();
+
+// PWA Installation Handler
+class PWAInstaller {
+    constructor() {
+        this.deferredPrompt = null;
+        this.isInstalled = false;
+        this.init();
+    }
+    
+    init() {
+        // Listen for the beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA install prompt available');
+            e.preventDefault();
+            this.deferredPrompt = e;
+            this.showInstallButton();
+        });
+        
+        // Listen for successful app installation
+        window.addEventListener('appinstalled', (e) => {
+            console.log('PWA was installed successfully');
+            this.isInstalled = true;
+            this.hideInstallButton();
+            this.showInstalledNotification();
+        });
+        
+        // Check if app is already installed
+        this.checkIfInstalled();
+    }
+    
+    showInstallButton() {
+        // Add install button to header
+        const headerRight = document.querySelector('.header-right');
+        if (headerRight && !document.getElementById('pwa-install-btn')) {
+            const installBtn = document.createElement('button');
+            installBtn.id = 'pwa-install-btn';
+            installBtn.className = 'access-btn pwa-install-btn';
+            installBtn.innerHTML = '📱 Install App';
+            installBtn.title = 'Install WRAVEN as a desktop/mobile app';
+            
+            installBtn.addEventListener('click', () => {
+                this.installPWA();
+            });
+            
+            headerRight.appendChild(installBtn);
+        }
+    }
+    
+    hideInstallButton() {
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (installBtn) {
+            installBtn.remove();
+        }
+    }
+    
+    async installPWA() {
+        if (!this.deferredPrompt) {
+            console.log('No install prompt available');
+            return;
+        }
+        
+        // Show the install prompt
+        this.deferredPrompt.prompt();
+        
+        // Wait for the user to respond
+        const { outcome } = await this.deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        } else {
+            console.log('User dismissed the install prompt');
+        }
+        
+        // Clear the deferredPrompt
+        this.deferredPrompt = null;
+        this.hideInstallButton();
+    }
+    
+    checkIfInstalled() {
+        // Check if running in standalone mode (installed)
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            this.isInstalled = true;
+            console.log('App is running in standalone mode');
+        }
+        
+        // Check if running in PWA mode on iOS
+        if (window.navigator.standalone === true) {
+            this.isInstalled = true;
+            console.log('App is running in iOS standalone mode');
+        }
+    }
+    
+    showInstalledNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'pwa-notification';
+        notification.innerHTML = `
+            <div class="pwa-icon">🎉</div>
+            <div class="pwa-message">
+                <strong>WRAVEN Installed!</strong><br>
+                You can now access WRAVEN from your desktop or home screen.
+            </div>
+            <button class="pwa-dismiss">×</button>
+        `;
+        
+        notification.querySelector('.pwa-dismiss').addEventListener('click', () => {
+            notification.remove();
+        });
+        
+        document.body.appendChild(notification);
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 5000);
+    }
+}
+
+// Initialize PWA
+function initializePWA() {
+    const pwaInstaller = new PWAInstaller();
+    
+    // Add PWA-specific features
+    addPWAFeatures();
+}
+
+// Add PWA-specific features
+function addPWAFeatures() {
+    // Add app shortcuts handling
+    if ('navigator' in window && 'shortcuts' in navigator) {
+        // Handle keyboard shortcuts for PWA
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'd':
+                        e.preventDefault();
+                        window.open('https://public.wraven.org', '_blank');
+                        break;
+                    case 'b':
+                        e.preventDefault();
+                        window.open('https://blog.wraven.org', '_blank');
+                        break;
+                }
+            }
+        });
+    }
+    
+    // Add app badge support (if available)
+    if ('setAppBadge' in navigator) {
+        // Could be used to show threat count
+        navigator.setAppBadge(0);
+    }
+    
+    // Handle app visibility changes
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            console.log('App is hidden');
+        } else {
+            console.log('App is visible');
+            // Refresh threat data when app becomes visible
+            checkDashboardStatus();
+        }
+    });
+}
 
 // Register service worker
 async function registerServiceWorker() {
