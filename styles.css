@@ -14,6 +14,7 @@
     --text-muted: #707070;
     --accent-blue: #1e90ff;
     --accent-orange: #fcbf49;
+    --accent-purple: #8a2be2;
     --border-color: #333333;
     --success: #00ff88;
     --warning: #fcbf49;
@@ -377,6 +378,8 @@ body {
 
 .threat-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .threat-title {
@@ -392,10 +395,18 @@ body {
     font-family: var(--font-mono);
 }
 
+.threat-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
 .threat-tags {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    flex: 1;
 }
 
 .tag {
@@ -414,6 +425,8 @@ body {
 .tag-technique { background: rgba(112, 112, 112, 0.2); color: var(--text-muted); }
 .tag-phishing { background: rgba(252, 191, 73, 0.2); color: var(--accent-orange); }
 .tag-ioc { background: rgba(0, 255, 136, 0.2); color: var(--success); }
+.tag-saas { background: rgba(138, 43, 226, 0.2); color: var(--accent-purple); }
+.tag-sector { background: rgba(255, 165, 0, 0.2); color: var(--accent-orange); }
 
 .threat-time {
     font-size: 0.875rem;
