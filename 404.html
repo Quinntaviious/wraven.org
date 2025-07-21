@@ -11,8 +11,8 @@
     <meta name="language" content="en">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="404 - Access Denied | WRAVEN">
-    <meta property="og:description" content="The requested resource could not be located. Return to WRAVEN's cybersecurity operations dashboard.">
+    <meta property="og:title" content="404 - Not Found | WRAVEN">
+    <meta property="og:description" content="The requested resource could not be located. Return to WRAVEN's homepage or contact support.">
     <meta property="og:image" content="https://wraven.org/imgs/og-image.png">
     <meta property="og:url" content="https://wraven.org/404">
     <meta property="og:type" content="website">
@@ -192,12 +192,6 @@
             justify-content: space-between;
         }
         
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
         
         .glitch {
             animation: glitch 2s infinite;
@@ -265,20 +259,6 @@
                 This endpoint may have been moved, deleted, or never existed in our threat intelligence database.
             </div>
             
-            <div class="threat-alert">
-                <div class="threat-alert-title">
-                    <span>⚠️</span>
-                    SYSTEM ALERT
-                </div>
-                <div class="threat-alert-content">
-                    Unauthorized access attempt detected. Logging IP address and request parameters for security analysis.
-                </div>
-            </div>
-            
-            <div class="status-indicator">
-                <span class="status-dot status-live"></span>
-                <span>Security Systems: ACTIVE</span>
-            </div>
             
             <div class="error-actions">
                 <a href="/" class="error-btn primary">Return to Base</a>
@@ -289,18 +269,6 @@
             <div class="system-info">
                 <div class="system-info-grid">
                     <div class="system-info-item">
-                        <span>Status Code:</span>
-                        <span>404</span>
-                    </div>
-                    <div class="system-info-item">
-                        <span>System:</span>
-                        <span>WRAVEN-OPS</span>
-                    </div>
-                    <div class="system-info-item">
-                        <span>Timestamp:</span>
-                        <span id="timestamp">Loading...</span>
-                    </div>
-                    <div class="system-info-item">
                         <span>Request ID:</span>
                         <span id="request-id">Loading...</span>
                     </div>
@@ -310,17 +278,6 @@
     </div>
     
     <script>
-        // Update timestamp
-        document.getElementById('timestamp').textContent = new Date().toLocaleString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        });
-        
         // Generate fake request ID
         document.getElementById('request-id').textContent = 
             Math.random().toString(36).substr(2, 8).toUpperCase();
