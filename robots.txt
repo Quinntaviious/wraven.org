@@ -1,3 +1,13 @@
+# Allow major search engines
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+User-agent: Baiduspider
+User-agent: YandexBot
+Allow: /
+
+# Block AI training crawlers
 User-agent: AI2Bot
 User-agent: Ai2Bot-Dolma
 User-agent: Amazonbot
@@ -42,3 +52,10 @@ User-agent: VelenPublicWebCrawler
 User-agent: Webzio-Extended
 User-agent: YouBot
 Disallow: /
+
+# All other bots (including unknown search engines)
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://wraven.org/sitemap.xml
