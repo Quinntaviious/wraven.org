@@ -343,62 +343,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Register service worker for performance and offline support
     registerServiceWorker();
-    
-    // Add Onion-Location header support
-    addOnionLocationSupport();
-
-    // Add Onion-Location header support
-    function addOnionLocationSupport() {
-        const onionAddress = 'http://fxyk2rjld5uqnkpqazbgt6w6yvq27vejjrg3brgtcdl3dm2bmq5c4nyd.onion';
-        
-        // Add onion address to page for Tor Browser detection
-        if (window.location.hostname === 'wraven.org' || window.location.hostname === 'www.wraven.org') {
-            // Create a hidden element with the onion address for Tor Browser
-            const onionMeta = document.createElement('meta');
-            onionMeta.setAttribute('http-equiv', 'onion-location');
-            onionMeta.setAttribute('content', onionAddress + window.location.pathname + window.location.search);
-            
-            // Check if meta tag doesn't already exist
-            if (!document.querySelector('meta[name="onion-location"]')) {
-                document.head.appendChild(onionMeta);
-            }
-            
-            // Add notification for Tor users
-            if (navigator.userAgent.includes('Tor')) {
-                setTimeout(() => {
-                    showTorNotification(onionAddress);
-                }, 2000);
-            }
-        }
-    }
-
-    // Show Tor notification
-    function showTorNotification(onionAddress) {
-        const notification = document.createElement('div');
-        notification.className = 'tor-notification';
-        notification.innerHTML = `
-            <div class="tor-icon">🧅</div>
-            <div class="tor-message">
-                <strong>Tor Browser Detected</strong><br>
-                <span>You can access this site via Tor at:</span><br>
-                <code>${onionAddress}</code>
-            </div>
-            <button class="tor-dismiss">×</button>
-        `;
-        
-        notification.querySelector('.tor-dismiss').addEventListener('click', () => {
-            notification.remove();
-        });
-        
-        document.body.appendChild(notification);
-        
-        // Auto-hide after 10 seconds
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 10000);
-    }
 
     // Register service worker
     async function registerServiceWorker() {
@@ -511,6 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Try a GET request first to check for Cloudflare error pages
             const response = await fetch('https://dashboard.wraven.org', { 
                 method: 'GET',
+                cache: 'no-store', // Force fresh request, bypass all caches
                 signal: AbortSignal.timeout(10000) // 10 second timeout
             });
             
@@ -550,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     await fetch('https://dashboard.wraven.org', { 
                         method: 'HEAD',
                         mode: 'no-cors',
+                        cache: 'no-store', // Force fresh request
                         signal: AbortSignal.timeout(8000)
                     });
                     // If no-cors succeeds, assume server is up (can't detect Cloudflare errors this way)
@@ -752,67 +698,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .pwa-install-btn:hover {
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
-        }
-        
-        .tor-notification {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            padding: 16px 20px;
-            border-radius: 8px;
-            border: 1px solid #ff6b35;
-            font-size: 14px;
-            z-index: 10000;
-            max-width: 400px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .tor-notification .tor-icon {
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-        
-        .tor-notification .tor-message {
-            flex: 1;
-            line-height: 1.4;
-        }
-        
-        .tor-notification .tor-message code {
-            background: rgba(255, 107, 53, 0.1);
-            color: #ff6b35;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            word-break: break-all;
-        }
-        
-        .tor-notification .tor-dismiss {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 18px;
-            cursor: pointer;
-            padding: 0;
-            margin-left: 8px;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-        }
-        
-        .tor-notification .tor-dismiss:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
         }
     `;
     document.head.appendChild(style);
