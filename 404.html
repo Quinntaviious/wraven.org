@@ -253,10 +253,10 @@
     <div class="error-container">
         <div class="error-content">
             <div class="error-code glitch">404</div>
-            <div class="error-title">ACCESS DENIED</div>
+            <div class="error-title">NOT FOUND</div>
             <div class="error-message">
-                The requested resource could not be located within WRAVEN's operational parameters. 
-                This endpoint may have been moved, deleted, or never existed in our threat intelligence database.
+                The requested resource could not be located within WRAVEN's site. 
+                This endpoint may have been moved, deleted, or never existed.
             </div>
             
             
@@ -278,13 +278,10 @@
     </div>
     
     <script>
-        // Generate fake request ID
         document.getElementById('request-id').textContent = 
             Math.random().toString(36).substr(2, 8).toUpperCase();
         
-        // Add some interactive behavior
         document.addEventListener('DOMContentLoaded', function() {
-            // Glitch effect trigger
             const errorCode = document.querySelector('.error-code');
             setInterval(() => {
                 if (Math.random() > 0.95) {
