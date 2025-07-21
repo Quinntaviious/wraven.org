@@ -338,148 +338,144 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(updateLoadingMessage, 1000);
     */
     
+    // Initialize immediately without loading screen
+    initializeInterface();
     
-    // Initialize components when DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initialize immediately without loading screen
-        initializeInterface();
-        
-        // Register service worker for performance and offline support
-        registerServiceWorker();
-        
-        // Add Onion-Location header support
-        addOnionLocationSupport();
-    });
+    // Register service worker for performance and offline support
+    registerServiceWorker();
+    
+    // Add Onion-Location header support
+    addOnionLocationSupport();
 
-// Add Onion-Location header support
-function addOnionLocationSupport() {
-    const onionAddress = 'http://fxyk2rjld5uqnkpqazbgt6w6yvq27vejjrg3brgtcdl3dm2bmq5c4nyd.onion';
-    
-    // Add onion address to page for Tor Browser detection
-    if (window.location.hostname === 'wraven.org' || window.location.hostname === 'www.wraven.org') {
-        // Create a hidden element with the onion address for Tor Browser
-        const onionMeta = document.createElement('meta');
-        onionMeta.setAttribute('http-equiv', 'onion-location');
-        onionMeta.setAttribute('content', onionAddress + window.location.pathname + window.location.search);
+    // Add Onion-Location header support
+    function addOnionLocationSupport() {
+        const onionAddress = 'http://fxyk2rjld5uqnkpqazbgt6w6yvq27vejjrg3brgtcdl3dm2bmq5c4nyd.onion';
         
-        // Check if meta tag doesn't already exist
-        if (!document.querySelector('meta[name="onion-location"]')) {
-            document.head.appendChild(onionMeta);
-        }
-        
-        // Add notification for Tor users
-        if (navigator.userAgent.includes('Tor')) {
-            setTimeout(() => {
-                showTorNotification(onionAddress);
-            }, 2000);
-        }
-    }
-}
-
-// Show Tor notification
-function showTorNotification(onionAddress) {
-    const notification = document.createElement('div');
-    notification.className = 'tor-notification';
-    notification.innerHTML = `
-        <div class="tor-icon">🧅</div>
-        <div class="tor-message">
-            <strong>Tor Browser Detected</strong><br>
-            <span>You can access this site via Tor at:</span><br>
-            <code>${onionAddress}</code>
-        </div>
-        <button class="tor-dismiss">×</button>
-    `;
-    
-    notification.querySelector('.tor-dismiss').addEventListener('click', () => {
-        notification.remove();
-    });
-    
-    document.body.appendChild(notification);
-    
-    // Auto-hide after 10 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.remove();
-        }
-    }, 10000);
-}
-
-// Register service worker
-async function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        try {
-            const registration = await navigator.serviceWorker.register('/sw.js', {
-                scope: '/' // Explicitly set scope
-            });
-            console.log('Service Worker registered successfully:', registration);
+        // Add onion address to page for Tor Browser detection
+        if (window.location.hostname === 'wraven.org' || window.location.hostname === 'www.wraven.org') {
+            // Create a hidden element with the onion address for Tor Browser
+            const onionMeta = document.createElement('meta');
+            onionMeta.setAttribute('http-equiv', 'onion-location');
+            onionMeta.setAttribute('content', onionAddress + window.location.pathname + window.location.search);
             
-            // Check if there's a waiting service worker
-            if (registration.waiting) {
-                console.log('Service Worker is waiting to activate');
-                showUpdateNotification();
+            // Check if meta tag doesn't already exist
+            if (!document.querySelector('meta[name="onion-location"]')) {
+                document.head.appendChild(onionMeta);
             }
             
-            // Listen for updates
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                if (newWorker) {
-                    console.log('New service worker installing...');
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // New version available
-                            console.log('New version available! Refresh to update.');
-                            showUpdateNotification();
-                        }
-                    });
-                }
-            });
-            
-        } catch (error) {
-            console.log('Service Worker registration failed:', error);
+            // Add notification for Tor users
+            if (navigator.userAgent.includes('Tor')) {
+                setTimeout(() => {
+                    showTorNotification(onionAddress);
+                }, 2000);
+            }
         }
-    } else {
-        console.log('Service Worker not supported');
     }
-}
 
-// Show update notification
-function showUpdateNotification() {
-    // Create a subtle notification
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
-        padding: 12px 16px;
-        border-radius: 6px;
-        border: 1px solid var(--accent-blue);
-        font-size: 14px;
-        z-index: 10000;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    `;
-    notification.innerHTML = `
-        <div style="margin-bottom: 8px;">🔄 New version available!</div>
-        <div style="font-size: 12px; color: var(--text-secondary);">Click to refresh</div>
-    `;
-    
-    notification.addEventListener('click', () => {
-        window.location.reload();
-    });
-    
-    document.body.appendChild(notification);
-    
-    // Auto-hide after 10 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
+    // Show Tor notification
+    function showTorNotification(onionAddress) {
+        const notification = document.createElement('div');
+        notification.className = 'tor-notification';
+        notification.innerHTML = `
+            <div class="tor-icon">🧅</div>
+            <div class="tor-message">
+                <strong>Tor Browser Detected</strong><br>
+                <span>You can access this site via Tor at:</span><br>
+                <code>${onionAddress}</code>
+            </div>
+            <button class="tor-dismiss">×</button>
+        `;
+        
+        notification.querySelector('.tor-dismiss').addEventListener('click', () => {
             notification.remove();
-        }
-    }, 10000);
-}
+        });
+        
+        document.body.appendChild(notification);
+        
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 10000);
+    }
 
-// Update threat feed timestamps
+    // Register service worker
+    async function registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js', {
+                    scope: '/' // Explicitly set scope
+                });
+                console.log('Service Worker registered successfully:', registration);
+                
+                // Check if there's a waiting service worker
+                if (registration.waiting) {
+                    console.log('Service Worker is waiting to activate');
+                    showUpdateNotification();
+                }
+                
+                // Listen for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    if (newWorker) {
+                        console.log('New service worker installing...');
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New version available
+                                console.log('New version available! Refresh to update.');
+                                showUpdateNotification();
+                            }
+                        });
+                    }
+                });
+                
+            } catch (error) {
+                console.log('Service Worker registration failed:', error);
+            }
+        } else {
+            console.log('Service Worker not supported');
+        }
+    }
+
+    // Show update notification
+    function showUpdateNotification() {
+        // Create a subtle notification
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--accent-blue);
+            font-size: 14px;
+            z-index: 10000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        `;
+        notification.innerHTML = `
+            <div style="margin-bottom: 8px;">🔄 New version available!</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Click to refresh</div>
+        `;
+        
+        notification.addEventListener('click', () => {
+            window.location.reload();
+        });
+        
+        document.body.appendChild(notification);
+        
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 10000);
+    }
+
+    // Update threat feed timestamps
 // Threat timestamps are now static dates in HTML - no need for dynamic updates
 // const updateThreatTimestamps = () => {
 //     // Timestamps are now static dates showing threat discovery dates
@@ -496,386 +492,386 @@ function showUpdateNotification() {
     
     // Add hover effects and interactions
     addInteractiveEffects();
-});
 
-// Get IP during loading (faster, simpler version)
-const getIPDuringLoading = async () => {
-    try {
-        // Use a fast, reliable IP service
-        const response = await fetch('https://api.ipify.org?format=json', {
-            signal: AbortSignal.timeout(3000) // 3 second timeout
-        });
-        const data = await response.json();
-        return data.ip || 'Unknown';
-    } catch (error) {
-        // Fallback to detecting from headers or using a mock
-        return 'Unavailable';
-    }
-};
-
-// Dashboard status check
-async function checkDashboardStatus() {
-    const feedStatus = document.querySelector('.feed-status');
-    
-    // Try multiple approaches to determine dashboard status
-    const checkMethods = [
-        // Method 1: Try GET request with CORS mode first
-        async () => {
-            const response = await fetch('https://dashboard.wraven.org', { 
-                method: 'GET',
-                signal: AbortSignal.timeout(8000), // 8 second timeout
-                redirect: 'follow' // Allow redirects
+    // Get IP during loading (faster, simpler version)
+    const getIPDuringLoading = async () => {
+        try {
+            // Use a fast, reliable IP service
+            const response = await fetch('https://api.ipify.org?format=json', {
+                signal: AbortSignal.timeout(3000) // 3 second timeout
             });
-            
-            // Check if response is successful and not a Cloudflare error page
-            if (response.ok) {
-                // For GET requests, we can check the content to detect Cloudflare error pages
-                const contentType = response.headers.get('content-type') || '';
+            const data = await response.json();
+            return data.ip || 'Unknown';
+        } catch (error) {
+            // Fallback to detecting from headers or using a mock
+            return 'Unavailable';
+        }
+    };
+
+    // Dashboard status check
+    async function checkDashboardStatus() {
+        const feedStatus = document.querySelector('.feed-status');
+        
+        // Try multiple approaches to determine dashboard status
+        const checkMethods = [
+            // Method 1: Try GET request with CORS mode first
+            async () => {
+                const response = await fetch('https://dashboard.wraven.org', { 
+                    method: 'GET',
+                    signal: AbortSignal.timeout(8000), // 8 second timeout
+                    redirect: 'follow' // Allow redirects
+                });
                 
-                // If it's HTML, check if it's a Cloudflare error page
-                if (contentType.includes('text/html')) {
-                    const text = await response.text();
-                    // Check for common Cloudflare error indicators
-                    if (text.includes('502 Bad gateway') || 
-                        text.includes('503 Service Temporarily Unavailable') ||
-                        text.includes('504 Gateway timeout') ||
-                        text.includes('cloudflare') && text.includes('error')) {
-                        return false;
+                // Check if response is successful and not a Cloudflare error page
+                if (response.ok) {
+                    // For GET requests, we can check the content to detect Cloudflare error pages
+                    const contentType = response.headers.get('content-type') || '';
+                    
+                    // If it's HTML, check if it's a Cloudflare error page
+                    if (contentType.includes('text/html')) {
+                        const text = await response.text();
+                        // Check for common Cloudflare error indicators
+                        if (text.includes('502 Bad gateway') || 
+                            text.includes('503 Service Temporarily Unavailable') ||
+                            text.includes('504 Gateway timeout') ||
+                            text.includes('cloudflare') && text.includes('error')) {
+                            return false;
+                        }
                     }
+                    return true;
                 }
+                return false;
+            },
+            
+            // Method 2: Fallback to HEAD request with no-cors
+            async () => {
+                const response = await fetch('https://dashboard.wraven.org', { 
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: AbortSignal.timeout(5000) // 5 second timeout
+                });
+                // If no-cors succeeds without throwing, assume it's reachable
                 return true;
             }
-            return false;
-        },
+        ];
         
-        // Method 2: Fallback to HEAD request with no-cors
-        async () => {
-            const response = await fetch('https://dashboard.wraven.org', { 
-                method: 'HEAD',
-                mode: 'no-cors',
-                signal: AbortSignal.timeout(5000) // 5 second timeout
-            });
-            // If no-cors succeeds without throwing, assume it's reachable
-            return true;
-        }
-    ];
-    
-    // Try each method in order
-    for (let i = 0; i < checkMethods.length; i++) {
-        try {
-            const result = await checkMethods[i]();
-            if (result === true) {
-                console.log(`Dashboard check method ${i + 1} succeeded`);
-                updateDashboardStatus(true);
-                return;
-            } else if (result === false) {
-                console.log(`Dashboard check method ${i + 1} detected error page`);
-                updateDashboardStatus(false);
-                return;
+        // Try each method in order
+        for (let i = 0; i < checkMethods.length; i++) {
+            try {
+                const result = await checkMethods[i]();
+                if (result === true) {
+                    console.log(`Dashboard check method ${i + 1} succeeded`);
+                    updateDashboardStatus(true);
+                    return;
+                } else if (result === false) {
+                    console.log(`Dashboard check method ${i + 1} detected error page`);
+                    updateDashboardStatus(false);
+                    return;
+                }
+            } catch (error) {
+                console.log(`Dashboard check method ${i + 1} failed:`, error.message);
+                // Continue to next method
             }
-        } catch (error) {
-            console.log(`Dashboard check method ${i + 1} failed:`, error.message);
-            // Continue to next method
         }
-    }
-    
-    // If all methods fail, dashboard is offline
-    console.log('All dashboard check methods failed');
-    updateDashboardStatus(false);
-}
-
-function updateDashboardStatus(isOnline) {
-    const feedStatus = document.querySelector('.feed-status');
-    if (feedStatus) {
-        if (isOnline) {
-            feedStatus.innerHTML = `
-                <span class="status-dot status-live"></span>
-                <a href="https://public.wraven.org" target="_blank" class="dashboard-link">WATCHTOWER Dashboard Online</a>
-            `;
-        } else {
-            feedStatus.innerHTML = `
-                <span class="status-dot status-offline"></span>
-                <a href="https://public.wraven.org" target="_blank" class="dashboard-link dashboard-offline">WATCHTOWER Dashboard Offline</a>
-            `;
-        }
-    }
-}
-
-// Add interactive effects
-const addInteractiveEffects = () => {
-    // Tool button clicks
-    const toolButtons = document.querySelectorAll('.tool-btn');
-    toolButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Add a brief flash effect
-            this.style.background = 'rgba(30, 144, 255, 0.1)';
-            setTimeout(() => {
-                this.style.background = '';
-            }, 200);
-            
-            console.log(`Accessing ${this.querySelector('.tool-name').textContent}...`);
-        });
-    });
-    
-    // Link button interactions
-    const linkButtons = document.querySelectorAll('.link-btn');
-    linkButtons.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Add visual feedback
-            this.style.background = 'rgba(30, 144, 255, 0.1)';
-            setTimeout(() => {
-                this.style.background = '';
-            }, 200);
-            
-            const linkText = this.querySelector('.link-text').textContent;
-            console.log(`Navigating to ${linkText}...`);
-            
-        });
-    });
-    
-    // WRAVEN info button interaction is now handled by setupWRAVENModal()
-    
-    // Threat item interactions
-    const threatItems = document.querySelectorAll('.threat-item');
-    threatItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Add selection effect
-            threatItems.forEach(t => t.classList.remove('selected'));
-            this.classList.add('selected');
-            
-            // Add a subtle pulse effect
-            this.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-            
-            const threatTitle = this.querySelector('.threat-title').textContent;
-            console.log(`Viewing details for: ${threatTitle}`);
-        });
-    });
-    
-    // Project card interactions
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const projectName = this.querySelector('.project-name').textContent;
-            console.log(`Opening project: ${projectName}`);
-            
-            // Add visual feedback
-            this.style.transform = 'translateY(-2px)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 200);
-        });
-    });
-};
-
-// Add selected state CSS
-const style = document.createElement('style');
-style.textContent = `
-    .threat-item.selected {
-        border-left-color: var(--accent-blue) !important;
-        background: rgba(30, 144, 255, 0.08) !important;
-    }
-    
-    .project-card:hover,
-    .tool-btn:hover,
-    .link-btn:hover {
-        transform: translateY(-1px);
-    }
-    
-    .access-btn:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-    }
-    
-    .pwa-notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
-        padding: 16px 20px;
-        border-radius: 8px;
-        border: 1px solid var(--accent-blue);
-        font-size: 14px;
-        z-index: 10000;
-        max-width: 300px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        animation: slideIn 0.3s ease-out;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    .pwa-notification .pwa-icon {
-        font-size: 24px;
-        flex-shrink: 0;
-    }
-    
-    .pwa-notification .pwa-message {
-        flex: 1;
-        line-height: 1.4;
-    }
-    
-    .pwa-notification .pwa-dismiss {
-        background: none;
-        border: none;
-        color: var(--text-secondary);
-        font-size: 18px;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 8px;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: all 0.2s ease;
-    }
-    
-    .pwa-notification .pwa-dismiss:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-primary);
-    }
-    
-    .pwa-install-btn {
-        background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 6px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        margin-left: 12px;
-    }
-    
-    .pwa-install-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
-    }
-    
-    .tor-notification {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
-        padding: 16px 20px;
-        border-radius: 8px;
-        border: 1px solid #ff6b35;
-        font-size: 14px;
-        z-index: 10000;
-        max-width: 400px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        animation: slideIn 0.3s ease-out;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    
-    .tor-notification .tor-icon {
-        font-size: 24px;
-        flex-shrink: 0;
-    }
-    
-    .tor-notification .tor-message {
-        flex: 1;
-        line-height: 1.4;
-    }
-    
-    .tor-notification .tor-message code {
-        background: rgba(255, 107, 53, 0.1);
-        color: #ff6b35;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
-        word-break: break-all;
-    }
-    
-    .tor-notification .tor-dismiss {
-        background: none;
-        border: none;
-        color: var(--text-secondary);
-        font-size: 18px;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 8px;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: all 0.2s ease;
-    }
-    
-    .tor-notification .tor-dismiss:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-primary);
-    }
-`;
-document.head.appendChild(style);
-
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    // Escape key to clear selections
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.threat-item.selected').forEach(item => {
-            item.classList.remove('selected');
-        });
-    }
-    
-    // Ctrl/Cmd + R to simulate refresh (prevent actual refresh)
-    if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
-        e.preventDefault();
-        console.log('Refreshing threat intelligence feeds...');
         
-        // Add a brief loading effect to threat items
+        // If all methods fail, dashboard is offline
+        console.log('All dashboard check methods failed');
+        updateDashboardStatus(false);
+    }
+
+    function updateDashboardStatus(isOnline) {
+        const feedStatus = document.querySelector('.feed-status');
+        if (feedStatus) {
+            if (isOnline) {
+                feedStatus.innerHTML = `
+                    <span class="status-dot status-live"></span>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">WATCHTOWER Dashboard Online</a>
+                `;
+            } else {
+                feedStatus.innerHTML = `
+                    <span class="status-dot status-offline"></span>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link dashboard-offline">WATCHTOWER Dashboard Offline</a>
+                `;
+            }
+        }
+    }
+
+    // Add interactive effects
+    const addInteractiveEffects = () => {
+        // Tool button clicks
+        const toolButtons = document.querySelectorAll('.tool-btn');
+        toolButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Add a brief flash effect
+                this.style.background = 'rgba(30, 144, 255, 0.1)';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 200);
+                
+                console.log(`Accessing ${this.querySelector('.tool-name').textContent}...`);
+            });
+        });
+        
+        // Link button interactions
+        const linkButtons = document.querySelectorAll('.link-btn');
+        linkButtons.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Add visual feedback
+                this.style.background = 'rgba(30, 144, 255, 0.1)';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 200);
+                
+                const linkText = this.querySelector('.link-text').textContent;
+                console.log(`Navigating to ${linkText}...`);
+                
+            });
+        });
+        
+        // WRAVEN info button interaction is now handled by setupWRAVENModal()
+        
+        // Threat item interactions
         const threatItems = document.querySelectorAll('.threat-item');
         threatItems.forEach(item => {
-            item.style.opacity = '0.5';
+            item.addEventListener('click', function() {
+                // Add selection effect
+                threatItems.forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Add a subtle pulse effect
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                const threatTitle = this.querySelector('.threat-title').textContent;
+                console.log(`Viewing details for: ${threatTitle}`);
+            });
         });
         
-        setTimeout(() => {
-            threatItems.forEach(item => {
-                item.style.opacity = '1';
-            });
-        }, 500);
-    }
-});
-
-// Add some subtle animations for status indicators
-const animateStatusIndicators = () => {
-    const statusDots = document.querySelectorAll('.status-dot');
-    
-    statusDots.forEach((dot, index) => {
-        if (dot.classList.contains('status-live')) {
-            // Pulse animation for live status
-            setInterval(() => {
-                dot.style.opacity = '0.4';
+        // Project card interactions
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const projectName = this.querySelector('.project-name').textContent;
+                console.log(`Opening project: ${projectName}`);
+                
+                // Add visual feedback
+                this.style.transform = 'translateY(-2px)';
                 setTimeout(() => {
-                    dot.style.opacity = '1';
-                }, 500);
-            }, 2000);
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    };
+
+    // Add selected state CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        .threat-item.selected {
+            border-left-color: var(--accent-blue) !important;
+            background: rgba(30, 144, 255, 0.08) !important;
+        }
+        
+        .project-card:hover,
+        .tool-btn:hover,
+        .link-btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .access-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .pwa-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-blue);
+            font-size: 14px;
+            z-index: 10000;
+            max-width: 300px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .pwa-notification .pwa-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .pwa-notification .pwa-message {
+            flex: 1;
+            line-height: 1.4;
+        }
+        
+        .pwa-notification .pwa-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 8px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .pwa-notification .pwa-dismiss:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .pwa-install-btn {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-left: 12px;
+        }
+        
+        .pwa-install-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+        }
+        
+        .tor-notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border: 1px solid #ff6b35;
+            font-size: 14px;
+            z-index: 10000;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tor-notification .tor-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .tor-notification .tor-message {
+            flex: 1;
+            line-height: 1.4;
+        }
+        
+        .tor-notification .tor-message code {
+            background: rgba(255, 107, 53, 0.1);
+            color: #ff6b35;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            word-break: break-all;
+        }
+        
+        .tor-notification .tor-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 8px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .tor-notification .tor-dismiss:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Escape key to clear selections
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.threat-item.selected').forEach(item => {
+                item.classList.remove('selected');
+            });
+        }
+        
+        // Ctrl/Cmd + R to simulate refresh (prevent actual refresh)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+            e.preventDefault();
+            console.log('Refreshing threat intelligence feeds...');
+            
+            // Add a brief loading effect to threat items
+            const threatItems = document.querySelectorAll('.threat-item');
+            threatItems.forEach(item => {
+                item.style.opacity = '0.5';
+            });
+            
+            setTimeout(() => {
+                threatItems.forEach(item => {
+                    item.style.opacity = '1';
+                });
+            }, 500);
         }
     });
-};
 
-// Initialize status animations after a delay
-setTimeout(animateStatusIndicators, 4000);
+    // Add some subtle animations for status indicators
+    const animateStatusIndicators = () => {
+        const statusDots = document.querySelectorAll('.status-dot');
+        
+        statusDots.forEach((dot, index) => {
+            if (dot.classList.contains('status-live')) {
+                // Pulse animation for live status
+                setInterval(() => {
+                    dot.style.opacity = '0.4';
+                    setTimeout(() => {
+                        dot.style.opacity = '1';
+                    }, 500);
+                }, 2000);
+            }
+        });
+    };
+
+    // Initialize status animations after a delay
+    setTimeout(animateStatusIndicators, 4000);
+});
