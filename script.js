@@ -489,9 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
             minute: '2-digit' 
         });
     };
-    
-    // Add hover effects and interactions
-    addInteractiveEffects();
 
     // Get IP during loading (faster, simpler version)
     const getIPDuringLoading = async () => {
@@ -510,73 +507,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Dashboard status check
     async function checkDashboardStatus() {
-        const feedStatus = document.querySelector('.feed-status');
-        
-        // Try multiple approaches to determine dashboard status
-        const checkMethods = [
-            // Method 1: Try GET request with CORS mode first
-            async () => {
-                const response = await fetch('https://dashboard.wraven.org', { 
-                    method: 'GET',
-                    signal: AbortSignal.timeout(8000), // 8 second timeout
-                    redirect: 'follow' // Allow redirects
-                });
-                
-                // Check if response is successful and not a Cloudflare error page
-                if (response.ok) {
-                    // For GET requests, we can check the content to detect Cloudflare error pages
-                    const contentType = response.headers.get('content-type') || '';
-                    
-                    // If it's HTML, check if it's a Cloudflare error page
-                    if (contentType.includes('text/html')) {
-                        const text = await response.text();
-                        // Check for common Cloudflare error indicators
-                        if (text.includes('502 Bad gateway') || 
-                            text.includes('503 Service Temporarily Unavailable') ||
-                            text.includes('504 Gateway timeout') ||
-                            text.includes('cloudflare') && text.includes('error')) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-                return false;
-            },
+        try {
+            // Try a GET request first to check for Cloudflare error pages
+            const response = await fetch('https://dashboard.wraven.org', { 
+                method: 'GET',
+                signal: AbortSignal.timeout(10000) // 10 second timeout
+            });
             
-            // Method 2: Fallback to HEAD request with no-cors
-            async () => {
-                const response = await fetch('https://dashboard.wraven.org', { 
-                    method: 'HEAD',
-                    mode: 'no-cors',
-                    signal: AbortSignal.timeout(5000) // 5 second timeout
-                });
-                // If no-cors succeeds without throwing, assume it's reachable
-                return true;
+            // If we get a response, check if it's a Cloudflare error page
+            if (response.ok || response.status >= 400) {
+                const text = await response.text();
+                
+                // Check for Cloudflare error page indicators
+                const isCloudflareError = 
+                    text.includes('502 Bad gateway') || 
+                    text.includes('503 Service Temporarily Unavailable') ||
+                    text.includes('504 Gateway timeout') ||
+                    text.includes('520 Web server is returning an unknown error') ||
+                    text.includes('521 Web server is down') ||
+                    text.includes('522 Connection timed out') ||
+                    text.includes('523 Origin is unreachable') ||
+                    text.includes('524 A timeout occurred') ||
+                    text.includes('525 SSL handshake failed') ||
+                    (text.includes('cloudflare') && text.includes('error')) ||
+                    text.includes('CF-RAY'); // Cloudflare ray ID present in error pages
+                
+                if (isCloudflareError) {
+                    console.log('Dashboard check detected Cloudflare error page - server is down');
+                    updateDashboardStatus(false);
+                } else {
+                    console.log('Dashboard check succeeded - server is reachable');
+                    updateDashboardStatus(true);
+                }
+                return;
             }
-        ];
-        
-        // Try each method in order
-        for (let i = 0; i < checkMethods.length; i++) {
-            try {
-                const result = await checkMethods[i]();
-                if (result === true) {
-                    console.log(`Dashboard check method ${i + 1} succeeded`);
+            
+        } catch (error) {
+            // If CORS blocks us, try the no-cors fallback
+            if (error.name === 'TypeError' && error.message.includes('CORS')) {
+                console.log('CORS blocked, trying no-cors fallback');
+                try {
+                    await fetch('https://dashboard.wraven.org', { 
+                        method: 'HEAD',
+                        mode: 'no-cors',
+                        signal: AbortSignal.timeout(8000)
+                    });
+                    // If no-cors succeeds, assume server is up (can't detect Cloudflare errors this way)
+                    console.log('Dashboard check (no-cors) succeeded - assuming server is reachable');
                     updateDashboardStatus(true);
                     return;
-                } else if (result === false) {
-                    console.log(`Dashboard check method ${i + 1} detected error page`);
-                    updateDashboardStatus(false);
-                    return;
+                } catch (noCorsError) {
+                    console.log('Dashboard check (no-cors) failed - server may be unreachable:', noCorsError.message);
                 }
-            } catch (error) {
-                console.log(`Dashboard check method ${i + 1} failed:`, error.message);
-                // Continue to next method
+            } else {
+                console.log('Dashboard check failed - server may be unreachable:', error.message);
             }
+            updateDashboardStatus(false);
         }
-        
-        // If all methods fail, dashboard is offline
-        console.log('All dashboard check methods failed');
-        updateDashboardStatus(false);
     }
 
     function updateDashboardStatus(isOnline) {
@@ -664,6 +651,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     };
+
+    // Add hover effects and interactions
+    addInteractiveEffects();
 
     // Add selected state CSS
     const style = document.createElement('style');
