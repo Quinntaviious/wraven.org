@@ -1,13 +1,19 @@
 /* Sponsor Bento Styles */
-.sponsor-list {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+.bento-box {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
 }
+
+.sponsor-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: center;
+}
+
 .sponsor-item {
     display: flex;
     flex-direction: column;
@@ -15,25 +21,77 @@
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 1rem 1.5rem;
-    min-width: 120px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+    text-align: center;
 }
+
+.sponsor-item:hover {
+    border-color: var(--accent-blue);
+    background: rgba(30, 144, 255, 0.05);
+    transform: translateY(-2px);
+}
+
 .sponsor-img {
     width: 48px;
     height: 48px;
     object-fit: contain;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     border-radius: 6px;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    padding: 4px;
 }
+
 .sponsor-name {
     font-family: var(--font-mono);
-    color: var(--accent-blue);
-    font-size: 1rem;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
     margin-top: 0.25rem;
+}
+
+/* Privacy & Tor Bento Styles */
+.privacy-tor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.tor-access, .privacy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-tertiary);
+    transition: all 0.2s ease;
     text-align: center;
+    font-weight: 500;
+}
+
+.tor-access:hover {
+    color: var(--accent-purple);
+    border-color: var(--accent-purple);
+    background: rgba(138, 43, 226, 0.1);
+    transform: translateY(-2px);
+}
+
+.privacy-btn:hover {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    background: rgba(30, 144, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.tor-icon, .privacy-icon {
+    font-size: 1.25rem;
 }
 /* CSS Reset and Base Styles */
 * {
@@ -337,6 +395,14 @@ body {
 
 .quick-links {
     grid-column: span 4;
+}
+
+.sponsor-bento {
+    grid-column: span 6;
+}
+
+.privacy-tor-bento {
+    grid-column: span 6;
 }
 
 /* Section Headers */
@@ -787,30 +853,6 @@ body {
     font-family: var(--font-mono);
 }
 
-.tor-access {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    text-decoration: none;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--bg-tertiary);
-    transition: all 0.2s ease;
-}
-
-.tor-access:hover {
-    color: var(--accent-purple);
-    border-color: var(--accent-purple);
-    background: rgba(138, 43, 226, 0.1);
-}
-
-.tor-icon {
-    font-size: 0.875rem;
-}
-
 /* Threat Loading Styles */
 .threat-loading {
     display: flex;
@@ -1041,6 +1083,16 @@ body {
         grid-template-columns: 1fr;
     }
     
+    .sponsor-list {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .privacy-tor {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
     .ctf-stats {
         grid-template-columns: 1fr;
     }
@@ -1105,6 +1157,28 @@ body {
     
     .header-left {
         text-align: center;
+    }
+    
+    .sponsor-item {
+        padding: 1rem;
+    }
+    
+    .sponsor-img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .sponsor-name {
+        font-size: 0.8rem;
+    }
+    
+    .tor-access, .privacy-btn {
+        padding: 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .tor-icon, .privacy-icon {
+        font-size: 1.1rem;
     }
     
     .logo-image {
