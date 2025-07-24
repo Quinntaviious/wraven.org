@@ -68,8 +68,8 @@ a.sponsor-item:hover {
 }
 
 .sponsor-img {
-    width: 64px;
-    height: 64px;
+    width: 96px;
+    height: 96px;
     object-fit: contain;
     margin-bottom: 0.75rem;
     border-radius: 6px;
@@ -87,6 +87,29 @@ a.sponsor-item:hover {
     line-height: 1.4;
     max-width: 220px;
     word-break: break-word;
+    position: relative;
+}
+
+.sponsor-title {
+    display: block;
+    font-weight: 600;
+}
+
+.sponsor-subtitle {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 0.25rem;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.sponsor-item:hover .sponsor-subtitle {
+    opacity: 1;
+    max-height: 3rem;
 }
 
 /* Privacy & Tor Bento Styles */
