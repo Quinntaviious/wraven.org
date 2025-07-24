@@ -48,6 +48,7 @@
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    flex-shrink: 1;
 }
 
 .sponsor-item:hover {
@@ -68,8 +69,9 @@ a.sponsor-item:hover {
 }
 
 .sponsor-img {
-    width: 96px;
-    height: 96px;
+    width: 80px;
+    height: auto;
+    max-height: 96px;
     object-fit: contain;
     margin-bottom: 0.75rem;
     border-radius: 6px;
@@ -88,11 +90,8 @@ a.sponsor-item:hover {
     max-width: 220px;
     text-align: center;
     word-break: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* or 1 if you want strict single-line */
-    -webkit-box-orient: vertical;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .sponsor-title {
@@ -112,9 +111,8 @@ a.sponsor-item:hover {
     position: relative;
     width: 100%;
     text-align: center;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .sponsor-item:hover .sponsor-subtitle {
