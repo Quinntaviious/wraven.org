@@ -45,6 +45,9 @@
     padding: 2rem 1.5rem;
     transition: all 0.2s ease;
     text-align: center;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .sponsor-item:hover {
@@ -53,9 +56,20 @@
     transform: translateY(-2px);
 }
 
+/* Ensure linked sponsor items maintain the same styles */
+a.sponsor-item {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.sponsor-item:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 .sponsor-img {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 64px;
     object-fit: contain;
     margin-bottom: 0.75rem;
     border-radius: 6px;
@@ -404,11 +418,11 @@ body {
 }
 
 .sponsor-bento {
-    grid-column: span 6;
+    grid-column: span 8;
 }
 
 .privacy-tor-bento {
-    grid-column: span 6;
+    grid-column: span 4;
 }
 
 /* Section Headers */
