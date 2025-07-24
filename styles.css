@@ -1,3 +1,21 @@
+:root {
+    --bg-primary: #0b0b0d;
+    --bg-secondary: #1a1a1d;
+    --bg-tertiary: #2a2a2d;
+    --text-primary: #ffffff;
+    --text-secondary: #b8b8b8;
+    --text-muted: #707070;
+    --accent-blue: #1e90ff;
+    --accent-orange: #fcbf49;
+    --accent-purple: #8a2be2;
+    --border-color: #333333;
+    --success: #00ff88;
+    --warning: #fcbf49;
+    --danger: #ff4757;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+}
+
 /* Sponsor Bento Styles */
 .bento-box {
     background: var(--bg-primary);
@@ -10,18 +28,21 @@
 .sponsor-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    align-items: center;
+    gap: 2rem;
+    align-items: stretch;
 }
 
 .sponsor-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.25rem;
+    border-radius: 12px;
+    min-height: 160px;
+    min-width: 0;
+    padding: 2rem 1.5rem;
     transition: all 0.2s ease;
     text-align: center;
 }
@@ -38,17 +59,20 @@
     object-fit: contain;
     margin-bottom: 0.75rem;
     border-radius: 6px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 4px;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
 .sponsor-name {
     font-family: var(--font-mono);
     color: var(--text-primary);
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 500;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    max-width: 220px;
+    word-break: break-word;
 }
 
 /* Privacy & Tor Bento Styles */
@@ -98,24 +122,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-:root {
-    --bg-primary: #0b0b0d;
-    --bg-secondary: #1a1a1d;
-    --bg-tertiary: #2a2a2d;
-    --text-primary: #ffffff;
-    --text-secondary: #b8b8b8;
-    --text-muted: #707070;
-    --accent-blue: #1e90ff;
-    --accent-orange: #fcbf49;
-    --accent-purple: #8a2be2;
-    --border-color: #333333;
-    --success: #00ff88;
-    --warning: #fcbf49;
-    --danger: #ff4757;
-    --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Inter', sans-serif;
 }
 
 body {
