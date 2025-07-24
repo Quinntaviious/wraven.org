@@ -147,10 +147,6 @@
                             <span class="status-dot status-live"></span>
                             <span>Intel Feed: Live</span>
                         </div>
-                        <div class="status-item">
-                            <span class="status-dot status-armed"></span>
-                            <span>CTF Status: On Break</span>
-                        </div>
                     </div>
                     <button class="access-btn" id="what-is-wraven-btn">What is WRAVEN?</button>
                 </div>
@@ -165,55 +161,58 @@
                     <h2>Threat Overview</h2>
                     <div class="feed-status">
                         <span class="status-dot status-live"></span>
-                        Checking Dashboard...
+                        Live updates…
                     </div>
                 </div>
                 <div class="threat-feed">
-                    <div class="threat-item">
-                        <div class="threat-indicator high"></div>
-                        <div class="threat-content">
-                            <div class="threat-title">Scattered Spider Lateral Movement Spike</div>
-                            <div class="threat-meta">T1078 | Surge in Okta and SaaS session hijacking activity</div>
-                            <div class="threat-footer">
-                                <div class="threat-tags">
-                                    <span class="tag tag-apt">SCATTERED-SPIDER</span>
-                                    <span class="tag tag-technique">T1078</span>
-                                    <span class="tag tag-saas">SaaS</span>
-                                </div>
-                                <div class="threat-time">July 14th</div>
-                            </div>
+                  <!-- The Com -->
+                  <div class="threat-item">
+                    <div class="threat-indicator high"></div>
+                    <div class="threat-content">
+                      <div class="threat-title">FBI alerts on “The Com” youth cyber‑crime network</div>
+                      <div class="threat-meta">SIM swaps, swatting, ransomware, and IRL attacks</div>
+                      <div class="threat-footer">
+                        <div class="threat-tags">
+                          <span class="tag tag-apt">THE‑COM</span>
+                          <span class="tag tag-technique">SOCENG</span>
+                          <span class="tag tag-ioc">SIM‑SWAP</span>
                         </div>
+                        <div class="threat-time">Jul 23</div>
+                      </div>
                     </div>
-                    <div class="threat-item">
-                        <div class="threat-indicator high"></div>
-                        <div class="threat-content">
-                            <div class="threat-title">Volt Typhoon Persistence Methods</div>
-                            <div class="threat-meta">T1059.001 | Living-off-the-land scripts in U.S. critical infrastructure</div>
-                            <div class="threat-footer">
-                                <div class="threat-tags">
-                                    <span class="tag tag-apt">VOLT-TYPHOON</span>
-                                    <span class="tag tag-technique">T1059</span>
-                                    <span class="tag tag-ioc">LOTL</span>
-                                </div>
-                                <div class="threat-time">July 10th</div>
-                            </div>
+                  </div>
+                  <!-- Interlock -->
+                  <div class="threat-item">
+                    <div class="threat-indicator high"></div>
+                    <div class="threat-content">
+                      <div class="threat-title">Joint FBI/CISA advisory on Interlock ransomware</div>
+                      <div class="threat-meta">T1041 | Data theft via SystemBC & PowerShell</div>
+                      <div class="threat-footer">
+                        <div class="threat-tags">
+                          <span class="tag tag-apt">INTERLOCK</span>
+                          <span class="tag tag-technique">T1041</span>
+                          <span class="tag tag-ioc">SystemBC</span>
                         </div>
+                        <div class="threat-time">Jul 22</div>
+                      </div>
                     </div>
-                    <div class="threat-item">
-                        <div class="threat-indicator medium"></div>
-                        <div class="threat-content">
-                            <div class="threat-title">Qilin Ransomware Hits U.S. Manufacturing</div>
-                            <div class="threat-meta">CISA Alert | Ongoing extortion targeting SMB industrial systems</div>
-                            <div class="threat-footer">
-                                <div class="threat-tags">
-                                    <span class="tag tag-apt">QILIN</span>
-                                    <span class="tag tag-technique">T1486</span>
-                                    <span class="tag tag-sector">MANUFACTURING</span>
-                                </div>
-                                <div class="threat-time">July 5th</div>
-                            </div>
+                  </div>
+                  <!-- UNC6148 -->
+                  <div class="threat-item">
+                    <div class="threat-indicator high"></div>
+                    <div class="threat-content">
+                      <div class="threat-title">UNC6148 exploiting SonicWall SMA</div>
+                      <div class="threat-meta">T1190 | OVERSTEP backdoor on end-of-life hardware</div>
+                      <div class="threat-footer">
+                        <div class="threat-tags">
+                          <span class="tag tag-apt">UNC6148</span>
+                          <span class="tag tag-technique">T1190</span>
+                          <span class="tag tag-ioc">OVERSTEP</span>
                         </div>
+                        <div class="threat-time">Jul 17</div>
+                      </div>
                     </div>
+                  </div>
                 </div>
             </section>
 
@@ -329,7 +328,7 @@
             <!-- Intel Tools -->
             <section class="grid-item intel-tools">
                 <div class="section-header">
-                    <h2>WRAVEN Intel Tools</h2>
+                    <h2>WRAVEN Public Tools</h2>
                 </div>
                 <div class="tools-grid">
                     <a href="https://public.wraven.org" target="_blank" class="tool-btn">
@@ -383,41 +382,6 @@
                 </div>
             </section>
 
-            <!-- Sponsors Bento -->
-            <section class="grid-item sponsor-bento">
-                <div class="section-header sponsor-header">
-                    <h2>Sponsors & Partners</h2>
-                    <button class="sponsor-interest-btn" onclick="window.open('mailto:contact@wraven.org?subject=Sponsorship%20Interest','_blank')">Become a Sponsor</button>
-                </div>
-                <div class="bento-box sponsors">
-                    <div class="sponsor-list">
-                        <div class="sponsor-item">
-                            <img src="/imgs/birdsquare.png" alt="Placeholder" class="sponsor-img">
-                            <span class="sponsor-name">
-                                <span class="sponsor-title">Your Organization?</span>
-                                <span class="sponsor-subtitle">We'd love your support</span>
-                            </span>
-                        </div>
-
-                        <a class="sponsor-item" href="https://hackclub.com/hcb" target="_blank" rel="noopener">
-                            <img src="/imgs/HCBicon.png" alt="HCB - The Hack Foundation" class="sponsor-img">
-                            <span class="sponsor-name">
-                                <span class="sponsor-title">HCB (Fiscal Sponsor)</span>
-                                <span class="sponsor-subtitle">The Hack Foundation "Hack Club"</span>
-                            </span>
-                        </a>
-
-                        <a class="sponsor-item" href="https://wmuwsa.org/allocations" target="_blank" rel="noopener">
-                            <img src="/imgs/WSAACicon.png" alt="WSAAC - Western Student Association Allocations Committee" class="sponsor-img">
-                            <span class="sponsor-name">
-                                <span class="sponsor-title">WSAAC</span>
-                                <span class="sponsor-subtitle">Western Student Association Allocations Committee</span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
             <!-- Privacy & Security Bento -->
             <section class="grid-item privacy-tor-bento">
                 <div class="section-header">
@@ -444,6 +408,41 @@
                         <span class="privacy-icon">🛠️</span>
                         <span>Security Policy</span>
                     </a>
+                </div>
+            </section>
+
+            <!-- Sponsors Bento -->
+            <section class="grid-item sponsor-bento">
+                <div class="section-header sponsor-header">
+                    <h2>Sponsors & Partners</h2>
+                    <button class="sponsor-</div>interest-btn" onclick="window.open('mailto:contact@wraven.org?subject=Sponsorship%20Interest','_blank')">Become a Sponsor</button>
+                </div>
+                <div class="bento-box sponsors">
+                    <div class="sponsor-list">
+                        <div class="sponsor-item">
+                            <img src="/imgs/birdsquare.png" alt="Placeholder" class="sponsor-img">
+                            <span class="sponsor-name">
+                                <span class="sponsor-title">Your Organization?</span>
+                                <span class="sponsor-subtitle">We'd love your support</span>
+                            </span>
+                        </div>
+
+                        <a class="sponsor-item" href="https://hackclub.com/hcb" target="_blank" rel="noopener">
+                            <img src="/imgs/HCBicon.png" alt="HCB - The Hack Foundation" class="sponsor-img">
+                            <span class="sponsor-name">
+                                <span class="sponsor-title">HCB (Fiscal Sponsor)</span>
+                            </a>    <span class="sponsor-subtitle">The Hack Foundation "Hack Club"</span>
+                            </span>
+                        </a>
+
+                        <a class="sponsor-item" href="https://wmuwsa.org/allocations" target="_blank" rel="noopener">
+                            <img src="/imgs/WSAACicon.png" alt="WSAAC - Western Student Association Allocations Committee" class="sponsor-img">
+                            <span class="sponsor-name">
+                                <span class="sponsor-title">WSAAC</span>
+                                <span class="sponsor-subtitle">Western Student Association Allocations Committee</span>
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </section>
         </main>
