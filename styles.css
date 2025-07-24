@@ -27,16 +27,17 @@
 
 .sponsor-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     align-items: stretch;
 }
 
 .sponsor-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 1rem;
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -44,7 +45,7 @@
     min-width: 0;
     padding: 2rem 1.5rem;
     transition: all 0.2s ease;
-    text-align: center;
+    text-align: left;
     text-decoration: none;
     color: inherit;
     cursor: pointer;
@@ -73,7 +74,7 @@ a.sponsor-item:hover {
     height: auto;
     max-height: 96px;
     object-fit: contain;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
     border-radius: 6px;
     background: none;
     border: none;
@@ -104,21 +105,12 @@ a.sponsor-item:hover {
     color: var(--text-muted);
     font-weight: 400;
     margin-top: 0.25rem;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    position: relative;
     width: 100%;
-    text-align: center;
+    text-align: left;
     white-space: normal;
     word-wrap: break-word;
 }
 
-.sponsor-item:hover .sponsor-subtitle {
-    opacity: 1;
-    max-height: 2rem;
-}
 
 /* Sponsor header button */
 .sponsor-header {
