@@ -88,6 +88,7 @@ a.sponsor-item:hover {
     max-width: 220px;
     word-break: break-word;
     position: relative;
+    min-height: 2.2em; /* Reserve space for subtitle, prevents shifting */
 }
 
 .sponsor-title {
@@ -105,11 +106,40 @@ a.sponsor-item:hover {
     max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.4em;
+    width: 100%;
+    pointer-events: none;
 }
 
 .sponsor-item:hover .sponsor-subtitle {
     opacity: 1;
     max-height: 3rem;
+}
+/* Sponsor header button */
+.sponsor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.sponsor-interest-btn {
+    background: var(--accent-blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4em 1em;
+    font-size: 0.95em;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(30,144,255,0.08);
+}
+.sponsor-interest-btn:hover {
+    background: var(--accent-blue-dark, #1a5fb4);
 }
 
 /* Privacy & Tor Bento Styles */
