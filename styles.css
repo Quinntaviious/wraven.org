@@ -78,6 +78,30 @@ body {
     border-radius: 8px;
     padding: 1.5rem;
 }
+/* Restore grid-area classes for main sections */
+.threat-overview {
+    grid-column: span 6;
+    grid-row: span 2;
+}
+.research-projects {
+    grid-column: span 6;
+    grid-row: span 2;
+}
+.ctf-operations {
+    grid-column: span 4;
+}
+.intel-tools {
+    grid-column: span 4;
+}
+.quick-links {
+    grid-column: span 4;
+}
+.sponsor-bento {
+    grid-column: span 8;
+}
+.privacy-tor-bento {
+    grid-column: span 4;
+}
 
 /* ------------------------------------------------------------------------
    4. Header & Navigation
@@ -908,6 +932,12 @@ a.sponsor-item:hover {
     .ctf-operations,
     .intel-tools,
     .quick-links {
+        grid-column: span 8;
+    }
+    .sponsor-bento {
+        grid-column: span 8;
+    }
+    .privacy-tor-bento {
         grid-column: span 8;
     }
 }
