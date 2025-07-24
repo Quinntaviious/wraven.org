@@ -1,3 +1,40 @@
+/* Sponsor Bento Styles */
+.sponsor-list {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.sponsor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.sponsor-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+.sponsor-name {
+    font-family: var(--font-mono);
+    color: var(--accent-blue);
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    text-align: center;
+}
 /* CSS Reset and Base Styles */
 * {
     margin: 0;
