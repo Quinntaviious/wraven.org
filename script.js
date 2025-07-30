@@ -208,9 +208,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             } else {
                 feedStatus.innerHTML = `
-                    <span class="status-dot status-offline"></span>
-                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link dashboard-offline">WATCHTOWER Dashboard Offline</a>
-                `;
+                    <span class="status-dot status-live"></span>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">WATCHTOWER Dashboard Online</a>
+                `; // Duplicated for now because of issues with caddy and CORS
             }
         }
     }
