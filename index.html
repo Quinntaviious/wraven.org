@@ -188,70 +188,74 @@
                 <span class="tag tag-phishing">PHISHING</span>
                 <span class="tag tag-sector">Telecom</span>
 
-            Date Format:
-                - Use short month and day (e.g., Jul 23)
+                Date Format:
+                    - Use short month and day (e.g., Jul 23)
 
-            You can freely mix and match tags as needed for each threat item.
-            -->
-            <section class="grid-item threat-overview">
-                <div class="section-header">
-                    <h2>Threat Overview</h2>
-                    <div class="feed-status">
-                        <span class="status-dot status-live"></span>
-                        Live updates…
-                    </div>
-                </div>
-                <div class="threat-feed">
-                  <!-- The Com -->
-                  <div class="threat-item">
-                    <div class="threat-indicator high"></div>
-                    <div class="threat-content">
-                      <div class="threat-title">FBI alerts on “The Com” youth cyber‑crime network</div>
-                      <div class="threat-meta">SIM swaps, swatting, ransomware, and IRL attacks</div>
-                      <div class="threat-footer">
-                        <div class="threat-tags">
-                          <span class="tag tag-apt">THE‑COM</span>
-                          <span class="tag tag-technique">SOCENG</span>
-                          <span class="tag tag-ioc">SIM‑SWAP</span>
+                You can freely mix and match tags as needed for each threat item.
+                -->
+                <section class="grid-item threat-overview">
+                    <div class="section-header">
+                        <h2>Threat Overview</h2>
+                        <div class="feed-status">
+                            <span class="status-dot status-live"></span>
+                            Live updates…
                         </div>
-                        <div class="threat-time">Jul 23</div>
-                      </div>
                     </div>
-                  </div>
-                  <!-- Interlock -->
-                  <div class="threat-item">
-                    <div class="threat-indicator high"></div>
-                    <div class="threat-content">
-                      <div class="threat-title">Joint FBI/CISA advisory on Interlock ransomware</div>
-                      <div class="threat-meta">T1041 | Data theft via SystemBC & PowerShell</div>
-                      <div class="threat-footer">
-                        <div class="threat-tags">
-                          <span class="tag tag-apt">INTERLOCK</span>
-                          <span class="tag tag-technique">T1041</span>
-                          <span class="tag tag-ioc">SystemBC</span>
+                    <div class="threat-feed">
+                        <!-- SonicWall SMA OVERSTEP -->
+                        <div class="threat-item">
+                            <div class="threat-indicator high"></div>
+                            <div class="threat-content"></div>
+                                <div class="threat-title">SonicWall SMA flaw and ongoing OVERSTEP activity</div>
+                                <div class="threat-meta">CVE-2025-40599 | Authenticated file upload on SMA 100; UNC6148 persists via OVERSTEP</div>
+                                <div class="threat-footer">
+                                    <div class="threat-tags">
+                                        <span class="tag tag-apt">UNC6148</span>
+                                        <span class="tag tag-cve">CVE-2025-40599</span>
+                                        <span class="tag tag-ioc">OVERSTEP</span>
+                                        <span class="tag tag-sector">VPN</span>
+                                    </div>
+                                    <div class="threat-time">Aug 18</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="threat-time">Jul 22</div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- UNC6148 -->
-                  <div class="threat-item">
-                    <div class="threat-indicator high"></div>
-                    <div class="threat-content">
-                      <div class="threat-title">UNC6148 exploiting SonicWall SMA</div>
-                      <div class="threat-meta">T1190 | OVERSTEP backdoor on end-of-life hardware</div>
-                      <div class="threat-footer">
-                        <div class="threat-tags">
-                          <span class="tag tag-apt">UNC6148</span>
-                          <span class="tag tag-technique">T1190</span>
-                          <span class="tag tag-ioc">OVERSTEP</span>
+
+                        <!-- Lazarus campaign -->
+                        <div class="threat-item">
+                            <div class="threat-indicator high"></div>
+                            <div class="threat-content">
+                                <div class="threat-title">Lazarus spear-phishing targets defense contractors</div>
+                                <div class="threat-meta">T1566 | MalDoc lures deliver custom RAT via job-themed emails</div>
+                                <div class="threat-footer">
+                                    <div class="threat-tags"></div>
+                                        <span class="tag tag-apt">LAZARUS</span>
+                                        <span class="tag tag-technique">T1566</span>
+                                        <span class="tag tag-malware">RAT</span>
+                                        <span class="tag tag-sector">Defense</span>
+                                    </div>
+                                    <div class="threat-time">Aug 14</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="threat-time">Jul 17</div>
-                      </div>
+
+                        <!-- Microsoft Patch Tuesday -->
+                        <div class="threat-item">
+                            <div class="threat-indicator high"></div>
+                            <div class="threat-content">
+                                <div class="threat-title">Microsoft August fixes Kerberos zero-day</div>
+                                <div class="threat-meta">CVE-2025-53779 | Privilege escalation via Kerberos attributes</div>
+                                <div class="threat-footer">
+                                    <div class="threat-tags">
+                                        <span class="tag tag-cve">CVE-2025-53779</span>
+                                        <span class="tag tag-technique">PrivEsc</span>
+                                        <span class="tag tag-saas">AD</span>
+                                    </div>
+                                    <div class="threat-time">Aug 12</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-            </section>
+                </section>
 
             <!-- Active Research Projects -->
             <section class="grid-item research-projects">
