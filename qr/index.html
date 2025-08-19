@@ -2,7 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=de    <section cla    <section class="about">
+      <h2 class="section-title">What is WRAVEN?</h2>
+      <div class="about-content">
+        <p>WRAVEN (Western Research Advisory for Vulnerabilities, Exploits, &amp; Networks) is Western Michigan University's premier cybersecurity nonprofit and student organization. We teach ethical hacking &amp; defending, run workshops and labs, compete as ECX Inc., publish research, and collaborate with nonprofits and small businesses to strengthen our community's security.</p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Active Members</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100+</span>
+            <span class="stat-label">CTF Competitions</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">25+</span>
+            <span class="stat-label">Research Papers</span>
+          </div>
+        </div>
+      </div>
+    </section>tips" aria-labelledby="tips-title">
+      <h2 id="tips-title" class="section-title">QR Safety Tips</h2>
+      <div class="tips-grid">
+        <div class="tip"><strong>Check the domain.</strong> Tap-and-hold to preview the full URL. Watch for typos and weird subdomains.</div>
+        <div class="tip"><strong>Look for HTTPS + known brand.</strong> Don't sign in on sites you don't recognize.</div>
+        <div class="tip"><strong>Avoid installing apps from QR codes.</strong> Go to the official app store instead.</div>
+        <div class="tip"><strong>When in doubt, don't submit.</strong> Close the page; find the destination manually.</div>
+      </div>
+    </section>dth, initial-scale=1.0" />
   <meta name="author" content="WRAVEN" />
   <title>WRAVEN | You scanned a QR code — Stay sharp</title>
   <meta name="description" content="Quick QR-safety tips from WRAVEN plus how to get involved: join the Discord, sign up on ExperienceWMU, read research, and support our work." />
@@ -51,17 +78,58 @@
       <div class="hero-grid">
         <div>
           <h1 class="hero-title">Ask us about hacking.</h1>
-          <p class="hero-sub">We teach ethical hacking and defense through hands‑on training, CTFs, and real threat research. We also partner with campus orgs, nonprofits, and small businesses to raise their security baseline. Below are quick QR-safety checks, then ways to plug into WRAVEN.</p>
+          <p class="hero-sub">We teach ethical hacking and defense through hands‑on training, CTFs, and real threat research. We also partner with campus orgs, nonprofits, and small businesses to raise their security baseline.</p>
           <div class="caution" role="note" aria-label="QR safety note">
-            ⚠️ Be cautious: Attackers use QR codes to drive credential theft and malware installs.
+            <span class="caution-icon">⚠️</span>
+            <span>Be cautious: Attackers use QR codes to drive credential theft and malware installs.</span>
           </div>
         </div>
         <div class="scan-card" aria-hidden="true">
           <div class="scan-frame">
             <div class="scan-line"></div>
-            <div class="qr-icon">▩</div>
+            <div class="qr-icon">
+              <div class="qr-squares">
+                <div class="qr-square"></div>
+                <div class="qr-square"></div>
+                <div class="qr-square"></div>
+                <div class="qr-square"></div>
+                <div class="qr-square"></div>
+                <div class="qr-square"></div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Primary CTAs for mobile users -->
+    <section class="primary-actions" aria-labelledby="primary-title">
+      <h2 id="primary-title" class="section-title">Get Connected</h2>
+      <div class="primary-grid">
+        <a class="primary-cta discord-cta" href="https://discord.gg/uYkvSU8DHy?src=qr" target="_blank" rel="noopener">
+          <div class="cta-icon">💬</div>
+          <div class="cta-content">
+            <span class="cta-label">Join Discord</span>
+            <span class="cta-note">Chat, events, and learning</span>
+          </div>
+          <div class="cta-arrow">→</div>
+        </a>
+        <a class="primary-cta site-cta" href="https://wraven.org/?src=qr">
+          <div class="cta-icon">🏠</div>
+          <div class="cta-content">
+            <span class="cta-label">Main Site</span>
+            <span class="cta-note">Full info & dashboard</span>
+          </div>
+          <div class="cta-arrow">→</div>
+        </a>
+        <a class="primary-cta blog-cta" href="https://blog.wraven.org/?src=qr" target="_blank" rel="noopener">
+          <div class="cta-icon">📖</div>
+          <div class="cta-content">
+            <span class="cta-label">Research Blog</span>
+            <span class="cta-note">Case studies & threat intel</span>
+          </div>
+          <div class="cta-arrow">→</div>
+        </a>
       </div>
     </section>
 
@@ -78,43 +146,61 @@
       <p>WRAVEN (Western Research Advisory for Vulnerabilities, Exploits, &amp; Networks) is Western Michigan University’s premier cybersecurity nonprofit and student organization. We teach ethical hacking &amp; defending, run workshops and labs, compete as ECX Inc., publish research, and collaborate with nonprofits and small businesses to strengthen our community’s security.</p>
     </section>
 
-    <section class="tips" aria-labelledby="programs-title">
-      <h2 id="programs-title" style="position:absolute;left:-9999px;">Programs snapshot</h2>
-      <div class="tip"><strong>Hands‑on Workshops.</strong> Beginner to advanced labs on web, cloud, forensics, reversing, and defense.</div>
-      <div class="tip"><strong>CTF Team — ECX Inc.</strong> Learn fast by doing. Compete with us and build practical skills.</div>
-      <div class="tip"><strong>Research &amp; Publishing.</strong> Track active threats, writeups, and build public tools.</div>
-      <div class="tip"><strong>Community Defense.</strong> Partner with student orgs, nonprofits, and small businesses.</div>
+    <section class="programs" aria-labelledby="programs-title">
+      <h2 id="programs-title" class="section-title">Programs Snapshot</h2>
+      <div class="programs-grid">
+        <div class="program-card">
+          <div class="program-icon">🛠️</div>
+          <div class="program-content">
+            <h3>Hands‑on Workshops</h3>
+            <p>Beginner to advanced labs on web, cloud, forensics, reversing, and defense.</p>
+          </div>
+        </div>
+        <div class="program-card">
+          <div class="program-icon">🏆</div>
+          <div class="program-content">
+            <h3>CTF Team — ECX Inc.</h3>
+            <p>Learn fast by doing. Compete with us and build practical skills.</p>
+          </div>
+        </div>
+        <div class="program-card">
+          <div class="program-icon">📊</div>
+          <div class="program-content">
+            <h3>Research &amp; Publishing</h3>
+            <p>Track active threats, writeups, and build public tools.</p>
+          </div>
+        </div>
+        <div class="program-card">
+          <div class="program-icon">🛡️</div>
+          <div class="program-content">
+            <h3>Community Defense</h3>
+            <p>Partner with student orgs, nonprofits, and small businesses.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="cta-grid" aria-labelledby="cta-title">
-      <h2 id="cta-title" style="position:absolute;left:-9999px;">Get involved</h2>
-      <a class="cta" href="https://discord.gg/uYkvSU8DHy?src=qr" target="_blank" rel="noopener">
-        <span class="label">Join the Discord</span>
-        <span class="note">Meet members, get event updates, and start learning.</span>
-      </a>
-      <a class="cta" href="https://experiencewmu.wmich.edu/organization/wraven?src=qr" target="_blank" rel="noopener">
-        <span class="label">Join on ExperienceWMU</span>
-        <span class="note">Become a member of the registered organization.</span>
-      </a>
-      <a class="cta" href="https://blog.wraven.org/?src=qr" target="_blank" rel="noopener">
-        <span class="label">Read the Research Blog</span>
-        <span class="note">Case studies, techniques, threat intel.</span>
-      </a>
-      <a class="cta" href="https://hcb.hackclub.com/donations/start/wraven?src=qr" target="_blank" rel="noopener">
-        <span class="label">Support the Mission</span>
-        <span class="note">Tax-deductible donations via our fiscal sponsor.</span>
-      </a>
-      <a class="cta" href="mailto:contact@wraven.org?subject=Workshop%20Request%20(from%20QR)&body=Hi%20WRAVEN%2C%0A%0AWe'd%20like%20to%20host%20a%20workshop%20on%20%5Btopic%5D%20for%20our%20%5Bgroup%2Forg%5D.%20Potential%20dates%3A%20%5Bdates%5D.%20Audience%20level%3A%20%5Bbeginner%2Fmixed%2Fadvanced%5D.%0A%0AThanks!" rel="noopener">
-        <span class="label">Invite a Workshop</span>
-        <span class="note">We’ll tailor content for your group or class.</span>
-      </a>
-      <a class="cta" href="mailto:contact@wraven.org?subject=Partnership%20Inquiry%20(from%20QR)&body=Hi%20WRAVEN%2C%0A%0AWe'd%20like%20to%20partner%20with%20you%20(%5Bnonprofit%20%2F%20small%20business%20%2F%20campus%20org%5D).%20What%20we're%20looking%20for%3A%20%5Btraining%20%2F%20threat%20review%20%2F%20CTF%20collab%20%2F%20other%5D.%0A%0AThanks!" rel="noopener">
-        <span class="label">Partner with WRAVEN</span>
-        <span class="note">Nonprofits &amp; small orgs welcome.</span>
-      </a>
-    </section>
-
-    <p class="footnote">We don’t collect personal data on this page. Questions? contact@wraven.org</p>
+    <section class="secondary-actions" aria-labelledby="secondary-title">
+      <h2 id="secondary-title" class="section-title">Get Involved</h2>
+      <div class="secondary-grid">
+        <a class="secondary-cta" href="https://experiencewmu.wmich.edu/organization/wraven?src=qr" target="_blank" rel="noopener">
+          <span class="label">Join on ExperienceWMU</span>
+          <span class="note">Become a member of the registered organization</span>
+        </a>
+        <a class="secondary-cta" href="https://hcb.hackclub.com/donations/start/wraven?src=qr" target="_blank" rel="noopener">
+          <span class="label">Support the Mission</span>
+          <span class="note">Tax-deductible donations via our fiscal sponsor</span>
+        </a>
+        <a class="secondary-cta" href="mailto:contact@wraven.org?subject=Workshop%20Request%20(from%20QR)&body=Hi%20WRAVEN%2C%0A%0AWe'd%20like%20to%20host%20a%20workshop%20on%20%5Btopic%5D%20for%20our%20%5Bgroup%2Forg%5D.%20Potential%20dates%3A%20%5Bdates%5D.%20Audience%20level%3A%20%5Bbeginner%2Fmixed%2Fadvanced%5D.%0A%0AThanks!" rel="noopener">
+          <span class="label">Invite a Workshop</span>
+          <span class="note">We'll tailor content for your group or class</span>
+        </a>
+        <a class="secondary-cta" href="mailto:contact@wraven.org?subject=Partnership%20Inquiry%20(from%20QR)&body=Hi%20WRAVEN%2C%0A%0AWe'd%20like%20to%20partner%20with%20you%20(%5Bnonprofit%20%2F%20small%20business%20%2F%20campus%20org%5D).%20What%20we're%20looking%20for%3A%20%5Btraining%20%2F%20threat%20review%20%2F%20CTF%20collab%20%2F%20other%5D.%0A%0AThanks!" rel="noopener">
+          <span class="label">Partner with WRAVEN</span>
+          <span class="note">Nonprofits &amp; small orgs welcome</span>
+        </a>
+      </div>
+    </section>    <p class="footnote">We don’t collect personal data on this page. Questions? contact@wraven.org</p>
   </main>
 
 </body>

@@ -1090,7 +1090,7 @@ a.sponsor-item:hover {
 }
 
 /* ------------------------------------------------------------------------
-   16. QR Landing Page Styles (scoped)
+   16. QR Landing Page Styles (Enhanced with animations)
    ------------------------------------------------------------------------ */
 .qr-page .qr-hero {
     position: relative;
@@ -1153,10 +1153,37 @@ a.sponsor-item:hover {
     50% { top: 85%; }
     100% { top: -10%; }
 }
+
+/* Enhanced QR Icon Animation */
 .qr-page .qr-icon {
     font-size: 3rem;
     opacity: 0.7;
 }
+.qr-page .qr-squares {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    width: 60px;
+    height: 60px;
+}
+.qr-page .qr-square {
+    background: var(--text-primary);
+    border-radius: 2px;
+    opacity: 0.6;
+    animation: qrPulse 2s ease-in-out infinite;
+}
+.qr-page .qr-square:nth-child(1) { animation-delay: 0s; }
+.qr-page .qr-square:nth-child(2) { animation-delay: 0.2s; }
+.qr-page .qr-square:nth-child(3) { animation-delay: 0.4s; }
+.qr-page .qr-square:nth-child(4) { animation-delay: 0.6s; }
+.qr-page .qr-square:nth-child(5) { animation-delay: 0.8s; }
+.qr-page .qr-square:nth-child(6) { animation-delay: 1s; }
+
+@keyframes qrPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
 .qr-page .caution {
     display: flex;
     align-items: center;
@@ -1169,17 +1196,117 @@ a.sponsor-item:hover {
     margin: 1rem 0 0.25rem;
     font-family: var(--font-mono);
 }
-.qr-page .tips,
-.qr-page .about,
-.qr-page .cta-grid {
-    max-width: 1100px;
-    margin: 0 auto;
+.qr-page .caution-icon {
+    animation: cautionPulse 2s ease-in-out infinite;
 }
-.qr-page .tips {
+@keyframes cautionPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Section Titles */
+.qr-page .section-title {
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Primary Action Buttons (Large, Mobile-First) */
+.qr-page .primary-actions {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.qr-page .primary-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
-    margin: 1.25rem auto 2rem;
+    margin-bottom: 1rem;
+}
+.qr-page .primary-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 80px;
+}
+.qr-page .primary-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30,144,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+.qr-page .primary-cta:hover::before {
+    left: 100%;
+}
+.qr-page .primary-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30,144,255,0.2);
+}
+.qr-page .discord-cta:hover {
+    border-color: #5865f2;
+    background: rgba(88,101,242,0.05);
+}
+.qr-page .site-cta:hover {
+    border-color: var(--accent-blue);
+    background: rgba(30,144,255,0.05);
+}
+.qr-page .blog-cta:hover {
+    border-color: var(--accent-purple);
+    background: rgba(138,43,226,0.05);
+}
+.qr-page .cta-icon {
+    font-size: 2rem;
+    min-width: 50px;
+    text-align: center;
+}
+.qr-page .cta-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.qr-page .cta-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+.qr-page .cta-note {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+.qr-page .cta-arrow {
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+    transition: transform 0.3s ease;
+}
+.qr-page .primary-cta:hover .cta-arrow {
+    transform: translateX(5px);
+}
+
+/* Tips Grid */
+.qr-page .tips {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.qr-page .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
 }
 .qr-page .tip {
     background: var(--bg-secondary);
@@ -1188,52 +1315,168 @@ a.sponsor-item:hover {
     padding: 1rem;
     color: var(--text-secondary);
     font-size: 0.95rem;
+    transition: transform 0.2s ease;
+}
+.qr-page .tip:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-blue);
 }
 .qr-page .tip strong { color: var(--text-primary); }
+
+/* About Section */
 .qr-page .about {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1100px;
+}
+.qr-page .about-content p { 
+    color: var(--text-secondary); 
     margin-bottom: 1.5rem;
 }
-.qr-page .about h2 {
-    color: var(--accent-blue);
-    font-family: var(--font-mono);
-    margin-bottom: 0.5rem;
-}
-.qr-page .about p { color: var(--text-secondary); }
-.qr-page .cta-grid {
+.qr-page .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    margin-bottom: 2rem;
+    text-align: center;
 }
-.qr-page .cta {
+.qr-page .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+.qr-page .stat-number {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    margin-bottom: 0.25rem;
+}
+.qr-page .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Programs Grid */
+.qr-page .programs {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.qr-page .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+.qr-page .program-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.qr-page .program-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30,144,255,0.05), transparent);
+    transition: left 0.5s ease;
+}
+.qr-page .program-card:hover::before {
+    left: 100%;
+}
+.qr-page .program-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-blue);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+.qr-page .program-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+.qr-page .program-content h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.qr-page .program-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Secondary Actions */
+.qr-page .secondary-actions {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.qr-page .secondary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+.qr-page .secondary-cta {
     text-decoration: none;
     background: var(--bg-tertiary);
-    border: 1px solid transparent;
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 1rem 1.25rem;
     color: var(--text-primary);
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     min-height: 92px;
+    position: relative;
+    overflow: hidden;
 }
-.qr-page .cta:hover {
+.qr-page .secondary-cta::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-blue);
+    transition: width 0.3s ease;
+}
+.qr-page .secondary-cta:hover::before {
+    width: 100%;
+}
+.qr-page .secondary-cta:hover {
     border-color: var(--accent-blue);
     background: rgba(30,144,255,0.06);
     transform: translateY(-1px);
 }
-.qr-page .cta .label { font-size: 0.95rem; }
-.qr-page .cta .note { color: var(--text-muted); font-size: 0.8rem; }
+.qr-page .secondary-cta .label { 
+    font-size: 0.95rem; 
+    font-weight: 500;
+}
+.qr-page .secondary-cta .note { 
+    color: var(--text-muted); 
+    font-size: 0.8rem; 
+}
+
 .qr-page .footnote {
     text-align: center;
     color: var(--text-muted);
     font-size: 0.9rem;
-    margin: 1rem auto 2rem;
+    margin: 2rem auto;
+    max-width: 1100px;
 }
 .qr-page header.qr-header {
     max-width: 1100px;
@@ -1257,18 +1500,46 @@ a.sponsor-item:hover {
     border: 1px solid var(--border-color);
     padding: 0.4rem 0.7rem;
     border-radius: 6px;
+    transition: all 0.2s ease;
 }
 .qr-page .qr-nav a:hover {
     color: var(--accent-blue);
     border-color: var(--accent-blue);
 }
 
+/* Responsive Design */
+@media (min-width: 768px) {
+    .qr-page .primary-grid { 
+        grid-template-columns: repeat(3, 1fr); 
+    }
+    .qr-page .stats-grid { 
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
 @media (max-width: 900px) {
     .qr-page .hero-grid { grid-template-columns: 1fr; }
-    .qr-page .tips { grid-template-columns: 1fr 1fr; }
-    .qr-page .cta-grid { grid-template-columns: 1fr 1fr; }
+    .qr-page .primary-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+    .qr-page .stats-grid { 
+        grid-template-columns: 1fr; 
+    }
+    .qr-page .qr-hero {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+    .qr-page .scan-frame {
+        height: 180px;
+    }
+    .qr-page .primary-cta {
+        padding: 1.25rem;
+    }
+    .qr-page .cta-label {
+        font-size: 1.1rem;
+    }
 }
 @media (max-width: 520px) {
-    .qr-page .tips { grid-template-columns: 1fr; }
-    .qr-page .cta-grid { grid-template-columns: 1fr; }
+    .qr-page .secondary-grid { grid-template-columns: 1fr; }
+    .qr-page .programs-grid { grid-template-columns: 1fr; }
+    .qr-page .tips-grid { grid-template-columns: 1fr; }
 }
