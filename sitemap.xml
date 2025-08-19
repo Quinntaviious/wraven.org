@@ -55,6 +55,12 @@
         <changefreq>monthly</changefreq>
     </url>
     <url>
+        <loc>https://wraven.org/qr/</loc>
+        <lastmod>2025-08-19</lastmod>
+        <priority>0.7</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
         <loc>https://github.com/WRAVENproject</loc>
         <lastmod>2025-07-21</lastmod>
         <priority>0.5</priority>

@@ -203,9 +203,7 @@ body {
     border-color: var(--accent-blue);
     color: var(--accent-blue);
 }
-.donate-btn {
-    /* Extra styling for donate button if needed */
-}
+/* .donate-btn available for future customization */
 
 /* ------------------------------------------------------------------------
    5. Section Headers & Utility Badges
@@ -642,7 +640,7 @@ a.sponsor-item:hover {
     align-items: flex-start;
     gap: 0.25rem;
 }
-.sponsor-title {}
+/* .sponsor-title inherits parent styles */
 .sponsor-subtitle {
     font-size: 0.8rem;
     color: var(--text-muted);
@@ -856,8 +854,7 @@ a.sponsor-item:hover {
     align-items: center;
     gap: 1.5rem;
 }
-.footer-center {}
-.footer-right {}
+/* footer center/right containers inherit layout */
 .system-status {
     display: flex;
     align-items: center;
@@ -913,9 +910,7 @@ a.sponsor-item:hover {
     opacity: 0;
     visibility: hidden;
 }
-.primary {
-    /* Used for primary buttons/links */
-}
+/* .primary utility reserved for future use */
 .dashboard-link {
     color: inherit;
     text-decoration: none;
@@ -1092,4 +1087,188 @@ a.sponsor-item:hover {
 @keyframes pulse {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
+}
+
+/* ------------------------------------------------------------------------
+   16. QR Landing Page Styles (scoped)
+   ------------------------------------------------------------------------ */
+.qr-page .qr-hero {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(1200px 500px at 10% 0%, rgba(30,144,255,0.15), transparent 50%),
+                radial-gradient(800px 400px at 90% 10%, rgba(138,43,226,0.12), transparent 50%),
+                var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.25rem;
+    margin: 1.5rem auto 2rem;
+    max-width: 1100px;
+}
+.qr-page .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    align-items: center;
+}
+.qr-page .hero-title {
+    font-family: var(--font-mono);
+    font-size: clamp(1.6rem, 2vw + 1rem, 2.2rem);
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+.qr-page .hero-sub {
+    color: var(--text-secondary);
+    max-width: 60ch;
+}
+.qr-page .scan-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+.qr-page .scan-frame {
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 8px;
+    height: 220px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+.qr-page .scan-line {
+    position: absolute;
+    top: -20%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+    box-shadow: 0 0 12px rgba(30,144,255,0.6);
+    animation: sweep 3.2s linear infinite;
+    opacity: 0.8;
+}
+@keyframes sweep {
+    0% { top: -10%; }
+    50% { top: 85%; }
+    100% { top: -10%; }
+}
+.qr-page .qr-icon {
+    font-size: 3rem;
+    opacity: 0.7;
+}
+.qr-page .caution {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(252,191,73,0.12);
+    border: 1px solid rgba(252,191,73,0.4);
+    color: var(--accent-orange);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0 0.25rem;
+    font-family: var(--font-mono);
+}
+.qr-page .tips,
+.qr-page .about,
+.qr-page .cta-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.qr-page .tips {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.25rem auto 2rem;
+}
+.qr-page .tip {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+.qr-page .tip strong { color: var(--text-primary); }
+.qr-page .about {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.qr-page .about h2 {
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    margin-bottom: 0.5rem;
+}
+.qr-page .about p { color: var(--text-secondary); }
+.qr-page .cta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.qr-page .cta {
+    text-decoration: none;
+    background: var(--bg-tertiary);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    min-height: 92px;
+}
+.qr-page .cta:hover {
+    border-color: var(--accent-blue);
+    background: rgba(30,144,255,0.06);
+    transform: translateY(-1px);
+}
+.qr-page .cta .label { font-size: 0.95rem; }
+.qr-page .cta .note { color: var(--text-muted); font-size: 0.8rem; }
+.qr-page .footnote {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 1rem auto 2rem;
+}
+.qr-page header.qr-header {
+    max-width: 1100px;
+    margin: 1rem auto 0;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.qr-page .qr-brand { display: flex; align-items: center; gap: 0.75rem; }
+.qr-page .qr-brand img { height: 28px; width: auto; }
+.qr-page .qr-brand span {
+    font-family: var(--font-mono);
+    color: var(--accent-blue);
+    letter-spacing: 0.06em;
+}
+.qr-page .qr-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+}
+.qr-page .qr-nav a:hover {
+    color: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+@media (max-width: 900px) {
+    .qr-page .hero-grid { grid-template-columns: 1fr; }
+    .qr-page .tips { grid-template-columns: 1fr 1fr; }
+    .qr-page .cta-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+    .qr-page .tips { grid-template-columns: 1fr; }
+    .qr-page .cta-grid { grid-template-columns: 1fr; }
 }
