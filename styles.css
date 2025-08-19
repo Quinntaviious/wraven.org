@@ -1092,6 +1092,10 @@ a.sponsor-item:hover {
 /* ------------------------------------------------------------------------
    16. QR Landing Page Styles (Enhanced with animations)
    ------------------------------------------------------------------------ */
+.qr-page {
+    position: relative;
+    z-index: 1;
+}
 .qr-page .qr-hero {
     position: relative;
     overflow: hidden;
@@ -1136,22 +1140,24 @@ a.sponsor-item:hover {
     display: grid;
     place-items: center;
     position: relative;
+    overflow: hidden;
 }
 .qr-page .scan-line {
     position: absolute;
-    top: -20%;
+    top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
     box-shadow: 0 0 12px rgba(30,144,255,0.6);
     animation: sweep 3.2s linear infinite;
     opacity: 0.8;
+    z-index: 1;
 }
 @keyframes sweep {
-    0% { top: -10%; }
-    50% { top: 85%; }
-    100% { top: -10%; }
+    0% { transform: translateY(-10px); }
+    50% { transform: translateY(200px); }
+    100% { transform: translateY(-10px); }
 }
 
 /* Enhanced QR Icon Animation */
@@ -1486,6 +1492,9 @@ a.sponsor-item:hover {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    position: relative;
+    z-index: 10;
+    background: transparent;
 }
 .qr-page .qr-brand { display: flex; align-items: center; gap: 0.75rem; }
 .qr-page .qr-brand img { height: 28px; width: auto; }
@@ -1531,12 +1540,20 @@ a.sponsor-item:hover {
     .qr-page .scan-frame {
         height: 180px;
     }
+    .qr-page .scan-line {
+        animation: sweep-mobile 3.2s linear infinite;
+    }
     .qr-page .primary-cta {
         padding: 1.25rem;
     }
     .qr-page .cta-label {
         font-size: 1.1rem;
     }
+}
+@keyframes sweep-mobile {
+    0% { transform: translateY(-10px); }
+    50% { transform: translateY(160px); }
+    100% { transform: translateY(-10px); }
 }
 @media (max-width: 520px) {
     .qr-page .secondary-grid { grid-template-columns: 1fr; }
