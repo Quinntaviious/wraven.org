@@ -79,6 +79,174 @@ body {
     padding: 1.5rem;
 }
 /* Restore grid-area classes for main sections */
+.hero-cta {
+    grid-column: span 12;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    border: 1px solid var(--accent-blue);
+    position: relative;
+    overflow: hidden;
+}
+.hero-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(30, 144, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+.hero-content {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    min-height: 300px;
+}
+.hero-text {
+    z-index: 2;
+}
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.hero-btn.primary {
+    background: var(--accent-blue);
+    color: white;
+    border: 1px solid var(--accent-blue);
+}
+.hero-btn.primary:hover {
+    background: #1976d2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+}
+.hero-btn.secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+.hero-btn.secondary:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+.hero-visual {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+.stat-card {
+    background: rgba(26, 26, 29, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    margin-bottom: 0.25rem;
+}
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+.hero-terminal {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+}
+.terminal-header {
+    background: #161b22;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.terminal-dots {
+    display: flex;
+    gap: 0.25rem;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.dot.red { background: #ff5f57; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #28ca42; }
+.terminal-title {
+    color: #8b949e;
+    font-size: 0.75rem;
+}
+.terminal-content {
+    padding: 1rem;
+    min-height: 120px;
+}
+.terminal-line {
+    margin-bottom: 0.5rem;
+    color: #c9d1d9;
+}
+.prompt {
+    color: #7c3aed;
+    font-weight: 500;
+}
+.command {
+    color: #58a6ff;
+}
+.output {
+    color: #8b949e;
+    margin-left: 2ch;
+}
+.output.success {
+    color: #3fb950;
+}
+.typing-effect {
+    animation: typing 2s steps(20, end) infinite;
+}
+@keyframes typing {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
 .threat-overview {
     grid-column: span 6;
     grid-row: span 2;
@@ -934,6 +1102,15 @@ a.sponsor-item:hover {
     .main-grid {
         grid-template-columns: repeat(8, 1fr);
     }
+    .hero-cta {
+        grid-column: span 8;
+    }
+    .hero-content {
+        gap: 2rem;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+    }
     .threat-overview,
     .research-projects {
         grid-column: span 8;
@@ -959,6 +1136,34 @@ a.sponsor-item:hover {
     .grid-item {
         grid-column: span 1 !important;
         padding: 1rem;
+    }
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .hero-description {
+        font-size: 1rem;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
+    .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+    .stat-card {
+        padding: 0.75rem;
+    }
+    .stat-number {
+        font-size: 1.25rem;
+    }
+    .terminal-content {
+        padding: 0.75rem;
+        min-height: 100px;
     }
     .header {
         padding: 1rem;
@@ -1019,6 +1224,30 @@ a.sponsor-item:hover {
     }
 }
 @media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    .hero-description {
+        font-size: 0.95rem;
+    }
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .hero-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    .terminal-header {
+        padding: 0.375rem 0.75rem;
+    }
+    .terminal-title {
+        font-size: 0.7rem;
+    }
     .threat-item {
         flex-direction: column;
         gap: 0.75rem;
