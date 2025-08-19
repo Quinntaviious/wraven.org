@@ -8,7 +8,7 @@ This is the source code for [wraven.org](https://wraven.org), the official site 
 
 WRAVEN (Western Research Advisory for Vulnerabilities, Exploits, & Networks) focuses on:
 
-- Threat intel & cyber research  
+- Threat intel & cybersecurity research  
 - CTF competitions (ECX Inc. team)  
 - Cybersecurity education & tooling  
 - Open-source community projects  
