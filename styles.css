@@ -96,22 +96,6 @@ body {
     overflow: hidden;
 }
 
-.grid-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(30,144,255,0.08), transparent);
-    transition: left 0.6s ease;
-    z-index: 1;
-}
-
-.grid-item:hover::before {
-    left: 100%;
-}
-
 .grid-item:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(30,144,255,0.15);
@@ -595,16 +579,16 @@ body {
 .threat-item::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent-blue);
-    transition: width 0.3s ease;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30,144,255,0.08), transparent);
+    transition: left 0.6s ease;
 }
 
 .threat-item:hover::before {
-    width: 100%;
+    left: 100%;
 }
 
 .threat-item:hover {
