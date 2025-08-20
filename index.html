@@ -559,24 +559,67 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-left">
-                    <div class="system-status">
-                        <span class="status-dot status-online"></span>
-                        <span>Connected from <code id="user-ip">Detecting...</code></span>
+            <div class="footer-container">
+                <div class="footer-section">
+                    <div class="section-header footer-header">
+                        <h2>System Status</h2>
+                        <div class="feed-status">
+                            <span class="status-dot status-online"></span>
+                            Online
+                        </div>
                     </div>
-                    <div class="uptime">Uptime: 127d 14h 32m</div>
+                    <div class="footer-items">
+                        <div class="footer-item">
+                            <div class="footer-item-label">Connection</div>
+                            <div class="footer-item-value">
+                                <span>Connected from </span>
+                                <code id="user-ip" class="status-code">Detecting...</code>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <div class="footer-item-label">Uptime</div>
+                            <div class="footer-item-value">
+                                <code class="status-code uptime-code">127d 14h 32m</code>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <div class="footer-item-label">Last Update</div>
+                            <div class="footer-item-value">
+                                <code class="status-code">Jul 7 2025 14:32 EST</code>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-center">
-                    <div class="contact">Contact: contact@wraven.org</div>
+                
+                <div class="footer-section">
+                    <div class="section-header footer-header">
+                        <h2>Contact & Legal</h2>
+                        <div class="feed-status">
+                            <span class="status-dot status-live"></span>
+                            Available
+                        </div>
+                    </div>
+                    <div class="footer-items">
+                        <div class="footer-item">
+                            <div class="footer-item-label">General Contact</div>
+                            <div class="footer-item-value">
+                                <a href="mailto:contact@wraven.org" class="footer-link">contact@wraven.org</a>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <div class="footer-item-label">Organization Status</div>
+                            <div class="footer-item-value">Registered Nonprofit</div>
+                        </div>
+                        <div class="footer-item">
+                            <div class="footer-item-label">Fiscal Sponsor</div>
+                            <div class="footer-item-value">
+                                <a href="https://hackclub.com/hcb" target="_blank" class="footer-link">
+                                    Hack Club, 501(c)(3) (EIN: 81-2908499)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-right">
-                    <div class="last-update">Last updated: Jul 7 2025 14:32 EST</div>
-                </div>
-            </div>
-            <div class="nonprofit-info">
-                <span>WRAVEN is a registered nonprofit</span><br>
-                <span class="nonprofit-fiscal">Fiscally sponsored by Hack Club, a 501(c)(3) nonprofit (EIN: 81-2908499)</span>
             </div>
         </footer>
 
