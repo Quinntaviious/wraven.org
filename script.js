@@ -377,6 +377,93 @@ document.addEventListener('DOMContentLoaded', function() {
     // --------------------------------------------------------------------
     // 13. STATUS INDICATOR ANIMATION (Pulse)
     // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+    // 14. BACK TO TOP BUTTON
+    // --------------------------------------------------------------------
+    const setupBackToTop = () => {
+        const backToTopBtn = document.getElementById('back-to-top');
+        if (!backToTopBtn) return;
+        
+        const toggleBackToTop = () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        };
+        
+        window.addEventListener('scroll', toggleBackToTop);
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    };
+    
+    // --------------------------------------------------------------------
+    // 15. ENHANCED TERMINAL ANIMATION
+    // --------------------------------------------------------------------
+    const enhanceTerminalAnimation = () => {
+        const typingElement = document.querySelector('.typing-effect');
+        if (!typingElement) return;
+        
+        const originalText = typingElement.textContent;
+        let currentText = '';
+        let index = 0;
+        
+        const typeWriter = () => {
+            if (index < originalText.length) {
+                currentText += originalText.charAt(index);
+                typingElement.textContent = currentText;
+                index++;
+                setTimeout(typeWriter, 100 + Math.random() * 50); // Realistic typing speed
+            } else {
+                // Reset after pause
+                setTimeout(() => {
+                    currentText = '';
+                    index = 0;
+                    typingElement.textContent = '';
+                    setTimeout(typeWriter, 1000);
+                }, 3000);
+            }
+        };
+        
+        // Start typing animation after initial delay
+        setTimeout(() => {
+            typingElement.textContent = '';
+            typeWriter();
+        }, 2000);
+    };
+    
+    // --------------------------------------------------------------------
+    // 16. LOADING STATE IMPROVEMENTS
+    // --------------------------------------------------------------------
+    const enhanceLoadingStates = () => {
+        // Add loading states for images
+        document.querySelectorAll('img').forEach(img => {
+            if (!img.complete) {
+                img.style.opacity = '0';
+                img.addEventListener('load', () => {
+                    img.style.opacity = '1';
+                });
+            }
+        });
+        
+        // Simulate loading for threat feed items
+        const threatItems = document.querySelectorAll('.threat-item');
+        threatItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                item.style.transition = 'all 0.3s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 200 * (index + 1));
+        });
+    };
+
     const animateStatusIndicators = () => {
         document.querySelectorAll('.status-dot').forEach(dot => {
             if (dot.classList.contains('status-live')) {
@@ -390,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(animateStatusIndicators, 4000);
 
     // --------------------------------------------------------------------
-    // 14. INITIALIZE MAIN INTERFACE
+    // 17. INITIALIZE MAIN INTERFACE
     // --------------------------------------------------------------------
     function initializeInterface() {
         setupLogoFallback();
@@ -399,6 +486,9 @@ document.addEventListener('DOMContentLoaded', function() {
         setupClickHandlers();
         checkDashboardStatus();
         startRealTimeUpdates();
+        setupBackToTop();
+        enhanceTerminalAnimation();
+        enhanceLoadingStates();
     }
     initializeInterface();
 
