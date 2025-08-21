@@ -1567,6 +1567,10 @@ a.sponsor-item:hover {
     .terminal-content {
         padding: 0.75rem;
         min-height: 100px;
+        text-align: left; /* Override centered text for terminal */
+    }
+    .terminal-line {
+        text-align: left; /* Ensure terminal lines are left-aligned */
     }
     .header {
         padding: 1rem;
@@ -1655,6 +1659,12 @@ a.sponsor-item:hover {
     }
     .terminal-title {
         font-size: 0.7rem;
+    }
+    .terminal-content {
+        text-align: left; /* Override centered text for terminal */
+    }
+    .terminal-line {
+        text-align: left; /* Ensure terminal lines are left-aligned */
     }
     .threat-item {
         flex-direction: column;
