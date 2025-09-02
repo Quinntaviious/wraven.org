@@ -113,6 +113,87 @@
       ]
     }
     </script>
+    
+    <!-- Sitelinks Structured Data for Google Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "WRAVEN",
+      "alternateName": "WMU Cybersecurity",
+      "url": "https://wraven.org",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://wraven.org/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "mainEntity": {
+        "@type": "Organization",
+        "@id": "https://wraven.org/#organization"
+      }
+    }
+    </script>
+    
+    <!-- Navigation/Sitelinks Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SiteNavigationElement",
+      "name": "Main Navigation",
+      "url": "https://wraven.org",
+      "hasPart": [
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Watchtower - Threat Intelligence",
+          "description": "Real-time cybersecurity threat intelligence and monitoring dashboard",
+          "url": "https://wraven.org/watchtower/"
+        },
+        {
+          "@type": "SiteNavigationElement", 
+          "name": "Research Blog",
+          "description": "Latest cybersecurity research, threat analysis, and intelligence reports",
+          "url": "https://blog.wraven.org"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Discord Community", 
+          "description": "Join our cybersecurity community and participate in discussions",
+          "url": "https://wraven.org/discord/"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "WRAVEN Store",
+          "description": "Official WRAVEN merchandise and cybersecurity resources",
+          "url": "https://wraven.org/store/"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "QR Code Tools",
+          "description": "Cybersecurity-focused QR code generation and analysis tools",
+          "url": "https://wraven.org/qr/"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://wraven.org/"
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -161,18 +242,18 @@
                             </a>
                             <a href="https://experiencewmu.wmich.edu/organization/wraven" target="_blank" class="hero-btn secondary">
                                 <span class="btn-icon">🎓</span>
-                                Join at WMU
+                                Attend a Meeting
                             </a>
                         </div>
                     </div>
                     <div class="hero-visual">
                         <div class="hero-stats">
                             <div class="stat-card">
-                                <div class="stat-number">36</div>
-                                <div class="stat-label">New Hackers</div>
+                                <div class="stat-number">44</div>
+                                <div class="stat-label">Researchers</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-number">7</div>
+                                <div class="stat-number">8</div>
                                 <div class="stat-label">Completed Projects</div>
                             </div>
                             <div class="stat-card">
@@ -337,20 +418,20 @@
             <section class="grid-item research-projects">
                 <div class="section-header">
                     <h2>Active Research Projects</h2>
-                    <div class="project-count">2 Active | 2 Completed</div>
+                    <div class="project-count">2 Active | 3 Completed</div>
                 </div>
                 <div class="projects-grid">
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-name">SPIDERWEB</div>
+                            <div class="project-name">HURRICANE WATCH</div>
                             <div class="project-status status-research">RESEARCHING</div>
                         </div>
-                        <div class="project-description">Scattered Spider threat actor behavioral pattern analysis</div>
+                        <div class="project-description">Salt Typhoon re-analysis due to CISA & NSA guidance</div>
                         <div class="project-progress">
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 42%"></div>
+                                <div class="progress-fill" style="width: 31%"></div>
                             </div>
-                            <span class="progress-text">42%</span>
+                            <span class="progress-text">31%</span>
                         </div>
                     </div>
                     <div class="project-card">
@@ -399,7 +480,7 @@
             <section class="grid-item ctf-operations">
                 <div class="section-header">
                     <h2>WMU CTF Team: ECX Inc.</h2>
-                    <div class="ctf-status">Summer Break</div>
+                    <div class="ctf-status">Upcoming...</div>
                 </div>
                 <div class="ctf-content">
                     <div class="team-info-section">
@@ -427,7 +508,7 @@
                     </div>
                     <div class="ctf-stats">
                         <div class="stat-item">
-                            <div class="stat-value">7</div>
+                            <div class="stat-value">8</div>
                             <div class="stat-label">Recent Events</div>
                         </div>
                         <div class="stat-item">

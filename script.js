@@ -1,6 +1,5 @@
 // ========================================================================
 // WRAVEN.ORG MAIN JAVASCRIPT
-// Cleaned, organized, and commented for clarity and maintainability
 // ========================================================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -204,12 +203,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (isOnline) {
                 feedStatus.innerHTML = `
                     <span class="status-dot status-live"></span>
-                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">WATCHTOWER Dashboard Online</a>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">Under Maintenance</a>
                 `;
             } else {
                 feedStatus.innerHTML = `
                     <span class="status-dot status-live"></span>
-                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">WATCHTOWER Dashboard Online</a>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">Under Maintenance</a>
                 `; // Duplicated for now because of issues with caddy and CORS
             }
         }

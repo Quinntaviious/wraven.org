@@ -1801,11 +1801,60 @@ a.sponsor-item:hover {
     margin-bottom: 2rem;
 }
 
-.qr-page .scan-section {
+/* ------------------------------------------------------------------------
+   QR Page Grid Sections
+   ------------------------------------------------------------------------ */
+.qr-page .main-content {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    display: grid;
+    gap: 2rem;
+}
+
+/* Hero Section Specific Styles */
+.qr-page .hero-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.qr-page .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.qr-page .caution {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.qr-page .caution-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.qr-page .caution span:last-child {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.qr-page .scan-card {
+    display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    position: relative;
 }
 
 .qr-page .scan-frame {
@@ -1832,45 +1881,57 @@ a.sponsor-item:hover {
     box-shadow: 0 0 10px var(--accent-blue);
 }
 
-@keyframes sweep {
-    0% { transform: translateY(-10px); }
-    50% { transform: translateY(240px); }
-    100% { transform: translateY(-10px); }
+.qr-page .qr-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.qr-page .scan-placeholder {
-    font-size: 4rem;
-    color: var(--accent-blue);
+.qr-page .qr-squares {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
     opacity: 0.5;
+}
+
+.qr-page .qr-square {
+    width: 20px;
+    height: 20px;
+    background: var(--accent-blue);
+    border-radius: 2px;
     animation: pulse-qr 2s ease-in-out infinite;
 }
 
-@keyframes pulse-qr {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.05); }
+.qr-page .qr-square:nth-child(even) {
+    animation-delay: 0.3s;
 }
 
-.qr-page .scan-instruction {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--text-muted);
+.qr-page .qr-square:nth-child(3n) {
+    animation-delay: 0.6s;
+}
+
+/* Section Styling */
+.qr-page .section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
     text-align: center;
 }
 
-/* ------------------------------------------------------------------------
-   QR Page Grid Sections
-   ------------------------------------------------------------------------ */
-.qr-page .main-content {
+.qr-page .primary-actions,
+.qr-page .tips,
+.qr-page .about,
+.qr-page .programs,
+.qr-page .secondary-actions {
     max-width: 1100px;
     margin: 3rem auto;
     padding: 0 1rem;
-    display: grid;
-    gap: 2rem;
 }
 
 .qr-page .primary-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
 }
 
@@ -1878,7 +1939,12 @@ a.sponsor-item:hover {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -1906,46 +1972,93 @@ a.sponsor-item:hover {
 }
 
 .qr-page .cta-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: block;
+    font-size: 2rem;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.qr-page .cta-content {
+    flex: 1;
     position: relative;
     z-index: 2;
 }
 
 .qr-page .cta-label {
-    font-size: 1.25rem;
+    display: block;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     color: var(--text-primary);
-    position: relative;
-    z-index: 2;
 }
 
-.qr-page .cta-description {
+.qr-page .cta-note {
+    display: block;
     color: var(--text-secondary);
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.qr-page .cta-arrow {
+    font-size: 1.2rem;
+    color: var(--accent-blue);
+    flex-shrink: 0;
     position: relative;
     z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.qr-page .primary-cta:hover .cta-arrow {
+    transform: translateX(3px);
+}
+
+/* Tips Grid */
+.qr-page .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.qr-page .tip {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.qr-page .tip strong {
+    color: var(--text-primary);
+}
+
+/* About Section */
+.qr-page .about-content p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
 }
 
 .qr-page .stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1rem;
     margin: 2rem 0;
 }
 
-.qr-page .stat-box {
+.qr-page .stat-item {
+    text-align: center;
+    padding: 1rem;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
 }
 
 .qr-page .stat-number {
-    font-size: 2rem;
+    display: block;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--accent-blue);
     font-family: var(--font-mono);
@@ -1953,13 +2066,56 @@ a.sponsor-item:hover {
 }
 
 .qr-page .stat-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Programs Grid */
+.qr-page .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.qr-page .program-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+}
+
+.qr-page .program-card:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.1);
+}
+
+.qr-page .program-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.qr-page .program-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.qr-page .program-content p {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 .qr-page .secondary-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
 }
@@ -1999,23 +2155,30 @@ a.sponsor-item:hover {
 }
 
 .qr-page .secondary-cta .label { 
-    font-size: 0.95rem; 
-    font-weight: 500;
+    display: block;
+    font-size: 1rem; 
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
 }
 
 .qr-page .secondary-cta .note { 
+    display: block;
     color: var(--text-muted); 
-    font-size: 0.8rem; 
+    font-size: 0.85rem; 
+    line-height: 1.4;
 }
 
 .qr-page .footnote {
     text-align: center;
     color: var(--text-muted);
     font-size: 0.9rem;
-    margin: 2rem auto;
+    margin: 3rem auto 2rem;
     max-width: 1100px;
+    padding: 0 1rem;
 }
 
+/* Header Styles */
 .qr-page header.qr-header {
     max-width: 1100px;
     margin: 1rem auto 0;
@@ -2036,7 +2199,7 @@ a.sponsor-item:hover {
 }
 
 .qr-page .qr-brand img { 
-    height: 28px; 
+    height: 32px; 
     width: auto; 
 }
 
@@ -2044,80 +2207,162 @@ a.sponsor-item:hover {
     font-family: var(--font-mono);
     color: var(--accent-blue);
     letter-spacing: 0.06em;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 .qr-page .qr-nav a {
     color: var(--text-secondary);
     text-decoration: none;
     border: 1px solid var(--border-color);
-    padding: 0.4rem 0.7rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .qr-page .qr-nav a:hover {
     color: var(--accent-blue);
     border-color: var(--accent-blue);
+    background: rgba(30, 144, 255, 0.05);
 }
 
 /* ------------------------------------------------------------------------
    QR Page Responsive Design
    ------------------------------------------------------------------------ */
-@media (min-width: 768px) {
-    .qr-page .primary-grid { 
-        grid-template-columns: repeat(3, 1fr); 
-    }
-    .qr-page .stats-grid { 
-        grid-template-columns: repeat(3, 1fr); 
-    }
-}
-
 @media (max-width: 900px) {
     .qr-page .hero-grid { 
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
     }
-    .qr-page .primary-grid { 
-        grid-template-columns: 1fr; 
+    
+    .qr-page .scan-frame {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .qr-page .primary-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .qr-page .secondary-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .qr-page .programs-grid {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
-    .qr-page .stats-grid { 
-        grid-template-columns: 1fr; 
-    }
     .qr-page .qr-hero {
-        padding: 1.5rem;
+        padding: 2rem 1.5rem;
         margin: 1rem auto;
     }
+    
+    .qr-page .hero-title {
+        font-size: 2rem;
+    }
+    
+    .qr-page .hero-sub {
+        font-size: 1rem;
+    }
+    
     .qr-page .scan-frame {
+        width: 180px;
         height: 180px;
     }
+    
     .qr-page .scan-line {
         animation: sweep-mobile 3.2s linear infinite;
     }
+    
     .qr-page .primary-cta {
         padding: 1.25rem;
     }
+    
     .qr-page .cta-label {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
-}
-
-@keyframes sweep-mobile {
-    0% { transform: translateY(-10px); }
-    50% { transform: translateY(160px); }
-    100% { transform: translateY(-10px); }
+    
+    .qr-page .cta-icon {
+        font-size: 1.8rem;
+    }
+    
+    .qr-page .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .qr-page .tips-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .qr-page .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 520px) {
-    .qr-page .secondary-grid { 
-        grid-template-columns: 1fr; 
+    .qr-page .qr-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        text-align: center;
     }
-    .qr-page .programs-grid { 
-        grid-template-columns: 1fr; 
+    
+    .qr-page .qr-brand {
+        justify-content: center;
     }
-    .qr-page .tips-grid { 
-        grid-template-columns: 1fr; 
+    
+    .qr-page .qr-nav {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .qr-page .qr-hero {
+        padding: 1.5rem 1rem;
+    }
+    
+    .qr-page .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .qr-page .caution {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .qr-page .primary-cta {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    
+    .qr-page .cta-arrow {
+        align-self: center;
+    }
+    
+    .qr-page .program-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .qr-page .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .qr-page .stat-item {
+        padding: 0.75rem;
+    }
+    
+    .qr-page .secondary-cta {
+        padding: 1rem;
     }
 }
 
