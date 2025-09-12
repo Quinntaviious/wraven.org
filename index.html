@@ -348,8 +348,9 @@
                 Date Format:
                     - Use short month and day (e.g., Jul 23)
 
-                You can freely mix and match tags as needed for each threat item.
-                -->
+                You can freely mix and match tags as needed for each threat item. -->
+
+                <!-- Threat Overview -->
                 <section class="grid-item threat-overview">
                     <div class="section-header">
                         <h2>Threat Overview</h2>
@@ -359,67 +360,67 @@
                         </div>
                     </div>
                     <div class="threat-feed" role="feed" aria-label="Live threat intelligence feed">
-                        <!-- SonicWall SMA OVERSTEP -->
+
+                        <!-- Salt Typhoon campaign -->
                         <div class="threat-item">
                             <div class="threat-indicator high"></div>
                             <div class="threat-content">
-                                <div class="threat-title">SonicWall SMA flaw and ongoing OVERSTEP activity</div>
-                                <div class="threat-meta">CVE-2025-40599 | Authenticated file upload on SMA 100; UNC6148 persists via OVERSTEP</div>
+                                <div class="threat-title">Salt Typhoon hacking campaign widens globally</div>
+                                <div class="threat-meta">Chinese state-sponsored APT impacting >80 countries; targets include telecom routers, governments, infrastructure</div>
                                 <div class="threat-footer">
                                     <div class="threat-tags">
-                                        <span class="tag tag-apt">UNC6148</span>
-                                        <span class="tag tag-cve">CVE-2025-40599</span>
-                                        <span class="tag tag-ioc">OVERSTEP</span>
-                                        <span class="tag tag-sector">VPN</span>
+                                        <span class="tag tag-apt">Salt Typhoon</span>
+                                        <span class="tag tag-technique">Router Exploits</span>
+                                        <span class="tag tag-sector">Telecom / Gov</span>
                                     </div>
-                                    <div class="threat-time">Aug 18</div>
+                                    <div class="threat-time">Sep 09</div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Lazarus campaign -->
+                        <!-- Microsoft Patch Tuesday vulnerabilities -->
                         <div class="threat-item">
                             <div class="threat-indicator high"></div>
                             <div class="threat-content">
-                                <div class="threat-title">Lazarus spear-phishing targets defense contractors</div>
-                                <div class="threat-meta">T1566 | MalDoc lures deliver custom RAT via job-themed emails</div>
+                                <div class="threat-title">Microsoft Patch Tuesday: Two zero-days + critical vulnerabilities</div>
+                                <div class="threat-meta">84 CVEs patched; includes Microsoft Office, SMB, NTFS; elevation of privilege & remote code execution flaws</div>
                                 <div class="threat-footer">
                                     <div class="threat-tags">
-                                        <span class="tag tag-apt">LAZARUS</span>
-                                        <span class="tag tag-technique">T1566</span>
-                                        <span class="tag tag-malware">RAT</span>
-                                        <span class="tag tag-sector">Defense</span>
+                                        <span class="tag tag-cve">CVE-2025-55234</span>
+                                        <span class="tag tag-technique">RCE / PrivEsc</span>
+                                        <span class="tag tag-sector">Software / Windows</span>
                                     </div>
-                                    <div class="threat-time">Aug 14</div>
+                                    <div class="threat-time">Sep 09</div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Microsoft Patch Tuesday -->
+                        <!-- Sophos AP6 vulnerability -->
                         <div class="threat-item">
                             <div class="threat-indicator high"></div>
                             <div class="threat-content">
-                                <div class="threat-title">Microsoft August fixes Kerberos zero-day</div>
-                                <div class="threat-meta">CVE-2025-53779 | Privilege escalation via Kerberos attributes</div>
+                                <div class="threat-title">Critical auth bypass in Sophos AP6 series WAPs</div>
+                                <div class="threat-meta">CVE-2025-10159 allows remote attackers to gain full admin without credentials on certain Sophos wireless access points</div>
                                 <div class="threat-footer">
                                     <div class="threat-tags">
-                                        <span class="tag tag-cve">CVE-2025-53779</span>
-                                        <span class="tag tag-technique">PrivEsc</span>
-                                        <span class="tag tag-saas">AD</span>
+                                        <span class="tag tag-cve">CVE-2025-10159</span>
+                                        <span class="tag tag-technique">Auth Bypass</span>
+                                        <span class="tag tag-sector">Networking / Telecom</span>
                                     </div>
-                                    <div class="threat-time">Aug 12</div>
+                                    <div class="threat-time">Sep 11</div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </section>
 
-            <!-- Active Research Projects -->
-            <section class="grid-item research-projects">
-                <div class="section-header">
-                    <h2>Active Research Projects</h2>
-                    <div class="project-count">2 Active | 3 Completed</div>
-                </div>
+                <!-- Active Research Projects -->
+                <section class="grid-item research-projects">
+                    <div class="section-header">
+                        <h2>Active Projects</h2>
+                        <div class="project-count">2 Active | 3 Completed</div>
+                    </div>
                 <div class="projects-grid">
                     <div class="project-card">
                         <div class="project-header">
@@ -429,22 +430,22 @@
                         <div class="project-description">Salt Typhoon re-analysis due to CISA & NSA guidance</div>
                         <div class="project-progress">
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 31%"></div>
+                                <div class="progress-fill" style="width: 72%"></div>
                             </div>
-                            <span class="progress-text">31%</span>
+                            <span class="progress-text">72%</span>
                         </div>
                     </div>
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-name">WARDEN</div>
+                            <div class="project-name">HORIZON</div>
                             <div class="project-status status-planning">PLANNING</div>
                         </div>
-                        <div class="project-description">Public-facing malware analysis dashboard framework</div>
+                        <div class="project-description">Student run security operations center</div>
                         <div class="project-progress">
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 12%"></div>
+                                <div class="progress-fill" style="width: 25%"></div>
                             </div>
-                            <span class="progress-text">12%</span>
+                            <span class="progress-text">25%</span>
                         </div>
                     </div>
                     <div class="project-card">
@@ -480,7 +481,7 @@
             <section class="grid-item ctf-operations">
                 <div class="section-header">
                     <h2>WMU CTF Team: ECX Inc.</h2>
-                    <div class="ctf-status">Upcoming...</div>
+                    <div class="ctf-status">Active</div>
                 </div>
                 <div class="ctf-content">
                     <div class="team-info-section">
@@ -613,18 +614,18 @@
             <section class="grid-item sponsor-bento">
                 <div class="section-header sponsor-header">
                     <h2>Sponsors & Partners</h2>
-                    <button class="sponsor-interest-btn" onclick="window.open('mailto:contact@wraven.org?subject=Sponsorship%20Interest','_blank')">Become a Sponsor</button>
+                    <button class="sponsor-interest-btn" onclick="window.open('mailto:contact@wraven.org?subject=Sponsorship%20Interest','_blank')">Become a Sponsor or Partner</button>
                 </div>
                 <div class="bento-box sponsors">
                     <div class="sponsor-list">
                         <div class="sponsor-item">
                             <picture>
-                                <source srcset="/imgs/birdsquare.webp" type="image/webp">
-                                <img src="/imgs/birdsquare.png" alt="Placeholder" class="sponsor-img" loading="lazy">
+                                <source srcset="/imgs/eff.webp" type="image/webp">
+                                <img src="/imgs/eff.png" alt="Electronic Frontier Foundation" class="sponsor-img" loading="lazy">
                             </picture>
                             <span class="sponsor-name">
-                                <span class="sponsor-title">Your Organization?</span>
-                                <span class="sponsor-subtitle">We'd love your support</span>
+                                <span class="sponsor-title">Electronic Frontier Foundation</span>
+                                <span class="sponsor-subtitle">Leader in digital rights advocacy.</span>
                             </span>
                         </div>
 
@@ -634,7 +635,7 @@
                                 <img src="/imgs/HCBicon.png" alt="HCB - The Hack Foundation" class="sponsor-img" loading="lazy">
                             </picture>
                             <span class="sponsor-name">
-                                <span class="sponsor-title">HCB (Fiscal Sponsor)</span>
+                                <span class="sponsor-title">The Hack Foundation (HCB)</span>
                                 <span class="sponsor-subtitle">The Hack Foundation "Hack Club"</span>
                             </span>
                         </a>
@@ -649,6 +650,16 @@
                                 <span class="sponsor-subtitle">Western Student Association Allocations Committee</span>
                             </span>
                         </a>
+
+                        <div class="sponsor-item">
+                            <picture>
+                                <source srcset="/imgs/bugcrowd.webp" type="image/webp">
+                                <img src="/imgs/bugcrowd.png" alt="Bugcrowd" class="sponsor-img" loading="lazy">
+                            </picture>
+                            <span class="sponsor-name">
+                                <span class="sponsor-title">Bugcrowd</span>
+                                <span class="sponsor-subtitle">Leading crowdsourced security platform.</span>
+                            </span>
                     </div>
                 </div>
             </section>
