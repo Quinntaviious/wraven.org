@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all features
     initializeParticleEffect();
     initializeScrollEffects();
-    initializeCursorGlow();
+    // Cursor glow removed for cleaner experience
     setupLogoFallback();
     setupWRAVENModal();
     setupClickHandlers();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.style.height = '100%';
         canvas.style.pointerEvents = 'none';
         canvas.style.zIndex = '-1';
-        canvas.style.opacity = '0.3';
+        canvas.style.opacity = '0.5'; // Increased from 0.3 for better visibility
         document.body.appendChild(canvas);
         
         const ctx = canvas.getContext('2d');
@@ -49,10 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 2.5 + 1; // Slightly larger particles
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.opacity = Math.random() * 0.6 + 0.3; // Increased opacity range
             }
             
             update() {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function init() {
             particles = [];
-            const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 15000), 80);
+            const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 100); // More particles
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     
                     if (distance < 150) {
-                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - distance / 150)})`;
-                        ctx.lineWidth = 0.5;
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`; // Slightly more visible connections
+                        ctx.lineWidth = 0.8;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -144,66 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --------------------------------------------------------------------
-    // 3. CUSTOM CURSOR GLOW EFFECT (ENHANCED WITH DARKENING)
+    // 3. CUSTOM CURSOR GLOW EFFECT - DISABLED FOR CLEANER LOOK
     // --------------------------------------------------------------------
+    /*
     function initializeCursorGlow() {
-        // Add overlay to darken the page
-        const overlay = document.createElement('div');
-        overlay.className = 'cursor-glow-overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 15, 0.7);
-            pointer-events: none;
-            z-index: 9998;
-            mix-blend-mode: multiply;
-        `;
-        document.body.appendChild(overlay);
-        
-        const cursorGlow = document.createElement('div');
-        cursorGlow.className = 'cursor-glow';
-        cursorGlow.style.cssText = `
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.25) 0%, rgba(0, 212, 255, 0.15) 30%, transparent 70%);
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            mix-blend-mode: screen;
-        `;
-        document.body.appendChild(cursorGlow);
-        
-        let mouseX = 0, mouseY = 0;
-        let glowX = 0, glowY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorGlow.style.opacity = '1';
-            overlay.style.opacity = '1';
-        });
-        
-        document.addEventListener('mouseleave', () => {
-            cursorGlow.style.opacity = '0';
-            overlay.style.opacity = '0';
-        });
-        
-        function animateGlow() {
-            glowX += (mouseX - glowX) * 0.15;
-            glowY += (mouseY - glowY) * 0.15;
-            cursorGlow.style.left = glowX + 'px';
-            cursorGlow.style.top = glowY + 'px';
-            requestAnimationFrame(animateGlow);
-        }
-        animateGlow();
+        // Cursor glow disabled - kept for future reference
     }
+    */
 
     // --------------------------------------------------------------------
     // 4. SYSTEM UPTIME & LAST UPDATE
@@ -358,10 +305,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.threat-item').forEach(item => {
             item.style.cursor = 'pointer';
             item.addEventListener('click', (e) => {
+                // Don't interfere with link clicks
+                if (e.target.tagName === 'A') return;
                 createRipple(e, item);
                 setTimeout(() => {
                     window.open('https://public.wraven.org', '_blank');
-                }, 200);
+                }, 150);
             });
         });
         
@@ -373,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     createRipple(e, project);
                     setTimeout(() => {
                         window.open('https://blog.wraven.org', '_blank');
-                    }, 200);
+                    }, 150);
                 });
                 project.style.cursor = 'pointer';
                 project.classList.add('clickable');

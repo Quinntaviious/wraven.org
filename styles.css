@@ -428,8 +428,8 @@ body::before {
 }
 
 .stat-card {
-    background: rgba(18, 18, 24, 0.9);
-    border: 2px solid var(--border-color);
+    background: rgba(24, 24, 37, 0.92);
+    border: 2px solid rgba(0, 212, 255, 0.25);
     border-radius: 10px;
     padding: 1.25rem;
     text-align: center;
@@ -1473,16 +1473,18 @@ a:focus-visible,
     gap: 1rem;
 }
 .project-card {
-    background: var(--bg-tertiary);
+    background: rgba(24, 24, 37, 0.92);
     padding: 1.5rem;
     border-radius: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(0, 212, 255, 0.25);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .project-icon {
@@ -1545,9 +1547,10 @@ a:focus-visible,
 .project-name {
     font-family: var(--font-mono);
     font-weight: 600;
-    color: var(--text-primary);
+    color: rgba(255, 255, 255, 0.95);
     position: relative;
     z-index: 2;
+    font-size: 1rem;
 }
 .project-status {
     font-size: 0.625rem;
@@ -1566,9 +1569,9 @@ a:focus-visible,
 .status-completed { background: rgba(0, 255, 136, 0.1); color: var(--success); border: 1px solid rgba(0, 255, 136, 0.3); }
 .project-description {
     font-size: 0.875rem;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 1rem;
-    line-height: 1.4;
+    line-height: 1.5;
     position: relative;
     z-index: 2;
 }
