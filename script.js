@@ -200,6 +200,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // --------------------------------------------------------------------
     const getUserIP = async () => {
         const ipElement = document.getElementById('user-ip');
+        if (!ipElement) return;
+        
         try {
             const services = [
                 'https://api.ipify.org?format=json',
@@ -208,16 +210,18 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
             for (const service of services) {
                 try {
-                    const response = await fetch(service);
+                    const response = await fetch(service, { timeout: 3000 });
                     const data = await response.json();
                     const ip = data.ip || data.origin || 'Unknown';
-                    ipElement.textContent = ip;
-                    return;
+                    if (ip && ip !== 'Unknown') {
+                        ipElement.textContent = ip;
+                        return;
+                    }
                 } catch (error) { continue; }
             }
-            ipElement.textContent = 'Unavailable';
+            ipElement.textContent = 'Privacy Protected';
         } catch (error) {
-            ipElement.textContent = 'Error';
+            ipElement.textContent = 'Privacy Protected';
         }
     };
 

@@ -2265,12 +2265,15 @@ a.sponsor-item:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
+    width: 100%;
 }
 
 .footer-section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    min-width: 0;
+    width: 100%;
 }
 
 .footer-section .section-header {
@@ -2294,6 +2297,7 @@ a.sponsor-item:hover {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    width: 100%;
 }
 
 .footer-stat {
@@ -2302,6 +2306,8 @@ a.sponsor-item:hover {
     align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%;
+    min-width: 0;
 }
 
 .footer-stat:last-child {
@@ -2314,6 +2320,7 @@ a.sponsor-item:hover {
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    flex-shrink: 0;
 }
 
 .footer-stat-value {
@@ -2323,6 +2330,9 @@ a.sponsor-item:hover {
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    text-align: right;
+    min-width: 0;
+    word-break: break-word;
 }
 
 .footer-link {
