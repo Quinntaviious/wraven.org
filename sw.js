@@ -1,6 +1,6 @@
-const CACHE_NAME = 'wraven-v1.0.0';
-const STATIC_CACHE_NAME = 'wraven-static-v1.0.0';
-const DYNAMIC_CACHE_NAME = 'wraven-dynamic-v1.0.0';
+const CACHE_NAME = 'wraven-v1.0.1';
+const STATIC_CACHE_NAME = 'wraven-static-v1.0.1';
+const DYNAMIC_CACHE_NAME = 'wraven-dynamic-v1.0.1';
 
 // Files to cache immediately (static assets)
 const STATIC_ASSETS = [
@@ -20,7 +20,8 @@ const STATIC_ASSETS = [
 const NEVER_CACHE = [
   '/index.html',
   '/script.js',
-  '/styles.css'
+  '/styles.css',
+  '/sw.js'
 ];
 
 // Domains/URLs that should bypass service worker entirely
@@ -28,7 +29,8 @@ const BYPASS_SERVICE_WORKER = [
   'dashboard.wraven.org',
   'api.ipify.org',
   'ipapi.co',
-  'httpbin.org'
+  'httpbin.org',
+  'ipinfo.io'
 ];
 
 // External resources that can be cached longer
@@ -113,10 +115,11 @@ async function handleRequest(request, url) {
   try {
     let response;
     
-    // Strategy 1: NEVER cache main content files (always fresh)
+    // Strategy 1: NEVER cache main content files (always fresh, no cache)
     if (NEVER_CACHE.some(pattern => url.pathname.includes(pattern))) {
       console.log('Fetching fresh (never cache):', url.pathname);
-      response = await fetchWithFallback(request);
+      response = await fetch(request, { cache: 'no-store' });
+      return response;
     }
     // Strategy 2: Cache external resources with network-first for freshness
     else if (EXTERNAL_CACHE_PATTERNS.some(pattern => pattern.test(url.hostname))) {

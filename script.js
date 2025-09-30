@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. PARTICLE EFFECT FOR BACKGROUND
     // --------------------------------------------------------------------
     function initializeParticleEffect() {
+        // Skip on mobile devices for better performance
+        if (window.innerWidth < 768) {
+            return;
+        }
+        
         const canvas = document.createElement('canvas');
         canvas.style.position = 'fixed';
         canvas.style.top = '0';
@@ -15,12 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.style.height = '100%';
         canvas.style.pointerEvents = 'none';
         canvas.style.zIndex = '-1';
-        canvas.style.opacity = '0.5'; // Increased from 0.3 for better visibility
+        canvas.style.opacity = '0.4';
         document.body.appendChild(canvas);
         
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
         let particles = [];
         let animationFrameId;
+        let lastFrame = Date.now();
+        const targetFPS = 60;
+        const frameInterval = 1000 / targetFPS;
         
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -33,10 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 1; // Slightly larger particles
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.6 + 0.3; // Increased opacity range
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.3; // Reduced speed
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.2;
             }
             
             update() {
@@ -59,28 +67,40 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function init() {
             particles = [];
-            const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 100); // More particles
+            // Reduced particle count for better performance
+            const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 20000), 60);
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
         }
         
         function animate() {
+            const now = Date.now();
+            const delta = now - lastFrame;
+            
+            // Throttle frame rate
+            if (delta < frameInterval) {
+                animationFrameId = requestAnimationFrame(animate);
+                return;
+            }
+            
+            lastFrame = now - (delta % frameInterval);
+            
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
                 
-                // Draw connections
+                // Reduced connection distance and checks for performance
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (distance < 150) {
-                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`; // Slightly more visible connections
-                        ctx.lineWidth = 0.8;
+                    if (distance < 120) { // Reduced from 150
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - distance / 120)})`;
+                        ctx.lineWidth = 0.5;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -202,26 +222,50 @@ document.addEventListener('DOMContentLoaded', function() {
         const ipElement = document.getElementById('user-ip');
         if (!ipElement) return;
         
+        ipElement.textContent = 'Detecting...';
+        
         try {
             const services = [
-                'https://api.ipify.org?format=json',
-                'https://ipapi.co/json/',
-                'https://httpbin.org/ip'
+                { url: 'https://api.ipify.org?format=json', key: 'ip' },
+                { url: 'https://ipapi.co/json/', key: 'ip' },
+                { url: 'https://httpbin.org/ip', key: 'origin' }
             ];
+            
             for (const service of services) {
                 try {
-                    const response = await fetch(service, { timeout: 3000 });
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000);
+                    
+                    const response = await fetch(service.url, { 
+                        signal: controller.signal,
+                        cache: 'no-store'
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) continue;
+                    
                     const data = await response.json();
-                    const ip = data.ip || data.origin || 'Unknown';
+                    const ip = data[service.key];
+                    
                     if (ip && ip !== 'Unknown') {
                         ipElement.textContent = ip;
+                        ipElement.style.color = 'var(--accent-blue)';
                         return;
                     }
-                } catch (error) { continue; }
+                } catch (error) { 
+                    console.log('IP service failed:', service.url, error.message);
+                    continue; 
+                }
             }
+            
+            // If all services fail
             ipElement.textContent = 'Privacy Protected';
+            ipElement.style.color = 'var(--text-muted)';
         } catch (error) {
+            console.error('IP detection error:', error);
             ipElement.textContent = 'Privacy Protected';
+            ipElement.style.color = 'var(--text-muted)';
         }
     };
 
