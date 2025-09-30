@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (isOnline) {
                 feedStatus.innerHTML = `
                     <span class="status-dot status-live"></span>
-                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">Live</a>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">Online</a>
                 `;
             } else {
                 feedStatus.innerHTML = `

@@ -21,7 +21,7 @@
     --accent-pink: #ff006e;
     --border-color: #2a2a3a;
     --border-glow: rgba(0, 212, 255, 0.3);
-    --success: #00ff88;
+    --success: #a78bfa;
     --warning: #fcbf49;
     --danger: #ff4757;
     --font-mono: 'JetBrains Mono', monospace;
@@ -183,7 +183,7 @@ body::before {
 }
 
 .grid-item {
-    background: rgba(24, 24, 37, 0.90);
+    background: rgba(24, 24, 37, 0.85);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.75rem;
@@ -210,7 +210,7 @@ body::before {
     transform: translateY(-4px) scale(1.01);
     box-shadow: var(--shadow-glow);
     border-color: var(--border-glow);
-    background: rgba(24, 24, 37, 0.90);
+    background: rgba(24, 24, 37, 0.85);
 }
 
 .grid-item:hover::before {
@@ -304,7 +304,7 @@ body::before {
         90deg,
         #ffffff 0%, 
         #00d4ff 25%, 
-        #00ffcc 50%, 
+        #a78bfa 50%, 
         #00d4ff 75%, 
         #ffffff 100%
     );
@@ -602,7 +602,7 @@ body::before {
 
 .output.success {
     color: var(--success);
-    text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+    text-shadow: 0 0 5px rgba(167, 139, 250, 0.3);
 }
 
 .cursor {
@@ -824,8 +824,8 @@ body::before {
 
 .status-live { 
     background: var(--success);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-    --dot-color: 0, 255, 136;
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+    --dot-color: 167, 139, 250;
 }
 
 .status-armed { 
@@ -836,8 +836,8 @@ body::before {
 
 .status-online { 
     background: var(--success);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-    --dot-color: 0, 255, 136;
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+    --dot-color: 167, 139, 250;
 }
 
 .status-offline { 
@@ -974,10 +974,10 @@ body::before {
 }
 
 .feed-status {
-    background: rgba(0, 255, 136, 0.15);
+    background: rgba(167, 139, 250, 0.15);
     color: var(--success);
-    border: 1px solid rgba(0, 255, 136, 0.3);
-    box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    box-shadow: 0 0 15px rgba(167, 139, 250, 0.2);
 }
 
 .project-count {
@@ -1030,35 +1030,24 @@ body::before {
     align-items: flex-start;
     gap: 1.25rem;
     padding: 1.5rem;
-    background: rgba(26, 26, 36, 0.6);
+    background: rgba(26, 26, 36, 0.5);
     border-radius: 10px;
     border: 1px solid var(--border-color);
     transition: all var(--transition-base);
     cursor: pointer;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .threat-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.05), transparent);
-    transition: left 0.6s ease;
-}
-
-.threat-item:hover::before {
-    left: 100%;
+    display: none;
 }
 
 .threat-item:hover {
-    background: rgba(26, 26, 36, 0.8);
+    background: rgba(26, 26, 36, 0.7);
     border-color: var(--accent-blue);
     transform: translateX(5px);
-    box-shadow: -5px 0 20px rgba(0, 212, 255, 0.2);
+    box-shadow: -5px 0 20px rgba(0, 212, 255, 0.15);
 }
 
 .threat-indicator {
@@ -1112,7 +1101,7 @@ body::before {
 
 .threat-indicator.low {
     background: var(--success);
-    box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+    box-shadow: 0 0 15px rgba(167, 139, 250, 0.6);
 }
 
 .threat-indicator.low::before {
@@ -1241,14 +1230,14 @@ body::before {
 }
 
 .tag-sector {
-    background: rgba(0, 255, 136, 0.15);
+    background: rgba(167, 139, 250, 0.15);
     color: var(--success);
-    border-color: rgba(0, 255, 136, 0.3);
+    border-color: rgba(167, 139, 250, 0.3);
 }
 
 .tag-sector:hover {
-    background: rgba(0, 255, 136, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+    background: rgba(167, 139, 250, 0.25);
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.4);
 }
 
 .tag-saas {
@@ -1564,11 +1553,11 @@ a:focus-visible,
     position: relative;
     z-index: 2;
 }
-.status-active { background: rgba(0, 255, 136, 0.2); color: var(--success); }
+.status-active { background: rgba(167, 139, 250, 0.2); color: var(--success); }
 .status-research { background: rgba(30, 144, 255, 0.2); color: var(--accent-blue); }
 .status-testing { background: rgba(252, 191, 73, 0.2); color: var(--accent-orange); }
 .status-planning { background: rgba(112, 112, 112, 0.2); color: var(--text-muted); }
-.status-completed { background: rgba(0, 255, 136, 0.1); color: var(--success); border: 1px solid rgba(0, 255, 136, 0.3); }
+.status-completed { background: rgba(167, 139, 250, 0.1); color: var(--success); border: 1px solid rgba(167, 139, 250, 0.3); }
 .project-description {
     font-size: 0.875rem;
     color: var(--text-secondary);
