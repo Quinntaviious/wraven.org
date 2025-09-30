@@ -11,8 +11,8 @@
     --bg-tertiary: #1a1a24;
     --bg-card: #181825;
     --text-primary: #ffffff;
-    --text-secondary: #c5c5d0;
-    --text-muted: #7a7a8a;
+    --text-secondary: #e0e0e8;
+    --text-muted: #a0a0b0;
     --accent-blue: #00d4ff;
     --accent-blue-dark: #0099ff;
     --accent-cyan: #00ffcc;
@@ -183,7 +183,7 @@ body::before {
 }
 
 .grid-item {
-    background: rgba(24, 24, 37, 0.85);
+    background: rgba(24, 24, 37, 0.90);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.75rem;
@@ -338,7 +338,8 @@ body::before {
     color: var(--text-secondary);
     margin-bottom: 2rem;
     line-height: 1.7;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 400;
 }
 
 .hero-actions {
@@ -751,7 +752,7 @@ body::before {
 
 .subtitle {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-weight: 400;
     transition: color var(--transition-base);
 }
@@ -1569,11 +1570,12 @@ a:focus-visible,
 .status-completed { background: rgba(0, 255, 136, 0.1); color: var(--success); border: 1px solid rgba(0, 255, 136, 0.3); }
 .project-description {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--text-secondary);
     margin-bottom: 1rem;
-    line-height: 1.5;
+    line-height: 1.6;
     position: relative;
     z-index: 2;
+    font-weight: 400;
 }
 .project-progress {
     display: flex;
@@ -1598,7 +1600,7 @@ a:focus-visible,
 .progress-text {
     font-size: 0.75rem;
     font-family: var(--font-mono);
-    color: var(--text-muted);
+    color: var(--text-secondary);
     min-width: 30px;
 }
 
@@ -1640,7 +1642,7 @@ a:focus-visible,
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-family: var(--font-mono);
 }
 .team-links {
@@ -1854,9 +1856,11 @@ a:focus-visible,
 }
 .tool-desc {
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     position: relative;
     z-index: 2;
+    line-height: 1.5;
+    font-weight: 400;
 }
 .links-grid {
     display: flex;
@@ -2060,20 +2064,41 @@ a.sponsor-item:hover {
     gap: 1rem;
 }
 .sponsor-interest-btn {
-    background: var(--accent-blue);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 0.4em 1em;
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+    color: #000000;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.65em 1.25em;
     font-size: 0.95em;
     font-family: var(--font-mono);
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
-    box-shadow: 0 2px 8px rgba(30,144,255,0.08);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
+.sponsor-interest-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.sponsor-interest-btn:hover::before {
+    left: 100%;
+}
+
 .sponsor-interest-btn:hover {
-    background: var(--accent-blue-dark, #1a5fb4);
+    background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 212, 255, 0.5);
 }
 
 /* ------------------------------------------------------------------------
@@ -2473,14 +2498,18 @@ a.sponsor-item:hover {
         gap: 0.75rem;
         align-items: center;
         flex-wrap: wrap;
+        width: 100%;
     }
     .access-btn {
         padding: 0.5rem 0.875rem;
         font-size: 0.75rem;
+        flex: 1;
+        min-width: 100px;
     }
     .status-indicators {
         flex-direction: column;
         gap: 0.5rem;
+        width: 100%;
     }
     .projects-grid {
         grid-template-columns: 1fr;
@@ -2491,6 +2520,19 @@ a.sponsor-item:hover {
     .sponsor-list {
         grid-template-columns: 1fr;
         gap: 0.75rem;
+    }
+    .sponsor-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .sponsor-interest-btn {
+        width: 100%;
+        text-align: center;
+    }
+    .sponsor-item {
+        padding: 1.25rem 1rem;
+        min-height: 120px;
     }
     .privacy-tor {
         grid-template-columns: 1fr;
@@ -2532,6 +2574,11 @@ a.sponsor-item:hover {
     .header-right {
         justify-content: center;
         flex-wrap: wrap;
+        flex-direction: column;
+    }
+    
+    .access-btn {
+        width: 100%;
     }
     
     .hero-title {
@@ -2563,15 +2610,28 @@ a.sponsor-item:hover {
     }
     .terminal-line {
         text-align: left; /* Ensure terminal lines are left-aligned */
+        font-size: 0.8rem;
     }
     .threat-item {
         flex-direction: column;
         gap: 0.75rem;
+        padding: 1rem;
     }
     .project-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
+    }
+    .sponsor-interest-btn {
+        font-size: 0.85em;
+        padding: 0.75em 1em;
+    }
+    .team-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .ctf-link {
+        min-width: 100%;
     }
     .leaderboard-item {
         flex-direction: column;
@@ -2620,13 +2680,6 @@ a.sponsor-item:hover {
     }
     .involvement-links a {
         text-align: center;
-    }
-    .team-links {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    .ctf-link {
-        min-width: auto;
     }
 }
 
