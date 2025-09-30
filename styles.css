@@ -849,7 +849,7 @@ body::before {
 
 .status-live { 
     background: var(--success);
-    box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+    box-shadow: var(--success);
     --dot-color: 167, 139, 250;
 }
 
@@ -861,13 +861,13 @@ body::before {
 
 .status-online { 
     background: var(--success);
-    box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+    box-shadow: var(--success);
     --dot-color: 167, 139, 250;
 }
 
 .status-offline { 
     background: #666;
-    box-shadow: 0 0 10px rgba(102, 102, 102, 0.5);
+    box-shadow: var(--border-color);
     --dot-color: 102, 102, 102;
 }
 
@@ -1755,7 +1755,7 @@ body::before {
     position: relative;
     overflow: hidden;
     min-height: 160px;
-    height: 160px;
+    height: 200px;
 }
 
 .tool-btn::before {
