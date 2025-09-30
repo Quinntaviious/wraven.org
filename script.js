@@ -1,15 +1,193 @@
 // ========================================================================
-// WRAVEN.ORG MAIN JAVASCRIPT
+// WRAVEN.ORG MAIN JAVASCRIPT - ENHANCED EDITION
 // ========================================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // --------------------------------------------------------------------
-    // 1. GLOBAL STATE
-    // --------------------------------------------------------------------
-    let detectedIP = 'Unknown';
+    // Initialize all features
+    initializeParticleEffect();
+    initializeScrollEffects();
+    initializeCursorGlow();
+    setupLogoFallback();
+    setupWRAVENModal();
+    setupClickHandlers();
+    startRealTimeUpdates();
+    getUserIP();
+    registerServiceWorker();
+    
+    // Smooth fade-in on page load
+    setTimeout(() => {
+        document.querySelector('.main-interface').style.opacity = '1';
+    }, 100);
 
     // --------------------------------------------------------------------
-    // 2. SYSTEM UPTIME & LAST UPDATE
+    // 1. PARTICLE EFFECT FOR BACKGROUND
+    // --------------------------------------------------------------------
+    function initializeParticleEffect() {
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '-1';
+        canvas.style.opacity = '0.3';
+        document.body.appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationFrameId;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function init() {
+            particles = [];
+            const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 15000), 80);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Draw connections
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            animationFrameId = requestAnimationFrame(animate);
+        }
+        
+        init();
+        animate();
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            cancelAnimationFrame(animationFrameId);
+        });
+    }
+
+    // --------------------------------------------------------------------
+    // 2. SCROLL-BASED ANIMATIONS
+    // --------------------------------------------------------------------
+    function initializeScrollEffects() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.grid-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+    }
+
+    // --------------------------------------------------------------------
+    // 3. CUSTOM CURSOR GLOW EFFECT
+    // --------------------------------------------------------------------
+    function initializeCursorGlow() {
+        const cursorGlow = document.createElement('div');
+        cursorGlow.className = 'cursor-glow';
+        cursorGlow.style.cssText = `
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        `;
+        document.body.appendChild(cursorGlow);
+        
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorGlow.style.opacity = '1';
+        });
+        
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.style.opacity = '0';
+        });
+        
+        function animateGlow() {
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+            cursorGlow.style.left = glowX + 'px';
+            cursorGlow.style.top = glowY + 'px';
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
+    }
+
+    // --------------------------------------------------------------------
+    // 4. SYSTEM UPTIME & LAST UPDATE
     // --------------------------------------------------------------------
     const updateSystemUptime = () => {
         const uptimeElement = document.querySelector('.uptime');
@@ -34,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // --------------------------------------------------------------------
-    // 3. REAL-TIME UPDATES (Uptime, Dashboard, etc)
+    // 5. REAL-TIME UPDATES (Uptime, Dashboard, etc)
     // --------------------------------------------------------------------
     const startRealTimeUpdates = () => {
         setInterval(checkDashboardStatus, 5 * 60 * 1000); // Check dashboard every 5 min
@@ -43,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // --------------------------------------------------------------------
-    // 4. LOGO FALLBACK (Image/Text)
+    // 6. LOGO FALLBACK (Image/Text)
     // --------------------------------------------------------------------
     const setupLogoFallback = () => {
         const logoImage = document.querySelector('.logo-image');
@@ -61,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // --------------------------------------------------------------------
-    // 5. GET USER IP (Async, Tries Multiple Services)
+    // 7. GET USER IP (Async, Tries Multiple Services)
     // --------------------------------------------------------------------
     const getUserIP = async () => {
         const ipElement = document.getElementById('user-ip');
@@ -87,12 +265,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // --------------------------------------------------------------------
-    // 6. MODAL SETUP (What is WRAVEN?)
+    // 8. MODAL SETUP (What is WRAVEN?)
     // --------------------------------------------------------------------
     const setupWRAVENModal = () => {
         const modal = document.getElementById('wraven-modal');
         const btn = document.getElementById('what-is-wraven-btn');
         const closeBtn = document.querySelector('.modal-close');
+        
         // Open via URL param
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('modal') === 'about') {
@@ -100,61 +279,153 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'hidden';
             history.replaceState({}, document.title, window.location.pathname);
         }
+        
         // Open modal
         if (btn) {
             btn.addEventListener('click', () => {
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
+                // Add fade-in animation
+                modal.style.animation = 'fadeIn 0.3s ease';
             });
         }
+        
         // Close modal
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
             });
         }
+        
         // Close modal when clicking outside
         window.addEventListener('click', (event) => {
             if (event.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
             }
         });
+        
         // Close modal with Escape key
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && modal.style.display === 'block') {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
             }
         });
     };
 
     // --------------------------------------------------------------------
-    // 7. CLICK HANDLERS (Threats, Projects)
+    // 9. CLICK HANDLERS (Threats, Projects) WITH ENHANCED EFFECTS
     // --------------------------------------------------------------------
     const setupClickHandlers = () => {
-        // Threat items open public dashboard
+        // Threat items open public dashboard with ripple effect
         document.querySelectorAll('.threat-item').forEach(item => {
-            item.addEventListener('click', () => {
-                window.open('https://public.wraven.org', '_blank');
+            item.addEventListener('click', (e) => {
+                createRipple(e, item);
+                setTimeout(() => {
+                    window.open('https://public.wraven.org', '_blank');
+                }, 200);
             });
         });
+        
         // Completed projects open blog
         document.querySelectorAll('.project-card').forEach(project => {
             const statusElement = project.querySelector('.project-status');
             if (statusElement && statusElement.textContent.trim() === 'COMPLETED') {
-                project.addEventListener('click', () => {
-                    window.open('https://blog.wraven.org', '_blank');
+                project.addEventListener('click', (e) => {
+                    createRipple(e, project);
+                    setTimeout(() => {
+                        window.open('https://blog.wraven.org', '_blank');
+                    }, 200);
                 });
                 project.style.cursor = 'pointer';
                 project.classList.add('clickable');
             }
         });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.hero-btn, .access-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                createRipple(e, btn);
+            });
+        });
     };
+    
+    function createRipple(event, element) {
+        const ripple = document.createElement('span');
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.5);
+            left: ${x}px;
+            top: ${y}px;
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        
+        element.style.position = 'relative';
+        element.style.overflow = 'hidden';
+        element.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+    }
+    
+    // Add ripple animation to CSS
+    if (!document.getElementById('ripple-style')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-style';
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
     // --------------------------------------------------------------------
-    // 8. DASHBOARD STATUS CHECK (Cloudflare Error Detection)
+    // 10. DASHBOARD STATUS CHECK (Cloudflare Error Detection)
     // --------------------------------------------------------------------
     async function checkDashboardStatus() {
         try {
@@ -197,6 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateDashboardStatus(false);
         }
     }
+    
     function updateDashboardStatus(isOnline) {
         const feedStatus = document.querySelector('.feed-status');
         if (feedStatus) {
@@ -207,17 +479,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             } else {
                 feedStatus.innerHTML = `
-                    <span class="status-dot status-live"></span>
-                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link">Live</a>
-                `; // Duplicated for now because of issues with caddy and CORS
+                    <span class="status-dot status-offline"></span>
+                    <a href="https://public.wraven.org" target="_blank" class="dashboard-link dashboard-offline">Offline</a>
+                `;
             }
         }
     }
 
     // --------------------------------------------------------------------
-    // 9. SERVICE WORKER REGISTRATION & UPDATE NOTIFICATION
+    // 11. SERVICE WORKER REGISTRATION & UPDATE NOTIFICATION
     // --------------------------------------------------------------------
-    registerServiceWorker();
     async function registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
@@ -236,23 +507,73 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch {}
         }
     }
+    
     function showUpdateNotification() {
         const notification = document.createElement('div');
         notification.style.cssText = `
-            position: fixed; top: 20px; right: 20px; background: var(--bg-tertiary); color: var(--text-primary);
-            padding: 12px 16px; border-radius: 6px; border: 1px solid var(--accent-blue); font-size: 14px; z-index: 10000;
-            cursor: pointer; transition: all 0.3s ease;`;
+            position: fixed; top: 20px; right: 20px; 
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-tertiary));
+            color: var(--text-primary);
+            padding: 16px 20px; border-radius: 10px; 
+            border: 2px solid var(--accent-blue); 
+            font-size: 14px; z-index: 10000;
+            cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+            animation: slideInRight 0.5s ease;
+        `;
         notification.innerHTML = `
-            <div style="margin-bottom: 8px;">🔄 New version available!</div>
+            <div style="margin-bottom: 8px; font-weight: 600;">🔄 New version available!</div>
             <div style="font-size: 12px; color: var(--text-secondary);">Click to refresh</div>
         `;
         notification.addEventListener('click', () => window.location.reload());
+        notification.addEventListener('mouseenter', () => {
+            notification.style.transform = 'translateY(-5px)';
+            notification.style.boxShadow = '0 12px 40px rgba(0, 212, 255, 0.5)';
+        });
+        notification.addEventListener('mouseleave', () => {
+            notification.style.transform = 'translateY(0)';
+            notification.style.boxShadow = '0 8px 32px rgba(0, 212, 255, 0.3)';
+        });
         document.body.appendChild(notification);
-        setTimeout(() => { if (notification.parentNode) notification.remove(); }, 10000);
+        setTimeout(() => { 
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => notification.remove(), 500);
+            }
+        }, 10000);
+    }
+    
+    // Add slide animations
+    if (!document.getElementById('slide-style')) {
+        const style = document.createElement('style');
+        style.id = 'slide-style';
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     // --------------------------------------------------------------------
-    // 10. INTERACTIVE EFFECTS (Tool/Link/Threat/Project Buttons)
+    // 12. INTERACTIVE EFFECTS (Tool/Link/Threat/Project Buttons)
     // --------------------------------------------------------------------
     const addInteractiveEffects = () => {
         // Tool button click flash
@@ -290,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addInteractiveEffects();
 
     // --------------------------------------------------------------------
-    // 11. DYNAMIC STYLE INJECTION (Selected State, PWA Notification, etc)
+    // 10. DYNAMIC STYLE INJECTION (Selected State, PWA Notification, etc)
     // --------------------------------------------------------------------
     const style = document.createElement('style');
     style.textContent = `
@@ -353,7 +674,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
 
     // --------------------------------------------------------------------
-    // 12. KEYBOARD SHORTCUTS (Escape, Ctrl/Cmd+R)
+    // 11. KEYBOARD SHORTCUTS (Escape, Ctrl/Cmd+R)
     // --------------------------------------------------------------------
     document.addEventListener('keydown', function(e) {
         // Escape: clear threat selection
@@ -374,10 +695,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --------------------------------------------------------------------
-    // 13. STATUS INDICATOR ANIMATION (Pulse)
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
-    // 14. BACK TO TOP BUTTON
+    // 12. BACK TO TOP BUTTON
     // --------------------------------------------------------------------
     const setupBackToTop = () => {
         const backToTopBtn = document.getElementById('back-to-top');
@@ -402,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // --------------------------------------------------------------------
-    // 15. ENHANCED TERMINAL ANIMATION
+    // 13. ENHANCED TERMINAL ANIMATION
     // --------------------------------------------------------------------
     const enhanceTerminalAnimation = () => {
         const typingElement = document.querySelector('.typing-effect');
@@ -437,7 +755,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // --------------------------------------------------------------------
-    // 16. LOADING STATE IMPROVEMENTS
+    // 14. LOADING STATE IMPROVEMENTS
     // --------------------------------------------------------------------
     const enhanceLoadingStates = () => {
         // Add loading states for images
@@ -463,20 +781,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    const animateStatusIndicators = () => {
-        document.querySelectorAll('.status-dot').forEach(dot => {
-            if (dot.classList.contains('status-live')) {
-                setInterval(() => {
-                    dot.style.opacity = '0.4';
-                    setTimeout(() => { dot.style.opacity = '1'; }, 500);
-                }, 2000);
-            }
-        });
-    };
-    setTimeout(animateStatusIndicators, 4000);
-
     // --------------------------------------------------------------------
-    // 17. INITIALIZE MAIN INTERFACE
+    // 15. INITIALIZE MAIN INTERFACE
     // --------------------------------------------------------------------
     function initializeInterface() {
         setupLogoFallback();
