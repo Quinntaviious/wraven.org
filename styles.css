@@ -210,7 +210,7 @@ body::before {
     transform: translateY(-4px) scale(1.01);
     box-shadow: var(--shadow-glow);
     border-color: var(--border-glow);
-    background: rgba(24, 24, 37, 0.95);
+    background: rgba(24, 24, 37, 0.90);
 }
 
 .grid-item:hover::before {

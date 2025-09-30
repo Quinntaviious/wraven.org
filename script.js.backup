@@ -2,25 +2,24 @@
 // WRAVEN.ORG MAIN JAVASCRIPT - ENHANCED EDITION
 // ========================================================================
 
-document.addEventListener('DOMContentLoaded', function() {
-    // --------------------------------------------------------------------
-    // 1. PARTICLE EFFECT FOR BACKGROUND
-    // --------------------------------------------------------------------
-    function initializeParticleEffect() {
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '-1';
-        canvas.style.opacity = '0.5'; // Increased from 0.3 for better visibility
-        document.body.appendChild(canvas);
-        
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationFrameId;
+// --------------------------------------------------------------------
+// 1. PARTICLE EFFECT FOR BACKGROUND
+// --------------------------------------------------------------------
+function initializeParticleEffect() {
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '-1';
+    canvas.style.opacity = '0.5'; // Increased from 0.3 for better visibility
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationFrameId;
         
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -136,10 +135,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     */
 
-    // --------------------------------------------------------------------
-    // 4. SYSTEM UPTIME & LAST UPDATE
-    // --------------------------------------------------------------------
-    const updateSystemUptime = () => {
+// --------------------------------------------------------------------
+// 4. SYSTEM UPTIME & LAST UPDATE
+// --------------------------------------------------------------------
+const updateSystemUptime = () => {
         const uptimeElement = document.querySelector('.uptime-code');
         const lastUpdateElement = document.querySelector('.footer-stat-value code:not(.uptime-code)');
         
@@ -713,12 +712,13 @@ document.addEventListener('DOMContentLoaded', function() {
             typingElement.textContent = '';
             typeWriter();
         }, 2000);
-    };
-    
-    // --------------------------------------------------------------------
-    // 14. LOADING STATE IMPROVEMENTS
-    // --------------------------------------------------------------------
-    const enhanceLoadingStates = () => {
+    }
+};
+
+// --------------------------------------------------------------------
+// 14. LOADING STATE IMPROVEMENTS
+// --------------------------------------------------------------------
+const enhanceLoadingStates = () => {
         // Add loading states for images
         document.querySelectorAll('img').forEach(img => {
             if (!img.complete) {
@@ -737,38 +737,23 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 item.style.transition = 'all 0.3s ease';
                 item.style.opacity = '1';
-                item.style.transform = 'translateY(0)';
-            }, 200 * (index + 1));
-        });
-    };
+            item.style.transform = 'translateY(0)';
+        }, 200 * (index + 1));
+    });
+};
 
-    // --------------------------------------------------------------------
-    // 15. INITIALIZE MAIN INTERFACE
-    // --------------------------------------------------------------------
-    function initializeInterface() {
-        setupLogoFallback();
-        getUserIP();
-        setupWRAVENModal();
-        setupClickHandlers();
-        checkDashboardStatus();
-        startRealTimeUpdates();
-        setupBackToTop();
-        enhanceTerminalAnimation();
-        enhanceLoadingStates();
-    }
-    
-    // --------------------------------------------------------------------
-    // INITIALIZE ALL FEATURES
-    // --------------------------------------------------------------------
+// --------------------------------------------------------------------
+// 15. INITIALIZE MAIN INTERFACE
+// --------------------------------------------------------------------
+function initializeInterface() {
     initializeParticleEffect();
     initializeScrollEffects();
     setupLogoFallback();
     getUserIP();
     setupWRAVENModal();
     setupClickHandlers();
-    startRealTimeUpdates();
-    registerServiceWorker();
     checkDashboardStatus();
+    startRealTimeUpdates();
     setupBackToTop();
     enhanceTerminalAnimation();
     enhanceLoadingStates();
@@ -780,8 +765,21 @@ document.addEventListener('DOMContentLoaded', function() {
             mainInterface.style.opacity = '1';
         }
     }, 100);
+    
+    // Register service worker
+    registerServiceWorker();
+}
 
-    // --------------------------------------------------------------------
-    // (END)
-    // --------------------------------------------------------------------
-});
+// --------------------------------------------------------------------
+// START APPLICATION
+// --------------------------------------------------------------------
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeInterface);
+} else {
+    // DOM already loaded
+    initializeInterface();
+}
+
+// --------------------------------------------------------------------
+// (END)
+// --------------------------------------------------------------------
