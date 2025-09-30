@@ -21,7 +21,7 @@
     --accent-pink: #ff006e;
     --border-color: #2a2a3a;
     --border-glow: rgba(0, 212, 255, 0.3);
-    --success: #a78bfa;
+    --success: #22c225;
     --warning: #fcbf49;
     --danger: #ff4757;
     --font-mono: 'JetBrains Mono', monospace;
@@ -268,16 +268,24 @@ body::before {
         rgba(0, 212, 255, 0.03) 50%,
         transparent 70%
     );
-    animation: shimmer 15s linear infinite;
+    animation: heroShimmer 15s linear infinite;
 }
 
-@keyframes shimmer {
+@keyframes heroShimmer {
     0% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
     }
     100% {
         transform: translateX(100%) translateY(100%) rotate(45deg);
     }
+}
+
+/* Remove hover effects from hero-cta */
+.hero-cta:hover {
+    transform: none;
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-blue);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(0, 212, 255, 0.05) 50%, var(--bg-tertiary) 100%);
 }
 
 .hero-content {
@@ -1164,91 +1172,120 @@ body::before {
 }
 
 .tag-apt {
-    background: rgba(255, 71, 87, 0.15);
-    color: var(--danger);
-    border-color: rgba(255, 71, 87, 0.3);
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.3);
 }
 
 .tag-apt:hover {
-    background: rgba(255, 71, 87, 0.25);
-    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .tag-cve {
-    background: rgba(157, 78, 221, 0.15);
-    color: var(--accent-purple);
-    border-color: rgba(157, 78, 221, 0.3);
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+    border-color: rgba(139, 92, 246, 0.3);
 }
 
 .tag-cve:hover {
-    background: rgba(157, 78, 221, 0.25);
-    box-shadow: 0 4px 12px rgba(157, 78, 221, 0.4);
+    background: rgba(139, 92, 246, 0.25);
+    color: #c4b5fd;
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
 .tag-malware {
-    background: rgba(255, 0, 110, 0.15);
-    color: var(--accent-pink);
-    border-color: rgba(255, 0, 110, 0.3);
+    background: rgba(236, 72, 153, 0.15);
+    color: #f472b6;
+    border-color: rgba(236, 72, 153, 0.3);
 }
 
 .tag-malware:hover {
-    background: rgba(255, 0, 110, 0.25);
-    box-shadow: 0 4px 12px rgba(255, 0, 110, 0.4);
+    background: rgba(236, 72, 153, 0.25);
+    color: #f9a8d4;
+    border-color: rgba(236, 72, 153, 0.5);
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
 }
 
 .tag-technique {
-    background: rgba(0, 212, 255, 0.15);
-    color: var(--accent-cyan);
-    border-color: rgba(0, 212, 255, 0.3);
+    background: rgba(6, 182, 212, 0.15);
+    color: #22d3ee;
+    border-color: rgba(6, 182, 212, 0.3);
 }
 
 .tag-technique:hover {
-    background: rgba(0, 212, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+    background: rgba(6, 182, 212, 0.25);
+    color: #67e8f9;
+    border-color: rgba(6, 182, 212, 0.5);
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
 }
 
 .tag-ioc {
-    background: rgba(255, 159, 67, 0.15);
-    color: var(--accent-orange);
-    border-color: rgba(255, 159, 67, 0.3);
+    background: rgba(251, 146, 60, 0.15);
+    color: #fb923c;
+    border-color: rgba(251, 146, 60, 0.3);
 }
 
 .tag-ioc:hover {
-    background: rgba(255, 159, 67, 0.25);
-    box-shadow: 0 4px 12px rgba(255, 159, 67, 0.4);
+    background: rgba(251, 146, 60, 0.25);
+    color: #fdba74;
+    border-color: rgba(251, 146, 60, 0.5);
+    box-shadow: 0 4px 12px rgba(251, 146, 60, 0.3);
 }
 
 .tag-phishing {
-    background: rgba(252, 191, 73, 0.15);
-    color: var(--warning);
-    border-color: rgba(252, 191, 73, 0.3);
+    background: rgba(234, 179, 8, 0.15);
+    color: #facc15;
+    border-color: rgba(234, 179, 8, 0.3);
 }
 
 .tag-phishing:hover {
-    background: rgba(252, 191, 73, 0.25);
-    box-shadow: 0 4px 12px rgba(252, 191, 73, 0.4);
+    background: rgba(234, 179, 8, 0.25);
+    color: #fde047;
+    border-color: rgba(234, 179, 8, 0.5);
+    box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
 }
 
 .tag-sector {
-    background: rgba(167, 139, 250, 0.15);
-    color: var(--success);
-    border-color: rgba(167, 139, 250, 0.3);
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
 }
 
 .tag-sector:hover {
-    background: rgba(167, 139, 250, 0.25);
-    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.4);
+    background: rgba(16, 185, 129, 0.25);
+    color: #6ee7b7;
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .tag-saas {
-    background: rgba(0, 153, 255, 0.15);
-    color: var(--accent-blue-dark);
-    border-color: rgba(0, 153, 255, 0.3);
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
 .tag-saas:hover {
-    background: rgba(0, 153, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
+    background: rgba(59, 130, 246, 0.25);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.tag-exploit {
+    background: rgba(220, 38, 38, 0.15);
+    color: #ef4444;
+    border-color: rgba(220, 38, 38, 0.3);
+}
+
+.tag-exploit:hover {
+    background: rgba(220, 38, 38, 0.25);
+    color: #f87171;
+    border-color: rgba(220, 38, 38, 0.5);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 .threat-time {
@@ -1262,40 +1299,7 @@ body::before {
 }
 
 /* ------------------------------------------------------------------------
-   7. Grid Layout Assignments
-   ------------------------------------------------------------------------ */
-.threat-overview {
-    grid-column: span 6;
-    grid-row: span 2;
-}
-
-.research-projects {
-    grid-column: span 6;
-    grid-row: span 2;
-}
-
-.ctf-operations {
-    grid-column: span 4;
-}
-
-.intel-tools {
-    grid-column: span 4;
-}
-
-.quick-links {
-    grid-column: span 4;
-}
-
-.sponsor-bento {
-    grid-column: span 8;
-}
-
-.privacy-tor-bento {
-    grid-column: span 4;
-}
-
-/* ------------------------------------------------------------------------
-   8. Responsive Design
+   7. Responsive Design
    ------------------------------------------------------------------------ */
 @media (max-width: 1200px) {
     .hero-content {
@@ -1381,81 +1385,6 @@ body::before {
 }
 
 /* ------------------------------------------------------------------------
-   9. Accessibility & Utility Classes
-   ------------------------------------------------------------------------ */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--accent-blue);
-    color: var(--bg-primary);
-    padding: 8px;
-    text-decoration: none;
-    z-index: 10000;
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
-/* Focus styles for accessibility */
-button:focus-visible,
-a:focus-visible,
-.hero-btn:focus-visible,
-.access-btn:focus-visible {
-    outline: 2px solid var(--accent-cyan);
-    outline-offset: 2px;
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* End of Enhanced Styles - Additional legacy styles below may need cleanup */
-.threat-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-}
-.threat-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    flex: 1;
-}
-.tag {
-    font-size: 0.75rem;
-    padding: 0.125rem 0.5rem;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-.tag-apt { background: rgba(255, 71, 87, 0.2); color: var(--danger); }
-.tag-cve { background: rgba(252, 191, 73, 0.2); color: var(--accent-orange); }
-.tag-malware { background: rgba(30, 144, 255, 0.2); color: var(--accent-blue); }
-.tag-exploit { background: rgba(255, 71, 87, 0.2); color: var(--danger); }
-.tag-technique { background: rgba(112, 112, 112, 0.2); color: var(--text-muted); }
-.tag-phishing { background: rgba(252, 191, 73, 0.2); color: var(--accent-orange); }
-.tag-ioc { background: rgba(0, 255, 136, 0.2); color: var(--success); }
-.tag-saas { background: rgba(138, 43, 226, 0.2); color: var(--accent-purple); }
-.tag-sector { background: rgba(255, 165, 0, 0.2); color: var(--accent-orange); }
-.threat-time {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    flex-shrink: 0;
-}
-
-/* ------------------------------------------------------------------------
    7. Research Projects Section
    ------------------------------------------------------------------------ */
 .projects-grid {
@@ -1479,7 +1408,7 @@ a:focus-visible,
 }
 
 .project-icon {
-    color: var(--accent-cyan);
+    color: #9ca3af;
     transition: all var(--transition-base);
 }
 
@@ -1487,31 +1416,43 @@ a:focus-visible,
     width: 32px;
     height: 32px;
     stroke: currentColor;
-    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+    filter: none;
 }
 
 .project-card:hover .project-icon {
     transform: scale(1.1) rotate(-5deg);
-    color: var(--accent-blue);
+    color: #d1d5db;
 }
 
 .project-card:hover .project-icon svg {
-    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
+    filter: none;
 }
 
 .project-card::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
+    left: 0;
+    width: 1px;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(30,144,255,0.06), transparent);
-    transition: left 0.5s ease;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 0.3s ease;
 }
 
-.project-card:hover::before {
-    left: 100%;
+.project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover::before,
+.project-card:hover::after {
+    opacity: 0.3;
 }
 
 .project-card:hover {
@@ -1527,6 +1468,7 @@ a:focus-visible,
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
 }
+
 .project-header {
     display: flex;
     justify-content: space-between;
@@ -1535,6 +1477,7 @@ a:focus-visible,
     position: relative;
     z-index: 2;
 }
+
 .project-name {
     font-family: var(--font-mono);
     font-weight: 600;
@@ -1543,6 +1486,7 @@ a:focus-visible,
     z-index: 2;
     font-size: 1rem;
 }
+
 .project-status {
     font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
@@ -1553,11 +1497,13 @@ a:focus-visible,
     position: relative;
     z-index: 2;
 }
+
 .status-active { background: rgba(167, 139, 250, 0.2); color: var(--success); }
 .status-research { background: rgba(30, 144, 255, 0.2); color: var(--accent-blue); }
 .status-testing { background: rgba(252, 191, 73, 0.2); color: var(--accent-orange); }
 .status-planning { background: rgba(112, 112, 112, 0.2); color: var(--text-muted); }
 .status-completed { background: rgba(167, 139, 250, 0.1); color: var(--success); border: 1px solid rgba(167, 139, 250, 0.3); }
+
 .project-description {
     font-size: 0.875rem;
     color: var(--text-secondary);
@@ -1567,6 +1513,7 @@ a:focus-visible,
     z-index: 2;
     font-weight: 400;
 }
+
 .project-progress {
     display: flex;
     align-items: center;
@@ -1574,6 +1521,7 @@ a:focus-visible,
     position: relative;
     z-index: 2;
 }
+
 .progress-bar {
     flex: 1;
     height: 4px;
@@ -1581,12 +1529,14 @@ a:focus-visible,
     border-radius: 2px;
     overflow: hidden;
 }
+
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--accent-blue), var(--success));
     border-radius: 2px;
     transition: width 0.3s ease;
 }
+
 .progress-text {
     font-size: 0.75rem;
     font-family: var(--font-mono);
@@ -1787,22 +1737,35 @@ a:focus-visible,
     gap: 0.75rem;
     position: relative;
     overflow: hidden;
-    min-height: 120px;
+    min-height: 160px;
+    height: 160px;
 }
 
 .tool-btn::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
+    left: 0;
+    width: 1px;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(30,144,255,0.1), transparent);
-    transition: left 0.5s ease;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 0.3s ease;
 }
 
-.tool-btn:hover::before {
-    left: 100%;
+.tool-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 0.3s ease;
+}
+
+.tool-btn:hover::before,
+.tool-btn:hover::after {
+    opacity: 0.3;
 }
 
 .tool-btn:hover {
@@ -1812,7 +1775,7 @@ a:focus-visible,
     box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
 }
 .tool-icon {
-    color: var(--accent-cyan);
+    color: #9ca3af;
     margin-bottom: 0.5rem;
     transition: all var(--transition-base);
     position: relative;
@@ -1823,16 +1786,16 @@ a:focus-visible,
     width: 32px;
     height: 32px;
     stroke: currentColor;
-    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+    filter: none;
 }
 
 .tool-btn:hover .tool-icon {
     transform: scale(1.15) rotate(5deg);
-    color: var(--accent-blue);
+    color: #d1d5db;
 }
 
 .tool-btn:hover .tool-icon svg {
-    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
+    filter: none;
 }
 
 .tool-name {
@@ -1875,7 +1838,7 @@ a:focus-visible,
 }
 
 .link-icon {
-    color: var(--accent-cyan);
+    color: #9ca3af;
     flex-shrink: 0;
     transition: all var(--transition-base);
     display: flex;
@@ -1885,31 +1848,43 @@ a:focus-visible,
 .link-icon svg {
     width: 20px;
     height: 20px;
-    filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.3));
+    filter: none;
 }
 
 .link-btn:hover .link-icon {
     transform: scale(1.2);
-    color: var(--accent-blue);
+    color: #d1d5db;
 }
 
 .link-btn:hover .link-icon svg {
-    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
+    filter: none;
 }
 
 .link-btn::before {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent-blue);
-    transition: width 0.3s ease;
+    width: 1px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 0.3s ease;
 }
 
-.link-btn:hover::before {
+.link-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 0.3s ease;
+}
+
+.link-btn:hover::before,
+.link-btn:hover::after {
+    opacity: 0.3;
 }
 
 .link-btn:hover {
@@ -2395,7 +2370,50 @@ a.sponsor-item:hover {
 }
 
 /* ------------------------------------------------------------------------
-   15. Responsive Design
+   15. Accessibility & Utility Classes
+   ------------------------------------------------------------------------ */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--accent-blue);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 10000;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 6px;
+    opacity: 1;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible,
+.hero-btn:focus-visible,
+.access-btn:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ------------------------------------------------------------------------
+   16. Responsive Design
    ------------------------------------------------------------------------ */
 @media (max-width: 1200px) {
     .main-grid {
@@ -3308,29 +3326,6 @@ a.sponsor-item:hover {
    ======================================================================== */
 
 /* ------------------------------------------------------------------------
-   Skip Navigation Link for Accessibility
-   ------------------------------------------------------------------------ */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--accent-blue);
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-    z-index: 1000;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.skip-link:focus {
-    top: 6px;
-    opacity: 1;
-}
-
-/* ------------------------------------------------------------------------
    Enhanced Terminal Cursor Animation
    ------------------------------------------------------------------------ */
 .cursor {
@@ -3412,7 +3407,7 @@ a.sponsor-item:hover {
 /* ------------------------------------------------------------------------
    Loading Skeleton Animation
    ------------------------------------------------------------------------ */
-@keyframes shimmer {
+@keyframes skeletonShimmer {
     0% {
         background-position: -200px 0;
     }
@@ -3424,11 +3419,11 @@ a.sponsor-item:hover {
 .skeleton {
     background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
     background-size: 200px 100%;
-    animation: shimmer 1.5s infinite;
+    animation: skeletonShimmer 1.5s infinite;
 }
 
 /* ------------------------------------------------------------------------
-   Enhanced Focus Indicators for Accessibility
+   Enhanced Focus Indicators for Additional Accessibility
    ------------------------------------------------------------------------ */
 *:focus {
     outline: 2px solid var(--accent-blue);

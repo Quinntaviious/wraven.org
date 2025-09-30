@@ -350,72 +350,75 @@
 
                 You can freely mix and match tags as needed for each threat item. -->
 
-                <!-- Threat Overview -->
-                <section class="grid-item threat-overview">
-                    <div class="section-header">
-                        <h2>Threat Overview</h2>
-                        <div class="feed-status" role="status" aria-label="Threat feed status">
-                            <span class="status-dot status-live"></span>
-                            Online
+            <!-- Threat Overview -->
+            <section class="grid-item threat-overview">
+                <div class="section-header">
+                    <h2>Threat Overview</h2>
+                    <div class="feed-status" role="status" aria-label="Threat feed status">
+                        <span class="status-dot status-live"></span>
+                        Online
+                    </div>
+                </div>
+                <div class="threat-feed" role="feed" aria-label="Live threat intelligence feed">
+
+                    <!-- New: Phantom Taurus Chinese APT campaign -->
+                    <div class="threat-item">
+                        <div class="threat-indicator high"></div>
+                        <div class="threat-content">
+                            <div class="threat-title">Phantom Taurus APT conducts surgical strikes on gov’t & telco networks</div>
+                            <div class="threat-meta">New China-linked actor uses fileless .NET backdoor “IIServerCore” to target SQL and mail servers</div>
+                            <div class="threat-footer">
+                                <div class="threat-tags">
+                                    <span class="tag tag-apt">Phantom Taurus</span>
+                                    <span class="tag tag-technique">Fileless backdoor / in-memory execution</span>
+                                    <span class="tag tag-malware">IIServerCore / NET-STAR</span>
+                                    <span class="tag tag-sector">Government / Telecom</span>
+                                </div>
+                                <div class="threat-time">Sep 30</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="threat-feed" role="feed" aria-label="Live threat intelligence feed">
 
-                        <!-- Salt Typhoon campaign -->
-                        <div class="threat-item">
-                            <div class="threat-indicator high"></div>
-                            <div class="threat-content">
-                                <div class="threat-title">Salt Typhoon hacking campaign widens globally</div>
-                                <div class="threat-meta">Chinese state-sponsored APT impacting >80 countries; targets include telecom routers, governments, infrastructure</div>
-                                <div class="threat-footer">
-                                    <div class="threat-tags">
-                                        <span class="tag tag-apt">Salt Typhoon</span>
-                                        <span class="tag tag-technique">Router Exploits</span>
-                                        <span class="tag tag-ioc">Telecom / Gov</span>
-                                    </div>
-                                    <div class="threat-time">Sep 09</div>
+                </div>
+
+                    <!-- New: VMware vulnerability patch wave -->
+                    <div class="threat-item">
+                        <div class="threat-indicator medium"></div>
+                        <div class="threat-content">
+                            <div class="threat-title">Critical flaws patched in VMware Aria, NSX, vCenter</div>
+                            <div class="threat-meta">Six vulnerabilities include privilege escalation, cross-VM access, SMTP injection in vCenter</div>
+                            <div class="threat-footer">
+                                <div class="threat-tags">
+                                    <span class="tag tag-cve">CVE-2025-41244 / CVE-2025-41246 / CVE-2025-41250</span>
+                                    <span class="tag tag-technique">PrivEsc / Cross-VM Attack / Injection</span>
+                                    <span class="tag tag-sector">Virtualization / Cloud</span>
                                 </div>
+                                <div class="threat-time">Sep 29</div>
                             </div>
                         </div>
-
-                        <!-- Microsoft Patch Tuesday vulnerabilities -->
-                        <div class="threat-item">
-                            <div class="threat-indicator low"></div>
-                            <div class="threat-content">
-                                <div class="threat-title">Microsoft Patch Tuesday: Two zero-days + critical vulnerabilities</div>
-                                <div class="threat-meta">84 CVEs patched; includes Microsoft Office, SMB, NTFS; elevation of privilege & remote code execution flaws</div>
-                                <div class="threat-footer">
-                                    <div class="threat-tags">
-                                        <span class="tag tag-cve">CVE-2025-55234</span>
-                                        <span class="tag tag-technique">RCE / PrivEsc</span>
-                                        <span class="tag tag-phishing">Software / Windows</span>
-                                    </div>
-                                    <div class="threat-time">Sep 09</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sophos AP6 vulnerability -->
-                        <div class="threat-item">
-                            <div class="threat-indicator medium"></div>
-                            <div class="threat-content">
-                                <div class="threat-title">Critical auth bypass in Sophos AP6 series WAPs</div>
-                                <div class="threat-meta">CVE-2025-10159 allows remote attackers to gain full admin without credentials on certain Sophos wireless access points</div>
-                                <div class="threat-footer">
-                                    <div class="threat-tags">
-                                        <span class="tag tag-cve">CVE-2025-10159</span>
-                                        <span class="tag tag-technique">Auth Bypass</span>
-                                        <span class="tag tag-sector">Networking / Telecom</span>
-                                    </div>
-                                    <div class="threat-time">Sep 11</div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-                </section>
 
-                <!-- Active Research Projects -->
+                    <!-- New: Datzbro Android trojan targeting elderly -->
+                    <div class="threat-item">
+                        <div class="threat-indicator medium"></div>
+                        <div class="threat-content"></div>
+                            <div class="threat-title">New Android trojan “Datzbro” scamming elders via AI-generated events</div>
+                            <div class="threat-meta">Trojan tricks victims with Facebook travel events, enables device takeover & banking fraud</div>
+                            <div class="threat-footer">
+                                <div class="threat-tags">
+                                    <span class="tag tag-malware">Datzbro</span>
+                                    <span class="tag tag-technique">Device Takeover / Fraud</span>
+                                    <span class="tag tag-ioc">Facebook AI lure</span>
+                                </div>
+                                <div class="threat-time">Sep 30</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Active Research Projects -->
                 <section class="grid-item research-projects">
                     <div class="section-header">
                         <h2>Active Projects</h2>
