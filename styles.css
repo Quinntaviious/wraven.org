@@ -183,7 +183,7 @@ body::before {
 }
 
 .grid-item {
-    background: var(--bg-card);
+    background: rgba(24, 24, 37, 0.85);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.75rem;
@@ -210,6 +210,7 @@ body::before {
     transform: translateY(-4px) scale(1.01);
     box-shadow: var(--shadow-glow);
     border-color: var(--border-glow);
+    background: rgba(24, 24, 37, 0.95);
 }
 
 .grid-item:hover::before {
@@ -299,11 +300,28 @@ body::before {
     color: var(--text-primary);
     margin-bottom: 1.25rem;
     line-height: 1.2;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%, 
+        #00d4ff 25%, 
+        #00ffcc 50%, 
+        #00d4ff 75%, 
+        #ffffff 100%
+    );
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: titleGlow 3s ease-in-out infinite alternate;
+    animation: gradientFlow 6s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
 }
 
 @keyframes titleGlow {
@@ -1462,6 +1480,30 @@ a:focus-visible,
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-icon {
+    color: var(--accent-cyan);
+    transition: all var(--transition-base);
+}
+
+.project-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: currentColor;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.project-card:hover .project-icon {
+    transform: scale(1.1) rotate(-5deg);
+    color: var(--accent-blue);
+}
+
+.project-card:hover .project-icon svg {
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
 }
 
 .project-card::before {
@@ -1606,6 +1648,7 @@ a:focus-visible,
 .ctf-link {
     display: flex;
     align-items: center;
+    gap: 0.75rem;
     justify-content: space-between;
     padding: 1rem 1.25rem;
     background: var(--bg-tertiary);
@@ -1618,6 +1661,19 @@ a:focus-visible,
     min-width: 180px;
     position: relative;
     overflow: hidden;
+}
+
+.ctf-link svg {
+    color: var(--accent-cyan);
+    flex-shrink: 0;
+    transition: all var(--transition-base);
+    filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.3));
+}
+
+.ctf-link:hover svg {
+    transform: scale(1.2);
+    color: var(--accent-blue);
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
 }
 
 .ctf-link::before {
@@ -1653,24 +1709,65 @@ a:focus-visible,
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    margin-top: 1.5rem;
 }
+
 .stat-item {
     text-align: center;
-    padding: 0.75rem;
+    padding: 1rem;
     background: var(--bg-tertiary);
-    border-radius: 6px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: 600;
+
+.stat-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-blue);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.15);
+}
+
+.stat-icon {
+    color: var(--accent-cyan);
+    transition: all var(--transition-base);
+}
+
+.stat-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.stat-item:hover .stat-icon {
+    transform: scale(1.2);
     color: var(--accent-blue);
+}
+
+.stat-item:hover .stat-icon svg {
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-family: var(--font-mono);
 }
+
 .stat-label {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.8px;
+    font-weight: 500;
 }
 
 /* ------------------------------------------------------------------------
@@ -1720,15 +1817,27 @@ a:focus-visible,
     box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
 }
 .tool-icon {
-    font-size: 2rem;
+    color: var(--accent-cyan);
     margin-bottom: 0.5rem;
-    transition: transform 0.3s ease;
+    transition: all var(--transition-base);
     position: relative;
     z-index: 2;
 }
 
+.tool-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: currentColor;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
 .tool-btn:hover .tool-icon {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.15) rotate(5deg);
+    color: var(--accent-blue);
+}
+
+.tool-btn:hover .tool-icon svg {
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
 }
 
 .tool-name {
@@ -1755,6 +1864,7 @@ a:focus-visible,
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
     padding: 1rem 1.25rem;
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
@@ -1765,6 +1875,29 @@ a:focus-visible,
     position: relative;
     overflow: hidden;
     min-height: 56px;
+}
+
+.link-icon {
+    color: var(--accent-cyan);
+    flex-shrink: 0;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+}
+
+.link-icon svg {
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.3));
+}
+
+.link-btn:hover .link-icon {
+    transform: scale(1.2);
+    color: var(--accent-blue);
+}
+
+.link-btn:hover .link-icon svg {
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
 }
 
 .link-btn::before {
@@ -1788,8 +1921,10 @@ a:focus-visible,
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(30, 144, 255, 0.1);
 }
+
 .link-text {
     font-weight: 500;
+    flex: 1;
 }
 .link-arrow {
     color: var(--accent-blue);

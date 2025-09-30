@@ -144,22 +144,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --------------------------------------------------------------------
-    // 3. CUSTOM CURSOR GLOW EFFECT
+    // 3. CUSTOM CURSOR GLOW EFFECT (ENHANCED WITH DARKENING)
     // --------------------------------------------------------------------
     function initializeCursorGlow() {
+        // Add overlay to darken the page
+        const overlay = document.createElement('div');
+        overlay.className = 'cursor-glow-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 15, 0.7);
+            pointer-events: none;
+            z-index: 9998;
+            mix-blend-mode: multiply;
+        `;
+        document.body.appendChild(overlay);
+        
         const cursorGlow = document.createElement('div');
         cursorGlow.className = 'cursor-glow';
         cursorGlow.style.cssText = `
             position: fixed;
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.25) 0%, rgba(0, 212, 255, 0.15) 30%, transparent 70%);
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
             transition: opacity 0.3s ease;
             opacity: 0;
+            mix-blend-mode: screen;
         `;
         document.body.appendChild(cursorGlow);
         
@@ -170,15 +187,17 @@ document.addEventListener('DOMContentLoaded', function() {
             mouseX = e.clientX;
             mouseY = e.clientY;
             cursorGlow.style.opacity = '1';
+            overlay.style.opacity = '1';
         });
         
         document.addEventListener('mouseleave', () => {
             cursorGlow.style.opacity = '0';
+            overlay.style.opacity = '0';
         });
         
         function animateGlow() {
-            glowX += (mouseX - glowX) * 0.1;
-            glowY += (mouseY - glowY) * 0.1;
+            glowX += (mouseX - glowX) * 0.15;
+            glowY += (mouseY - glowY) * 0.15;
             cursorGlow.style.left = glowX + 'px';
             cursorGlow.style.top = glowY + 'px';
             requestAnimationFrame(animateGlow);
@@ -190,24 +209,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. SYSTEM UPTIME & LAST UPDATE
     // --------------------------------------------------------------------
     const updateSystemUptime = () => {
-        const uptimeElement = document.querySelector('.uptime');
-        const lastUpdateElement = document.querySelector('.last-update');
+        const uptimeElement = document.querySelector('.uptime-code');
+        const lastUpdateElement = document.querySelector('.footer-stat-value code:not(.uptime-code)');
+        
         if (uptimeElement) {
-            // Calculate uptime from November 30th, 2024 at 3pm
-            const startTime = new Date('2024-11-30T15:00:00');
+            // Calculate uptime from November 30th, 2024 at 3pm EST
+            const startTime = new Date('2024-11-30T15:00:00-05:00');
             const now = new Date();
             const uptimeMs = now.getTime() - startTime.getTime();
             const days = Math.floor(uptimeMs / (1000 * 60 * 60 * 24));
             const hours = Math.floor((uptimeMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((uptimeMs % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((uptimeMs % (1000 * 60)) / 1000);
-            uptimeElement.innerHTML = `Uptime: <code class="uptime-code">${days}d ${hours}h ${minutes}m ${seconds}s</code>`;
+            uptimeElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
+        
         if (lastUpdateElement) {
             const now = new Date();
-            const timestamp = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
-                ' ' + now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }) + ' EST';
-            lastUpdateElement.textContent = `Last updated: ${timestamp}`;
+            const estTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const month = monthNames[estTime.getMonth()];
+            const day = estTime.getDate();
+            const year = estTime.getFullYear();
+            const hours = String(estTime.getHours()).padStart(2, '0');
+            const mins = String(estTime.getMinutes()).padStart(2, '0');
+            lastUpdateElement.textContent = `${month} ${day} ${year} ${hours}:${mins} EST`;
         }
     };
 
@@ -330,6 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const setupClickHandlers = () => {
         // Threat items open public dashboard with ripple effect
         document.querySelectorAll('.threat-item').forEach(item => {
+            item.style.cursor = 'pointer';
             item.addEventListener('click', (e) => {
                 createRipple(e, item);
                 setTimeout(() => {
@@ -354,8 +381,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Add ripple effect to buttons
-        document.querySelectorAll('.hero-btn, .access-btn').forEach(btn => {
+        document.querySelectorAll('.hero-btn, .access-btn, .tool-btn, .link-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                if (!btn.href && !btn.onclick) return; // Skip if not interactive
                 createRipple(e, btn);
             });
         });
