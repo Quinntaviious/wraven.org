@@ -1519,7 +1519,7 @@ body::before {
 .status-research { background: rgba(30, 144, 255, 0.2); color: var(--accent-blue); }
 .status-testing { background: rgba(252, 191, 73, 0.2); color: var(--accent-orange); }
 .status-planning { background: rgba(112, 112, 112, 0.2); color: var(--text-muted); }
-.status-completed { background: rgba(167, 139, 250, 0.1); color: var(--success); border: 1px solid rgba(167, 139, 250, 0.3); }
+.status-completed { background: rgba(33, 226, 43, 0.282); color: var(--success); border: 1px solid rgba(26, 113, 22, 0.3); }
 
 .project-description {
     font-size: 0.875rem;
