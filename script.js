@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --------------------------------------------------------------------
     const updateSystemUptime = () => {
         const uptimeElement = document.querySelector('.uptime-code');
-        const lastUpdateElement = document.querySelector('.footer-stat-value code:not(.uptime-code)');
+        const lastUpdateElement = document.querySelector('.footer-stat-value code:not(.uptime-code):not(#user-ip)');
         
         if (uptimeElement) {
             // Calculate uptime from November 30th, 2024 at 3pm EST
