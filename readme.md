@@ -1,6 +1,6 @@
 # WRAVEN.org
 
-This is the source code for [wraven.org](https://wraven.org), the official site of WRAVEN — Western Michigan University's student-run cybersecurity organization.
+This is the source code for [wraven.org](https://wraven.org), the official site of WRAVEN - Western Michigan University's student-run cybersecurity organization.
 
 ---
 
@@ -63,5 +63,6 @@ open index.html  # macOS
 ⸻
 
 ## 🤝 Contributions
+
 
 Pull requests are welcome. If you’re a not a member and want to help, reach out via Discord or email.
